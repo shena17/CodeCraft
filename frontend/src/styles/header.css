@@ -1,5 +1,5 @@
 :root {
-  --blue: #213152;
+  --blue: #283d65;
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #005c91;
@@ -12,7 +12,6 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
@@ -70,7 +69,7 @@ body {
 }
 
 .register {
-  background-color: var(--pink);
+  background-color: var(--dark-blue);
   position: relative;
   transition: all 550ms ease-in-out;
   z-index: 1;

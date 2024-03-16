@@ -17,6 +17,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   position: absolute;
+  top: 30px;
 }
 
 .right-main {
@@ -143,7 +144,7 @@
 }
 
 .categ-topic {
-  color: var(--dark-blue);
+  color: var(--pink);
   font-size: clamp(1.9rem, 4vw + 1rem, 2.5rem);
   width: 280px;
   font-weight: 500;
