@@ -12,6 +12,7 @@ import todoicon from "../images/to-do-list.png";
 import chaticon from "../images/chat.png";
 import memoicon from "../images/memo.png";
 import meeticon from "../images/meet.png";
+import homebg from "../images/bghome.png";
 
 export default function Home() {
   //ON SCROLL
@@ -57,14 +58,17 @@ export default function Home() {
     <div>
       <div className="main-top">
         <div className="top-container">
+          <div className="rightTop"></div>
           <div className="home-main container">
             <div className="left-main">
               <div className="left-inner">
                 <p className="lead flex-wrap">
-                  <span>Work Remotely</span> <span>With Workspace</span>
+                  <span>Code</span> <span className="me-2">Learn &</span>
+                  <span>Collaborate</span>
                 </p>
                 <p className="flex-wrap  lead-second">
-                  Register today and Manage your work at home
+                  A portal where creativity meets logic, unlocking the power to
+                  create software and join a vibrant community.
                 </p>
                 <div className="top-btns">
                   <Button
@@ -72,7 +76,7 @@ export default function Home() {
                     href="/register"
                     className="header-btn register reg-company-btn"
                   >
-                    Register Your Company
+                    Get Started
                   </Button>
                   <OverlayTrigger
                     placement="top"
@@ -90,7 +94,9 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="right-main img-fluid"></div>
+            <div className="right-main img-fluid">
+              {/* <img src={homebg} /> */}
+            </div>
           </div>
         </div>
       </div>

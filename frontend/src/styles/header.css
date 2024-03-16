@@ -2,7 +2,7 @@
   --blue: #28395a;
   --indigo: #6610f2;
   --purple: #6f42c1;
-  --pink: #fb246a;
+  --pink: #9438a9;
   --red: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
@@ -12,8 +12,7 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-  --primary: #007bff;
-  --secondary: #6c757d;
+
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
@@ -35,6 +34,12 @@
 
   --font-family-para: "Comic Neue", Helvetica, Arial, sans-serif;
   --font-family-solid: "Be Vietnam Pro", sans-serif;
+
+  --text: #0f0810;
+  --background: #ffffff;
+  --primary: #9438a9;
+  --secondary: #b0a90b;
+  --accent: #8db279;
 }
 
 body {
@@ -207,7 +212,7 @@ body {
   width: 100%;
   z-index: 10;
   transition: all 200ms ease-in-out;
-  background-color: var(--white);
+  /* background-color: var(--white); */
 }
 
 .sticky {
