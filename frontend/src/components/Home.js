@@ -76,7 +76,7 @@ export default function Home() {
                     href="/register"
                     className="header-btn register reg-company-btn"
                   >
-                    Get Started
+                    GET STARTED
                   </Button>
                   <OverlayTrigger
                     placement="top"
@@ -94,9 +94,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="right-main img-fluid">
-              {/* <img src={homebg} /> */}
-            </div>
+            <div className="right-main img-fluid"></div>
           </div>
         </div>
       </div>

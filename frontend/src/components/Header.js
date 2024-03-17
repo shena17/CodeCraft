@@ -5,6 +5,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import "../styles/header.css";
 import logo from "../images/logo.png";
+import LoginIcon from "@mui/icons-material/Login";
 
 function Header() {
   const [isScrolled, setScrolled] = useState(false);
@@ -40,10 +41,10 @@ function Header() {
                 Home
               </Nav.Link>
               <Nav.Link href="/dashboard" className="nav-links">
-                Resources
+                Code Editor
               </Nav.Link>
               <Nav.Link href="#home" className="nav-links">
-                Contact
+                Courses
               </Nav.Link>
               <Nav.Link href="#link" className="nav-links">
                 About
@@ -51,18 +52,19 @@ function Header() {
             </Nav>
             <Button
               variant="outline-light"
-              href="/register"
+              href="/login"
               className="header-btn register"
             >
-              Register
+              Login
+              <LoginIcon className="mx-2" fontSize="small" />
             </Button>
-            <Button
+            {/* <Button
               variant="outline-light"
               href="/login"
               className="header-btn ms-3 login"
             >
               Login
-            </Button>
+            </Button> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

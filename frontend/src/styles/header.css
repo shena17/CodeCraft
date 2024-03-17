@@ -1,8 +1,8 @@
 :root {
-  --blue: #28395a;
+  --blue: #283d65;
   --indigo: #6610f2;
   --purple: #6f42c1;
-  --pink: #9438a9;
+  --pink: #005c91;
   --red: #dc3545;
   --orange: #fd7e14;
   --yellow: #ffc107;
@@ -12,7 +12,6 @@
   --white: #fff;
   --gray: #6c757d;
   --gray-dark: #343a40;
-
   --success: #28a745;
   --info: #17a2b8;
   --warning: #ffc107;
@@ -20,7 +19,7 @@
   --light: #f8f9fa;
   --dark: #343a40;
   --light-blue: #014b85;
-  --dark-blue: #33375f;
+  --dark-blue: #7200a7;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -34,12 +33,6 @@
 
   --font-family-para: "Comic Neue", Helvetica, Arial, sans-serif;
   --font-family-solid: "Be Vietnam Pro", sans-serif;
-
-  --text: #0f0810;
-  --background: #ffffff;
-  --primary: #9438a9;
-  --secondary: #b0a90b;
-  --accent: #8db279;
 }
 
 body {
@@ -57,26 +50,26 @@ body {
 
 .nav-links {
   margin-right: 20px;
-  color: var(--dark-blue);
+  color: var(--blue);
   transition: transform 150ms ease-in-out;
   font-weight: 500;
 }
 
 .nav-links:hover {
-  color: var(--pink);
+  color: var(--dark-blue);
   transition: all 150ms ease-in-out;
   transform: scale(1.1);
 }
 
 .header-btn {
   border: 0;
-  font-family: "Muli", sans-serif;
-  padding: 1.5% 4%;
-  border-radius: 5px;
+  padding: 1.2% 4%;
+  border-radius: 10px;
+  font-weight: 500;
 }
 
 .register {
-  background-color: var(--pink);
+  background-color: var(--dark-blue);
   position: relative;
   transition: all 550ms ease-in-out;
   z-index: 1;
@@ -91,7 +84,7 @@ body {
   background-color: var(--white);
   border: 1px solid var(--pink);
   z-index: -1;
-  border-radius: 5px;
+  border-radius: 10px;
 
   transform: scaleX(0);
   transform-origin: left;
