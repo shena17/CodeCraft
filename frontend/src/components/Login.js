@@ -35,7 +35,7 @@ export default function Login() {
           onSubmit={handleSubmit}
           className="login-form"
         >
-          <div className="login-lead">Sign In to Workspace</div>
+          <div className="login-lead">Login to CodeCraft</div>
           <Form.Group
             className="form-group"
             controlId="validationCustomUsername"
