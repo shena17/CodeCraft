@@ -38,7 +38,7 @@ function Header() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="justify-content-center flex-grow-1 nav-items">
               <Nav.Link href="/" className="nav-links">
-                Home
+                Shashini
               </Nav.Link>
               <Nav.Link href="/dashboard" className="nav-links">
                 Code Editor
