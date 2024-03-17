@@ -133,7 +133,7 @@ export default function Register() {
           onSubmit={handleSubmit}
           className="login-form"
         >
-          <div className="login-lead">Register your Company</div>
+          <div className="login-lead">Register to CodeCraft</div>
 
           {/* ERROR MSG */}
           {show ? (
@@ -145,20 +145,45 @@ export default function Register() {
             ""
           )}
 
-          <Form.Group className="form-group" controlId="validationCustom01">
-            <Form.Label>Company name</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Enter company name"
-              value={form.companyName}
-              onChange={(e) => setField("companyName", e.target.value)}
-              isInvalid={!!errors.companyName}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.companyName}
-            </Form.Control.Feedback>
-          </Form.Group>
+          <Row className="country-input">
+            <Form.Group
+              as={Col}
+              className="form-group"
+              controlId="validationCustom05"
+            >
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter first name"
+                required
+                value={form.address}
+                onChange={(e) => setField("address", e.target.value)}
+                isInvalid={!!errors.country}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.address}
+              </Form.Control.Feedback>
+            </Form.Group>
+
+            <Form.Group
+              as={Col}
+              className="form-group"
+              controlId="validationCustom05"
+            >
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter last name"
+                required
+                value={form.address}
+                onChange={(e) => setField("address", e.target.value)}
+                isInvalid={!!errors.country}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.address}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Row>
 
           {/* Country */}
 
@@ -204,10 +229,10 @@ export default function Register() {
               className="form-group"
               controlId="validationCustom05"
             >
-              <Form.Label>Address</Form.Label>
+              <Form.Label>Date of Birth</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter Address"
+                placeholder="DD/MM/YYYY"
                 required
                 value={form.address}
                 onChange={(e) => setField("address", e.target.value)}
@@ -241,23 +266,6 @@ export default function Register() {
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
-
-          {/* <Form.Group className="form-group" controlId="validationCustom06">
-            <Form.Label>Create Username</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="company@123"
-              value={form.username}
-              onChange={(e) => {
-                setField("username", e.target.value);
-              }}
-              isInvalid={!!errors.username}
-            />
-            <Form.Control.Feedback type="invalid">
-              {errors.username}
-            </Form.Control.Feedback>
-          </Form.Group> */}
 
           <Form.Group className="form-group" controlId="formBasicPassword">
             <Form.Label>Create Password</Form.Label>
@@ -300,7 +308,7 @@ export default function Register() {
             type="submit"
             className="header-btn register browse-btn signin-btn"
           >
-            Register Company
+            Register
           </Button>
 
           <div className="signup-div form-label">
