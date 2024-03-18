@@ -58,13 +58,6 @@ function Header() {
               Login
               <LoginIcon className="mx-2" fontSize="small" />
             </Button>
-            {/* <Button
-              variant="outline-light"
-              href="/login"
-              className="header-btn ms-3 login"
-            >
-              Login
-            </Button> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -1,123 +1,57 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/login.css";
 import logo from "../images/logo.png";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import { Row, Col } from "react-bootstrap";
 import countries from "../json/countries.json";
 import axios from "axios";
-import Alert from "react-bootstrap/Alert";
+import { Grid } from "@mui/material";
+import { useFormik, Formik, Field } from "formik";
+import * as Yup from "yup";
+import TextField from "./FormsUI/TextField";
+import SelectField from "./FormsUI/SelectField";
+import DatePicker from "./FormsUI/DatePicker";
+import SubmitButton from "./FormsUI/SubmitButton";
+import { useNavigate } from "react-router-dom";
+import Notification from "./DispayComponents/Notification";
+
+// FORMIK
+const INITIAL_FORM_STATE = {
+  firstName: "",
+  lastName: "",
+  country: "",
+  dob: "",
+  email: "",
+  password: "",
+  confirmpwd: "",
+};
+
+// YUP
+const FORM_VALIDATION = Yup.object().shape({
+  firstName: Yup.string().required("Required!"),
+  lastName: Yup.string().required("Required!"),
+  country: Yup.string().required("Required!"),
+  dob: Yup.date().required("Required!"),
+  email: Yup.string().email().required("Required!"),
+  password: Yup.string().required("Required!"),
+  confirmpwd: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Required!"),
+});
 
 export default function Register() {
-  //Validation
-  const [form, setForm] = useState({});
-  const [errors, setErrors] = useState({});
-  const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
 
-  const setField = (field, value) => {
-    setForm({
-      ...form,
-      [field]: value,
-    });
-
-    if (!!errors[field])
-      setErrors({
-        ...errors,
-        [field]: null,
-      });
-  };
-
-  const validateForm = () => {
-    const { companyName, country, address, email, password, confirmPwd } = form;
-
-    const newErrors = {};
-
-    if (!companyName || companyName === "") {
-      newErrors.companyName = "Enter your company name!";
-    }
-
-    if (!country || country === "") newErrors.country = "Choose a country!";
-
-    if (!address || address === "") newErrors.address = "Enter the address!";
-
-    if (!email || email === "") {
-      newErrors.email = "Enter the email!";
-    } else if (!email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-      newErrors.email = "Invalid email address";
-    }
-
-    // if (!username || username === "") {
-    //   newErrors.username = "Create a username!";
-    // } else if (username.length < 4 || username.length > 15) {
-    //   newErrors.username = "Username should be of length 4 - 15 characters";
-    // } else if (!username.match(/^[a-z0-9_\@\.]+$/)) {
-    //   newErrors.username =
-    //     "Usernames can only have lowercase letters, numbers, dots, @ & underscores";
-    // }
-
-    if (!password || password === "") {
-      newErrors.password = "Create a password!";
-    } else if (
-      !password.match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/)
-    ) {
-      newErrors.password =
-        "Password should contain at least one digit and one special character [7 - 15 characters]";
-    }
-
-    if (!confirmPwd || confirmPwd === "") {
-      newErrors.confirmPwd = "Confirm your password";
-    } else if (confirmPwd !== password) {
-      newErrors.confirmPwd = "Password you entered does not match";
-    }
-
-    setValidated(true);
-    return newErrors;
-  };
-
-  //Error state
-  const [show, setShow] = useState(false);
-  const [regError, setRegError] = useState();
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const formErrors = validateForm();
-
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-    } else {
-      setValidated(true);
-
-      //SEND DATA TO FORM
-      const { companyName, country, address, email, password } = form;
-
-      const newCompany = {
-        companyName,
-        country,
-        address,
-        email,
-        password,
-      };
-
-      axios
-        .post("https://work-from-home-backend.onrender.com", newCompany)
-        .then((res) => {
-          window.location.href = "/login";
-        })
-        .catch((res) => {
-          setShow(true);
-          setRegError(res.data);
-        });
-    }
-  };
-
-  // placeholder
-
-  const [selected, setSelected] = useState(false);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
   return (
     <div className="login-main">
+      {/* NOTIFICATION */}
+      <Notification notify={notify} setNotify={setNotify} />
+
       <div className="login-container container register-container">
         <a href="/" className="logo-div">
           <img
@@ -127,194 +61,119 @@ export default function Register() {
           />
         </a>
 
-        <Form
-          noValidate
-          validated={validated}
-          onSubmit={handleSubmit}
-          className="login-form"
-        >
+        <div className="login-form">
           <div className="login-lead">Register to CodeCraft</div>
 
-          {/* ERROR MSG */}
-          {show ? (
-            <Alert variant="danger" onClose={() => setShow(false)} dismissible>
-              <Alert.Heading>Registration Failed</Alert.Heading>
-              <p className="mt-4">{regError}</p>
-            </Alert>
-          ) : (
-            ""
-          )}
-
-          <Row className="country-input">
-            <Form.Group
-              as={Col}
-              className="form-group"
-              controlId="validationCustom05"
-            >
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter first name"
-                required
-                value={form.address}
-                onChange={(e) => setField("address", e.target.value)}
-                isInvalid={!!errors.country}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.address}
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group
-              as={Col}
-              className="form-group"
-              controlId="validationCustom05"
-            >
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter last name"
-                required
-                value={form.address}
-                onChange={(e) => setField("address", e.target.value)}
-                isInvalid={!!errors.country}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.address}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-
-          {/* Country */}
-
-          <Row className="country-input">
-            <Form.Group
-              as={Col}
-              className="form-group"
-              controlId="validationCustom04"
-            >
-              <Form.Label>Country</Form.Label>
-
-              <Form.Select
-                aria-label="Default select example"
-                onChange={(e) => {
-                  setField("country", e.target.value);
-                  setSelected(true);
-                }}
-                required
-                isInvalid={!!errors.country}
-                className={
-                  selected ? "select-placeholder option " : "select-placeholder"
-                }
-              >
-                <option key="blankChoice" hidden value="">
-                  Select a country
-                </option>
-
-                {countries.map((country) => {
-                  return (
-                    <option key={country.code} value={country.name}>
-                      {country.name}
-                    </option>
-                  );
-                })}
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                {errors.country}
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group
-              as={Col}
-              className="form-group"
-              controlId="validationCustom05"
-            >
-              <Form.Label>Date of Birth</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="DD/MM/YYYY"
-                required
-                value={form.address}
-                onChange={(e) => setField("address", e.target.value)}
-                isInvalid={!!errors.country}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.address}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-
-          <Form.Group
-            className="form-group"
-            controlId="validationCustomUsername"
+          <Formik
+            initialValues={{ ...INITIAL_FORM_STATE }}
+            validationSchema={FORM_VALIDATION}
+            onSubmit={async (values) => {
+              await axios
+                .post("http://localhost:8071/user/register", {
+                  firstName: values.firstName,
+                  lastName: values.lastName,
+                  country: values.country,
+                  dob: values.dob,
+                  email: values.email,
+                  password: values.password,
+                })
+                .then((res) => {
+                  setNotify({
+                    isOpen: true,
+                    message: "User added successfully",
+                    type: "success",
+                  });
+                })
+                .catch((err) => {
+                  if (
+                    err.response &&
+                    err.response.data &&
+                    err.response.data.errorMessage
+                  ) {
+                    setNotify({
+                      isOpen: true,
+                      message: err.response.data.errorMessage,
+                      type: "error",
+                    });
+                  }
+                });
+            }}
           >
-            <Form.Label>Email</Form.Label>
-            <InputGroup hasValidation>
-              <Form.Control
-                type="email"
-                placeholder="mail@example.com"
-                aria-describedby="inputGroupPrepend"
-                required
-                value={form.email}
-                onChange={(e) => {
-                  setField("email", e.target.value);
-                }}
-                isInvalid={!!errors.email}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.email}
-              </Form.Control.Feedback>
-            </InputGroup>
-          </Form.Group>
+            <Grid container sx={{}} spacing={2}>
+              {/* 1st row */}
 
-          <Form.Group className="form-group" controlId="formBasicPassword">
-            <Form.Label>Create Password</Form.Label>
+              <Grid item xs={6}>
+                <Form.Label>First Name</Form.Label>
+                <TextField name="firstName" placeholder="Enter first name" />
+              </Grid>
+              <Grid item xs={6}>
+                <Form.Label>Last Name</Form.Label>
+                <TextField name="lastName" placeholder="Enter last name" />
+              </Grid>
 
-            <Form.Control
-              type="password"
-              placeholder="Enter password here"
-              aria-describedby="inputGroupPrepend"
-              required
-              value={form.password}
-              onChange={(e) => setField("password", e.target.value)}
-              isInvalid={!!errors.password}
-            />
+              {/* 2nd row */}
 
-            <Form.Control.Feedback type="invalid">
-              {errors.password}
-            </Form.Control.Feedback>
-          </Form.Group>
+              <Grid item xs={6}>
+                <Form.Label>Country</Form.Label>
+                <SelectField
+                  name="country"
+                  options={{
+                    NotStarted: "Not Started",
+                    Started: "Started",
+                    InProgress: "In Progress",
+                    Completed: "Completed",
+                  }}
+                />
+              </Grid>
 
-          <Form.Group className="form-group" controlId="formBasicPassword01">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Confirm your password"
-              aria-describedby="inputGroupPrepend"
-              required
-              value={form.confirmPwd}
-              onChange={(e) => setField("confirmPwd", e.target.value)}
-              isInvalid={!!errors.confirmPwd}
-            />
+              <Grid item xs={6}>
+                <Form.Label>Date of Birth</Form.Label>
+                <DatePicker name="dob" />
+              </Grid>
 
-            <Form.Control.Feedback type="invalid">
-              {errors.confirmPwd}
-            </Form.Control.Feedback>
-          </Form.Group>
+              {/* 3rd row */}
 
-          <Button
-            onClick={handleSubmit}
-            variant="bg-danger"
-            type="submit"
-            className="header-btn register browse-btn signin-btn"
-          >
-            Register
-          </Button>
+              <Grid item xs={12}>
+                <Form.Label>Email</Form.Label>
+                <TextField name="email" placeholder="Enter email" />
+              </Grid>
 
-          <div className="signup-div form-label">
-            Already have an account? <a href="/login">Sign In</a>
-          </div>
-        </Form>
+              {/* 4th row */}
+
+              <Grid item xs={12}>
+                <Form.Label>Create Password</Form.Label>
+                <TextField
+                  name="password"
+                  type="password"
+                  placeholder="Enter password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Form.Label>Confirm Password</Form.Label>
+                <TextField
+                  name="confirmpwd"
+                  type="password"
+                  placeholder="Re-enter your password"
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <SubmitButton
+                  variant="bg-danger"
+                  type="submit"
+                  className="header-btn register browse-btn signin-btn register-btn"
+                  style={{ marginBottom: "30px" }}
+                >
+                  Register
+                </SubmitButton>
+
+                <div className="signup-div form-label">
+                  Already have an account? <a href="/login">Sign In</a>
+                </div>
+              </Grid>
+            </Grid>
+          </Formik>
+        </div>
       </div>
     </div>
   );
