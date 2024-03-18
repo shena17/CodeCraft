@@ -10,6 +10,7 @@ const TextfieldWrapper = ({ name, ...otherProps }) => {
     ...otherProps,
     fullWidth: true,
     variant: "outlined",
+    size: "small",
   };
 
   if (meta && meta.touched && meta.error) {
@@ -17,7 +18,7 @@ const TextfieldWrapper = ({ name, ...otherProps }) => {
     configTextfield.helperText = meta.error;
   }
 
-  return <TextField {...configTextfield} />;
+  return <TextField {...configTextfield} sx={{ marginBottom: "15px" }} />;
 };
 
 export default TextfieldWrapper;

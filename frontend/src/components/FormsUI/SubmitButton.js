@@ -19,15 +19,17 @@ const SubmitButton = ({ children, ...otherProps }) => {
     <Button
       {...configBtn}
       sx={{
-        padding: "6px 20px",
-        borderRadius: "10px",
-        backgroundColor: "var(--light-blue)",
-        border: "1px solid var(--light-blue)",
+        fontWeight: "600",
+        padding: "8px 20px",
+        borderRadius: "5px",
+        backgroundColor: "var(--dark-blue)",
         color: "var(--white)",
         "&:last-child td, &:last-child th": { border: 0 },
         "&:hover": {
-          backgroundColor: "var(--transparent)",
+          backgroundColor: "var(--white)",
           color: "var(--light-blue)",
+          borderRadius: "5px",
+          border: "0px solid var(--white)",
         },
       }}
     >

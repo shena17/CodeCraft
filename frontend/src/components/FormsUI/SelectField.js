@@ -19,6 +19,7 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
     fullWidth: true,
     variant: "outlined",
     onChange: handleChange,
+    size: "small",
   };
 
   if (meta && meta.touched && meta.error) {
@@ -27,7 +28,7 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
   }
 
   return (
-    <TextField {...configSelect}>
+    <TextField {...configSelect} sx={{ marginBottom: "15px" }}>
       {Object.keys(options).map((item, pos) => {
         return (
           <MenuItem key={pos} value={item}>

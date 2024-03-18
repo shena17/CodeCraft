@@ -26,8 +26,7 @@ const DatePicker = (name, ...otherProps) => {
     InputLabelProps: {
       shrink: true,
     },
-    label: "Deadline",
-    InputProps: { inputProps: { min: formatDate(new Date().toDateString()) } },
+    size: "small",
   };
 
   if (meta && meta.touched && meta.error) {
@@ -35,7 +34,7 @@ const DatePicker = (name, ...otherProps) => {
     configDatePicker.helperText = meta.error;
   }
 
-  return <TextField {...configDatePicker} />;
+  return <TextField {...configDatePicker} sx={{ marginBottom: "15px" }} />;
 };
 
 export default DatePicker;
