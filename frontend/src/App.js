@@ -17,6 +17,8 @@ import Members from "./components/Admin/Members";
 import Fees from "./components/Admin/Fees";
 import Attendance from "./components/Admin/Attendance";
 import AdminHome from "./components/Admin/Home";
+import LiveCollabHome from "./components/Pages/LiveCollabHome";
+import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
 
 export default function App() {
   return (
@@ -46,6 +48,9 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
+        <Route path="/LiveHome" element={<LiveCollabHome/>} />
+        <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage/>} />
+        {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<AdminHome />} />
           <Route path="members" element={<Members />} />
@@ -53,6 +58,7 @@ function AppContent() {
           <Route path="attendance" element={<Attendance />} />
           {/* Other nested routes */}
         </Route>
+        {/* Admin Panel */}
       </Routes>
 
       {/* Footer */}
