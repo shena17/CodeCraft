@@ -43,7 +43,7 @@ function Header() {
               <Nav.Link href="/dashboard" className="nav-links">
                 Code Editor
               </Nav.Link>
-              <Nav.Link href="#home" className="nav-links">
+              <Nav.Link href="/admin/home" className="nav-links">
                 Courses
               </Nav.Link>
               <Nav.Link href="#link" className="nav-links">

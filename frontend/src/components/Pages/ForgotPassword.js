@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "../styles/login.css";
-import logo from "../images/logo.png";
+import "../../styles/login.css";
+import logo from "../../images/logo.png";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";

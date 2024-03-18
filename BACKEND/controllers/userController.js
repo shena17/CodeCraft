@@ -63,8 +63,8 @@ const registerUser = async (req, res) => {
 //Login user
 const login = async (req, res) => {
   try {
-    if (req.body && req.body.username && req.body.password) {
-      const user = await User.findOne({ username: req.body.username });
+    if (req.body && req.body.email && req.body.password) {
+      const user = await User.findOne({ email: req.body.email });
       if (user) {
         if (await bcrypt.compareSync(req.body.password, user.password)) {
           //generate jwt token

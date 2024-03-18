@@ -6,8 +6,12 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import ForgotPassword from "./components/ForgotPassword";
-import Dashboard from "./components/Dashboard";
+import ForgotPassword from "./components/Pages/ForgotPassword";
+import Dashboard from "./components/Admin/Dashboard";
+import Members from "./components/Admin/Members";
+import Fees from "./components/Admin/Fees";
+import Attendance from "./components/Admin/Attendance";
+import AdminHome from "./components/Admin/Home";
 
 export default function App() {
   return (
@@ -15,7 +19,7 @@ export default function App() {
       {window.location.pathname !== "/login" &&
         window.location.pathname !== "/register" &&
         window.location.pathname !== "/forgotpwd" &&
-        window.location.pathname !== "/dashboard" && <Header />}
+        window.location.pathname !== "/admin" && <Header />}
 
       <Router>
         <Routes>
@@ -23,14 +27,20 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgotpwd" element={<ForgotPassword />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin/*" element={<Dashboard />}>
+            <Route path="home" element={<AdminHome />} />
+            <Route path="members" element={<Members />} />
+            <Route path="fees" element={<Fees />} />
+            <Route path="attendance" element={<Attendance />} />
+            {/* Other nested routes */}
+          </Route>
         </Routes>
       </Router>
 
       {window.location.pathname !== "/login" &&
         window.location.pathname !== "/register" &&
         window.location.pathname !== "/forgotpwd" &&
-        window.location.pathname !== "/dashboard" && <Footer />}
+        window.location.pathname !== "/admin" && <Footer />}
     </div>
   );
 }
