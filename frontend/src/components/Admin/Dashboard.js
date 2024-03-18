@@ -324,7 +324,7 @@ export default function Dashboard() {
           <DrawerHeader />
 
           <Routes>
-            <Route exact path="/" element={<Home />} />
+            <Route exact path="/home" element={<Home />} />
             <Route exact path="/members" element={<Members />} />
             <Route exact path="/fees" element={<Fees />} />
             <Route exact path="/attendance" element={<Attendance />} />

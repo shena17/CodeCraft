@@ -1,6 +1,11 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import Footer from "./components/Footer";
@@ -15,32 +20,46 @@ import AdminHome from "./components/Admin/Home";
 
 export default function App() {
   return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
+
+function AppContent() {
+  const location = useLocation();
+
+  // Function to check if the current path is under admin
+  const isUnderAdminPath = (path) =>
+    location.pathname.startsWith(`/admin${path}`);
+
+  return (
     <div className="App">
-      {window.location.pathname !== "/login" &&
-        window.location.pathname !== "/register" &&
-        window.location.pathname !== "/forgotpwd" &&
-        window.location.pathname !== "/admin" && <Header />}
+      {/* Header */}
+      {["/login", "/register", "/forgotpwd"].includes(location.pathname) ||
+      isUnderAdminPath("/") ? null : (
+        <Header />
+      )}
 
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgotpwd" element={<ForgotPassword />} />
-          <Route path="/admin/*" element={<Dashboard />}>
-            <Route path="home" element={<AdminHome />} />
-            <Route path="members" element={<Members />} />
-            <Route path="fees" element={<Fees />} />
-            <Route path="attendance" element={<Attendance />} />
-            {/* Other nested routes */}
-          </Route>
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgotpwd" element={<ForgotPassword />} />
+        <Route path="/admin/*" element={<Dashboard />}>
+          <Route path="home" element={<AdminHome />} />
+          <Route path="members" element={<Members />} />
+          <Route path="fees" element={<Fees />} />
+          <Route path="attendance" element={<Attendance />} />
+          {/* Other nested routes */}
+        </Route>
+      </Routes>
 
-      {window.location.pathname !== "/login" &&
-        window.location.pathname !== "/register" &&
-        window.location.pathname !== "/forgotpwd" &&
-        window.location.pathname !== "/admin" && <Footer />}
+      {/* Footer */}
+      {["/login", "/register", "/forgotpwd"].includes(location.pathname) ||
+      isUnderAdminPath("/") ? null : (
+        <Footer />
+      )}
     </div>
   );
 }
