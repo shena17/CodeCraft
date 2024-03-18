@@ -17,6 +17,8 @@ import Members from "./components/Admin/Members";
 import Fees from "./components/Admin/Fees";
 import Attendance from "./components/Admin/Attendance";
 import AdminHome from "./components/Admin/Home";
+import LiveCollabHome from "./components/Pages/LiveCollabHome";
+import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
 
 export default function App() {
   return (
@@ -51,6 +53,8 @@ function AppContent() {
           <Route path="members" element={<Members />} />
           <Route path="fees" element={<Fees />} />
           <Route path="attendance" element={<Attendance />} />
+          <Route path="/LiveHome" element={<LiveCollabHome/>} />
+          <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage/>} />
           {/* Other nested routes */}
         </Route>
       </Routes>
