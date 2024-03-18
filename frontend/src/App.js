@@ -48,15 +48,17 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
+        <Route path="/LiveHome" element={<LiveCollabHome/>} />
+        <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage/>} />
+        {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<AdminHome />} />
           <Route path="members" element={<Members />} />
           <Route path="fees" element={<Fees />} />
           <Route path="attendance" element={<Attendance />} />
-          <Route path="/LiveHome" element={<LiveCollabHome/>} />
-          <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage/>} />
           {/* Other nested routes */}
         </Route>
+        {/* Admin Panel */}
       </Routes>
 
       {/* Footer */}
