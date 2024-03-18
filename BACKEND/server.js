@@ -7,10 +7,13 @@ const cors = require("cors");
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8070;
+const PORT = process.env.PORT || 8071;
 
 app.use(cors());
 app.use(express.json());
+
+//Setting up routing
+app.use("/user", require("./routes/User"));
 
 app.listen(PORT, () => {
   console.log("Server up with port : " + PORT);

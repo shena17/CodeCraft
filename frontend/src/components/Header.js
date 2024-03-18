@@ -43,7 +43,7 @@ function Header() {
               <Nav.Link href="/dashboard" className="nav-links">
                 Code Editor
               </Nav.Link>
-              <Nav.Link href="#home" className="nav-links">
+              <Nav.Link href="/admin/home" className="nav-links">
                 Courses
               </Nav.Link>
               <Nav.Link href="#link" className="nav-links">
@@ -58,13 +58,6 @@ function Header() {
               Login
               <LoginIcon className="mx-2" fontSize="small" />
             </Button>
-            {/* <Button
-              variant="outline-light"
-              href="/login"
-              className="header-btn ms-3 login"
-            >
-              Login
-            </Button> */}
           </Navbar.Collapse>
         </Container>
       </Navbar>

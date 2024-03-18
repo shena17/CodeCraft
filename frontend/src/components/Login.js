@@ -4,23 +4,83 @@ import logo from "../images/logo.png";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import axios from "axios";
+import Notification from "./DispayComponents/Notification";
 
 export default function Login() {
-  //VALIDATIONS
-  const [validated, setValidated] = useState(false);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
 
-  const handleSubmit = (event) => {
+  // VALIDATIONS
+  const [validated, setValidated] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
       event.stopPropagation();
+      setValidated(true);
+    } else {
+      setValidated(true);
+      try {
+        await axios
+          .post("http://localhost:8071/user/login", {
+            email: formData.email,
+            password: formData.password,
+          })
+          .then((res) => {
+            window.localStorage.setItem("token", res.data);
+            window.localStorage.setItem("LoggedIn", true);
+            sessionStorage.setItem("showmsg", "1");
+            window.location.href = "./";
+          })
+          .catch((err) => {
+            if (
+              err.response &&
+              err.response.data &&
+              err.response.data.errorMessage
+            ) {
+              setNotify({
+                isOpen: true,
+                message: err.response.data.errorMessage,
+                type: "error",
+              });
+            }
+          });
+      } catch (err) {
+        if (
+          err.response &&
+          err.response.data &&
+          err.response.data.errorMessage
+        ) {
+          setNotify({
+            isOpen: true,
+            message: err.response.data.errorMessage,
+            type: "error",
+          });
+        }
+      }
     }
-
-    setValidated(true);
   };
 
   return (
     <div className="login-main">
+      {/* NOTIFICATION START*/}
+      <Notification notify={notify} setNotify={setNotify} />
+      {/* NOTIFICATION END*/}
+
       <div className="login-container container">
         <a href="/" className="logo-div">
           <img
@@ -43,13 +103,16 @@ export default function Login() {
             <Form.Label>Email</Form.Label>
             <InputGroup hasValidation>
               <Form.Control
-                type="text"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 placeholder="mail@example.com"
                 aria-describedby="inputGroupPrepend"
                 required
               />
               <Form.Control.Feedback type="invalid">
-                Please enter the email!
+                Please enter a valid email address.
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
@@ -59,12 +122,15 @@ export default function Login() {
             <InputGroup hasValidation>
               <Form.Control
                 type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
                 placeholder="Enter password here"
                 aria-describedby="inputGroupPrepend"
                 required
               />
               <Form.Control.Feedback type="invalid">
-                Please enter the password!
+                Please enter the password.
               </Form.Control.Feedback>
             </InputGroup>
             <div className="forgot-pwd-div">

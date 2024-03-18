@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/home.css";
 import { Button, OverlayTrigger, Tooltip, Carousel } from "react-bootstrap";
 import caro1 from "../images/caro1.png";
@@ -12,33 +12,59 @@ import todoicon from "../images/to-do-list.png";
 import chaticon from "../images/chat.png";
 import memoicon from "../images/memo.png";
 import meeticon from "../images/meet.png";
-import homebg from "../images/bghome.png";
+import { jwtDecode } from "jwt-decode";
 
 export default function Home() {
-  //ON SCROLL
-  const faders = document.querySelectorAll(".category");
-
-  const options = {
-    root: null,
-    treshold: 1,
-    rootMargin: "-150px",
-  };
-
-  const observer = new IntersectionObserver(function (entries, observer) {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) {
-        entry.target.classList.add("hide");
-        entry.target.classList.remove("animate");
-      } else {
-        entry.target.classList.remove("hide");
-        entry.target.classList.add("animate");
-      }
-    });
-  }, options);
-
-  faders.forEach((fader) => {
-    observer.observe(fader);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
   });
+
+  // Check token expiry on component mount
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+
+  //   if (token) {
+  //     const decodedToken = jwtDecode(token);
+  //     const currentTime = Date.now() / 1000;
+
+  //     if (decodedToken.exp < currentTime) {
+  //       // Token has expired, clear token and redirect to login
+  //       localStorage.removeItem("token");
+  //       localStorage.removeItem("LoggedIn");
+  //       sessionStorage.setItem("tokenExpired");
+  //       window.location.reload();
+  //     }
+  //   } else {
+  //     // Token not found, redirect to login
+  //     // Token has expired, clear token and redirect to login
+  //     setNotify({
+  //       isOpen: true,
+  //       message: "Session expired, Logged In again!",
+  //       type: "warning",
+  //     });
+  //   }
+
+  //   // LogIn msg
+  //   if (sessionStorage.getItem("showmsg") == 1) {
+  //     setNotify({
+  //       isOpen: true,
+  //       message: "Logged In!",
+  //       type: "success",
+  //     });
+  //     sessionStorage.removeItem("showmsg");
+  //   }
+
+  //   if (sessionStorage.getItem("tokenExpired") == true) {
+  //     setNotify({
+  //       isOpen: true,
+  //       message: "Session expired, Logged In again!",
+  //       type: "warning",
+  //     });
+  //     sessionStorage.removeItem("tokenExpired");
+  //   }
+  // }, []);
 
   //TOOLTIP
   const renderTooltip = (props) => (
@@ -88,7 +114,7 @@ export default function Home() {
                       href="/login"
                       className="header-btn login reg-company-btn login-body"
                     >
-                      <i class="fa-sharp fa-solid fa-right-to-bracket"></i>
+                      <i className="fa-sharp fa-solid fa-right-to-bracket"></i>
                     </Button>
                   </OverlayTrigger>
                 </div>
@@ -123,7 +149,7 @@ export default function Home() {
                 href="#"
                 className="header-btn login reg-company-btn learn-more"
               >
-                Learn More<i class="fa-solid fa-chevron-right ms-1"></i>
+                Learn More<i className="fa-solid fa-chevron-right ms-1"></i>
               </Button>
             </section>
           </div>
@@ -189,7 +215,7 @@ export default function Home() {
               href="#"
               className="header-btn login reg-company-btn learn-more"
             >
-              Learn More<i class="fa-solid fa-chevron-right ms-1"></i>
+              Learn More<i className="fa-solid fa-chevron-right ms-1"></i>
             </Button>
           </div>
           <div className="right">
@@ -219,8 +245,8 @@ export default function Home() {
               </div>
               <p className="categ-name">Memo Notepad</p>
               <p className="categ-desc">
-                Quikly record and save any word, text, information and knowledge
-                immediately.
+                Quickly record and save any word, text, information, and
+                knowledge immediately.
               </p>
             </div>
             <div className="category">
@@ -266,11 +292,11 @@ export default function Home() {
               <h5>Peter Lawson</h5>
               <p className="profession">CEO</p>
               <div className="rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
               </div>
               <p className="testi-desc">
                 "Amazing tool and top class support. Workspace helped me above
@@ -284,11 +310,11 @@ export default function Home() {
               <h5>Amy Amrou</h5>
               <p className="profession">Manager</p>
               <div className="rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
               </div>
 
               <p className="testi-desc">
@@ -303,11 +329,11 @@ export default function Home() {
               <h5>Jay Doe</h5>
               <p className="profession">Manager</p>
               <div className="rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star checked"></span>
+                <span className="fa fa-star"></span>
               </div>
               <p className="testi-desc">
                 "The Workspace really got me started on actually building
