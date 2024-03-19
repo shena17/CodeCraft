@@ -1,7 +1,18 @@
-import React from 'react'
+import React, { useEffect} from 'react'
+
+
+
+
+
 
 export default function LiveEditor() {
+
+ 
+
   return (
-    <textarea id="realtimeEditor">realtimeEditor</textarea>
+    <div className='realtimeMargin'>
+         <textarea id="realtimeEditor">realtimeEditor</textarea>
+    </div>
+   
   )
 }
