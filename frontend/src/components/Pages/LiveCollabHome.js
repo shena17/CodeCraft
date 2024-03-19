@@ -6,7 +6,7 @@ export default function LiveCollabHome() {
 
       <div className='formWrapper'>
 
-        <img src="../images/logo.png" alt="codecraftlogo"/>
+        <img src="../../images/logo.png" alt="codecraftlogo"/>
 
       </div>
 
