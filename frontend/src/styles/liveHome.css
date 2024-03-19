@@ -32,7 +32,7 @@
       rgb(216, 204, 221) 40%,
       rgba(255, 255, 255, 0) 81%
     ), url('../images/LiveHome.jpg');
-    background-blend-mode: overlay;
+    background-blend-mode: normal;
     background-size: cover;
 }
 
