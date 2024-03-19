@@ -66,6 +66,22 @@
     background: gray;
 }
 
-.realtimeMargin{
+.editorCenter {
     margin-top: 100px;
 }
+
+.CodeMirror {
+    min-height: calc(100vh - 20px);
+    font-size: 20px;
+    line-height: 1.6;
+    padding-top: 20px;
+}
+
+
+
+
+
+
+
+
+
