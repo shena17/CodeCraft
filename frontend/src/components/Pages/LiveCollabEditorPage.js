@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import logo from "../../images/logo.png";
-import '../../styles/liveEditor.css'
 import Client from '../LiveCollab/Client';
+import "../../styles/liveEditor.css"
 
 export default function LiveCollabEditorPage() {
 
@@ -27,17 +27,21 @@ export default function LiveCollabEditorPage() {
           <h3>Connected</h3>
           <div className="clientsList">
             {
-              clients.map((client) => {
+              clients.map((client) => (
                 <Client 
                       key={client.socketId} 
                       username={client.username}
                 />
-              })      
+              ))      
             }
           </div>
 
           </div>
         </div>
+
+        <button>Copy ROOM ID</button>
+        <button>Leave </button>
+
       </div>
 
       <div className='liveeditorWrap'>
