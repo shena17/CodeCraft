@@ -1,13 +1,67 @@
-.liveimage-Container {
-    width: 200px;
-    height: 200x;
-    overflow: hidden;
-    display: flex;
+.livemainWrap {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    height: 100vh;
+    background: rgba(254, 254, 254, 0.766);
+    background: linear-gradient(
+      180deg,
+      rgb(216, 204, 221) 40%,
+      rgba(255, 255, 255, 0) 81%
+    )
 }
 
-.livelogoImage {
+.aside{
+    background: #1c1e29;
+    padding: 16px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.asideInner {
+    flex: 1;
+}
+
+.clientList {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.client {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-weight: bold;
+
+}
+
+.username {
+    margin-top: 10px;
+}
+
+.liveLogo{
+    border-bottom: 1px solid #E098F7;
+    padding-bottom: 10px;
+}
+
+.leaveBtn {
+    background: #6A4CFF;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    margin-bottom: 10px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.leaveBtn:hover {
+    background: #907BF9;
+}
+
+.copyBtn {
+    background: white;
+}
+
+.copyBtn:hover {
+    background: gray;
 }

@@ -88,7 +88,6 @@ export default function LiveCollabHome() {
 
       </div>
 
-
     </div>
   )
 }
