@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import logo from "../../images/logo.png";
-import "../../styles/liveHome.css"
-import { colors } from '@mui/material';
+import "../../styles/liveHome.css" 
 import {v4 as uuidV4} from 'uuid';  
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
