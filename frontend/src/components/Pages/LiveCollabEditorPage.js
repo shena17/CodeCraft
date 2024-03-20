@@ -31,10 +31,10 @@ export default function LiveCollabEditorPage() {
               ))      
             }
           </div>
-
           </div>
         </div>
 
+        <button className='btn joinchatBtn'>Join Chat</button>
         <button className='btn copyBtn'>Copy ROOM ID</button>
         <button className='btn leaveBtn'>Leave</button>
 
