@@ -21,6 +21,7 @@ export default function LiveCollabEditorPage() {
 
       //});
     }
+    init();
   },[])
 
   const [clients, setClients] = useState([
