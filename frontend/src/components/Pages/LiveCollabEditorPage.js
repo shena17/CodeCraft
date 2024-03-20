@@ -3,6 +3,7 @@ import logo from "../../images/logo.png";
 import Client from '../LiveCollab/Client';
 import LiveEditor from '../LiveCollab/LiveEditor';
 import "../../styles/liveEditor.css"
+import "../../styles/liveHome.css"
 
 export default function LiveCollabEditorPage() {
 
