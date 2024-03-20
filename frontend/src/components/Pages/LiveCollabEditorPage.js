@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
-import logo from "../../images/logo.png";
+import React, { useState, useRef, useEffect } from 'react';
 import Client from '../LiveCollab/Client';
 import LiveEditor from '../LiveCollab/LiveEditor';
 import "../../styles/liveEditor.css"
 import "../../styles/liveHome.css"
+import { initSocket } from '../../socket';
+import ACTIONS from '../../Actions';
+import {useLocation} from 'react-router-dom';
 
 export default function LiveCollabEditorPage() {
+
+  const socketRef = useRef(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const init = async () => {
+      socketRef.current = await initSocket();
+     // socketRef.current.emit(ACTIONS.JOIN, {
+       // roomId,
+        //username: location.state?.username,
+
+      //});
+    }
+  },[])
 
   const [clients, setClients] = useState([
     {socketId: 1, username: 'Thanuka'},

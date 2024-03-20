@@ -66,8 +66,8 @@ export default function LiveEditor() {
         </div>
 
         <div className='successBtn'>
-                        <button type="button" class="btn btn-outline-success"><i class="bi bi-play">Run the Code</i></button>
-                    </div>     
+                <button type="button" class="btn btn-outline-success"><i class="bi bi-play">Run the Code</i></button>
+        </div>     
     </div>
          
    
