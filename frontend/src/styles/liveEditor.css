@@ -1,7 +1,7 @@
 .livemainWrap {
     display: grid;
     grid-template-columns: 230px 1fr;
-    height: 100vh;
+    height: 120vh;
     background: rgba(254, 254, 254, 0.766);
     background: linear-gradient(
       180deg,
@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 100px;
+    height: 778px;
 }
 
 .asideInner {
@@ -67,14 +68,15 @@
 }
 
 .editorCenter {
-    margin-top: 100px;
+    margin-top: 136px;
 }
 
 .CodeMirror {
-    min-height: calc(100vh - 20px);
+    min-height: calc(101.5vh);
     font-size: 20px;
     line-height: 1.6;
     padding-top: 20px;
+    width: 800px;
 }
 
 .joinchatBtn {
@@ -88,6 +90,36 @@
 .joinchatBtn:hover{
     background: #66BAFB;
 }
+
+.custom-textarea{
+    position: absolute;
+    top:200px;
+    left: 1070px;
+    width: 25%;
+    height: 25%;
+}
+
+.chooseoption{
+    position: absolute;
+    top:98px;
+    left: 230px;
+    width: 150%;
+
+}
+
+.successBtn{
+    position: absolute;
+    top:88px;
+    left: 912px;
+    background-color: lightgreen;
+    color: black;
+    font-weight: bold;
+    border-radius: 10px;
+    
+}
+
+
+
 
 
 
