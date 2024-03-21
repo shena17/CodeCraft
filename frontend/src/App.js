@@ -20,6 +20,8 @@ import AdminHome from "./components/Admin/Home";
 import LiveCollabHome from "./components/Pages/LiveCollabHome";
 import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
 import { Toaster } from "react-hot-toast";
+import Tutorials from "./components/Pages/Tutorials";
+import ViewTutorial from "./components/Pages/ViewTutorial";
 
 export default function App() {
   return (
@@ -61,8 +63,11 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
-        <Route path="/LiveHome" element={<LiveCollabHome/>} />
-        <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage/>} />
+        <Route path="/LiveHome" element={<LiveCollabHome />} />
+        <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage />} />
+        <Route path="/tutorials" element={<Tutorials />} />
+        <Route path="/viewTutorial" element={<ViewTutorial />} />
+
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<AdminHome />} />
