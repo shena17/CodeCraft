@@ -17,7 +17,7 @@ export default function ViewTutorial() {
       <div className="main-top">
         <div className="tutContainer">
           <div className="home-main container pageMain">
-            <div className="tutTopBar container mt-4">
+            <div className="tutTopBar container mt-5">
               <Button
                 variant="outline-light"
                 onClick={() => window.history.back()}
@@ -27,7 +27,7 @@ export default function ViewTutorial() {
                 Back
               </Button>
             </div>
-            <img src={html} alt="Tutorial" className="viewTutLogo mt-4" />
+            <img src={html} alt="Tutorial" className="viewTutLogo mt-5" />
             <div className="topic topic-main pageTopic mb-0 mt-3">
               HTML Course for Beginners
             </div>
