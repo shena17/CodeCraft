@@ -9,5 +9,15 @@ export const initSocket = async () => {
         transports: ['websocket'],
     }
 
-    return io(process.env.REACT_APP_API_URL, options);
+    const socket = io("http://localhost:8071/", options);
+
+    socket.on('connect', () => {
+        console.log('Socket connected successfully');
+    });
+
+    socket.on('connect_error', (error) => {
+        console.error('Socket connection error:', error);
+    });
+
+    return socket;
 }

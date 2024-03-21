@@ -1,7 +1,7 @@
 .livemainWrap {
     display: grid;
     grid-template-columns: 230px 1fr;
-    height: auto;
+    height: 778px;
     background: rgba(254, 254, 254, 0.766);
     background: linear-gradient(
       180deg,
@@ -16,7 +16,7 @@
     color: #fff;
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
+    margin-top: 10vh;
     height: 778px;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .editorCenter {
-    margin-top: 100px;
+    margin-top: 10vh;
 }
 
 .CodeMirror {
