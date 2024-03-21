@@ -102,14 +102,14 @@ export default function ViewTutorial() {
                   <div className="tutDocBtns mt-3">
                     <Button
                       variant="outline-light"
-                      onClick={() => window.history.back()}
+                      //   onClick={() => window.history.back()}
                       className="header-btn register viewTutBtn me-2 mx-2"
                     >
                       Download PDF
                     </Button>
                     <Button
                       variant="outline-light"
-                      onClick={() => window.history.back()}
+                      //   onClick={() => window.history.back()}
                       className="header-btn register viewTutBtn me-2 mx-2"
                     >
                       View PDF
