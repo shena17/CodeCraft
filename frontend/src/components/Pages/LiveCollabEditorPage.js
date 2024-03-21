@@ -5,8 +5,7 @@ import "../../styles/liveEditor.css"
 import "../../styles/liveHome.css"
 import { initSocket } from '../../socket';
 import ACTIONS from '../../Actions';
-import {useLocation, useNavigate, Navigate} from 'react-router-dom';
-import roomId from "../Pages/LiveCollabHome";
+import {useLocation, useNavigate, Navigate, useParams} from 'react-router-dom';
 import toast from "react-hot-toast"
 
 
@@ -14,6 +13,7 @@ export default function LiveCollabEditorPage() {
 
   const socketRef = useRef(null);
   const location = useLocation();
+  const {roomId} = useParams();
   const reactNavigator = useNavigate();
 
   useEffect(() => {
@@ -24,14 +24,14 @@ export default function LiveCollabEditorPage() {
         //username: location.state?.username,
 
       //});
+
+   
     }
     init();
   },[])
 
   const [clients, setClients] = useState([
     {socketId: 1, username: 'Thanuka'},
-    {socketId: 2, username: 'Sithmi'},
-    {socketId: 3, username: 'Minik'},
   ]);
 
   async function copyRoomId() {

@@ -1,7 +1,7 @@
 .livemainWrap {
     display: grid;
     grid-template-columns: 230px 1fr;
-    height: 120vh;
+    height: auto;
     background: rgba(254, 254, 254, 0.766);
     background: linear-gradient(
       180deg,
