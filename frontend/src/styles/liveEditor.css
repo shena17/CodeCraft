@@ -68,15 +68,15 @@
 }
 
 .editorCenter {
-    margin-top: 136px;
+    margin-top: 100px;
 }
 
 .CodeMirror {
-    min-height: calc(101.5vh);
+    min-height: calc(106.5vh);
     font-size: 20px;
     line-height: 1.6;
     padding-top: 20px;
-    width: 800px;
+    width: auto;
 }
 
 .joinchatBtn {
@@ -91,32 +91,7 @@
     background: #66BAFB;
 }
 
-.custom-textarea{
-    position: absolute;
-    top:200px;
-    left: 1070px;
-    width: 25%;
-    height: 25%;
-}
 
-.chooseoption{
-    position: absolute;
-    top:98px;
-    left: 230px;
-    width: 150%;
-
-}
-
-.successBtn{
-    position: absolute;
-    top:88px;
-    left: 912px;
-    background-color: lightgreen;
-    color: black;
-    font-weight: bold;
-    border-radius: 10px;
-    
-}
 
 
 
