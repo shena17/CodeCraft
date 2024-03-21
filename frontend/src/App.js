@@ -19,6 +19,7 @@ import Attendance from "./components/Admin/Attendance";
 import AdminHome from "./components/Admin/Home";
 import LiveCollabHome from "./components/Pages/LiveCollabHome";
 import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
+import { Toaster } from "react-hot-toast";
 import Tutorials from "./components/Pages/Tutorials";
 import ViewTutorial from "./components/Pages/ViewTutorial";
 
@@ -44,6 +45,18 @@ function AppContent() {
       isUnderAdminPath("/") ? null : (
         <Header />
       )}
+
+      <div>
+        <Toaster
+            position="top-right"
+            toastOptions={{
+              success: {
+                theme: {
+                  primary: '#4aed88',
+                }
+              }
+            }}></Toaster>
+      </div>
 
       <Routes>
         <Route path="/" element={<Home />} />
