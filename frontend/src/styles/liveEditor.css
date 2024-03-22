@@ -21,7 +21,7 @@
 }
 
 .asideInner {
-    flex: 1;
+  flex: 1;
 }
 
 .clientsList {
@@ -32,75 +32,61 @@
 }
 
 .client {
-    display: flex;
-    align-items:center;
-    flex-direction: column;
-    font-weight: bold;
-
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-weight: bold;
 }
 
 .username {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
-.liveLogo{
-    border-bottom: 1px solid #E098F7;
-    padding-bottom: 10px;
+.liveLogo {
+  border-bottom: 1px solid #e098f7;
+  padding-bottom: 10px;
 }
 
 .leaveBtn {
-    background: #6A4CFF;
-    width: 100%;
-    margin: auto;
-    margin-top: 20px;
+  background: #6a4cff;
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
 }
 
 .leaveBtn:hover {
-    background: #907BF9;
+  background: #907bf9;
 }
 
 .copyBtn {
-    background: white;
+  background: white;
 }
 
 .copyBtn:hover {
-    background: gray;
+  background: gray;
 }
 
 .editorCenter {
     margin-top: 10vh;
+
 }
 
 .CodeMirror {
-    min-height: calc(106.5vh);
-    font-size: 20px;
-    line-height: 1.6;
-    padding-top: 20px;
-    width: auto;
+  min-height: calc(106.5vh);
+  font-size: 20px;
+  line-height: 1.6;
+  padding-top: 20px;
+  width: auto;
 }
 
 .joinchatBtn {
-    background: #0091FF;
-    width: 100%;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  background: #0091ff;
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.joinchatBtn:hover{
-    background: #66BAFB;
+.joinchatBtn:hover {
+  background: #66bafb;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
