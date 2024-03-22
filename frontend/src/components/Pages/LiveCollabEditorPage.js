@@ -5,30 +5,68 @@ import "../../styles/liveEditor.css"
 import "../../styles/liveHome.css"
 import { initSocket } from '../../socket';
 import ACTIONS from '../../Actions';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate, Navigate, useParams} from 'react-router-dom';
+import toast from "react-hot-toast"
+
 
 export default function LiveCollabEditorPage() {
 
   const socketRef = useRef(null);
   const location = useLocation();
+  const {roomId} = useParams();
+  const reactNavigator = useNavigate();
+  const [clients, setClients] = useState([
+
+  ]);
 
   useEffect(() => {
     const init = async () => {
       socketRef.current = await initSocket();
-     // socketRef.current.emit(ACTIONS.JOIN, {
-       // roomId,
-        //username: location.state?.username,
+      socketRef.current.on('connect_error', (err) => handleErrors(err));
+      socketRef.current.on('connect_failed', (err) => handleErrors(err));
 
-      //});
+
+      function handleErrors(e) {
+        console.log('socket error', e);
+        toast.error('Socket connection failed, try again later');
+        reactNavigator('/LiveHome');
+      }
+
+      socketRef.current.emit(ACTIONS.JOIN, {
+          roomId,
+          username: location.state?.username,
+
+      });
+
+      //Listening for joined event
+      socketRef.current.on(ACTIONS.JOINED, ({clients, username, socketId}) => {
+        if(username !== location.state?.username) {
+          toast.success(`${username} joined the room`);
+          console.log(`${username} joined`);
+        }
+        setClients(clients);
+      }) 
     }
     init();
   },[])
 
-  const [clients, setClients] = useState([
-    {socketId: 1, username: 'Thanuka'},
-    {socketId: 2, username: 'Sithmi'},
-    {socketId: 3, username: 'Minik'},
-  ]);
+  async function copyRoomId() {
+    try{
+      await navigator.clipboard.writeText(roomId);
+      toast.success('Room ID has been copied to your clipboard');
+        } catch (err) {
+            toast.error('Could not copy the Room ID');
+            console.error(err);
+    }
+  }
+
+  function leaveRoom() {
+    reactNavigator('/LiveHome');
+}
+
+if(!location.state){
+  return <Navigate to="/LiveHome" />
+}
     
 
   return (
@@ -53,8 +91,8 @@ export default function LiveCollabEditorPage() {
         </div>
 
         <button className='btn joinchatBtn'>Join Chat</button>
-        <button className='btn copyBtn'>Copy ROOM ID</button>
-        <button className='btn leaveBtn'>Leave</button>
+        <button className='btn copyBtn' onClick={copyRoomId}>Copy ROOM ID</button>
+        <button className='btn leaveBtn' onClick={leaveRoom}>Leave</button>
 
       </div>
 
