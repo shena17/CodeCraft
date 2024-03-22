@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const {Server} = require('socket.io');
 const http = require("http");
+const ACTIONS = require("../frontend/src/Actions");
 
 //Setting up the server
 dotenv.config();
@@ -35,9 +36,34 @@ connection.once("open", () => {
 //Create Socket.IO server
 const io = new Server(server);
 
+const userSocketMap = {};
+
+function getAllConnectedClients(roomId) {
+  //Map
+  return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map((socketId) => {
+    return {
+      socketId,
+      username: userSocketMap[socketId],
+    }
+  });
+}
+
 //Socket.IO connection event
 io.on("connection", (socket) => {
   console.log("Socket Connected", socket.id);
+
+  socket.on(ACTIONS.JOIN, ({roomId, username}) => {
+    userSocketMap[socket.id] = username;
+    socket.join(roomId);
+    const clients = getAllConnectedClients(roomId);
+    clients.forEach(({socketId}) => {
+      io.to(socketId).emit(ACTIONS.JOINED, {
+        clients,
+        username,
+        socketId: socket.id
+      })
+    })
+  })
 })
 
 //Start the HTTP server

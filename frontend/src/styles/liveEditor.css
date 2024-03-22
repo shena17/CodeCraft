@@ -1,34 +1,34 @@
 .livemainWrap {
-  display: grid;
-  grid-template-columns: 230px 1fr;
-  height: 120vh;
-  background: rgba(254, 254, 254, 0.766);
-  background: linear-gradient(
-    180deg,
-    rgb(216, 204, 221) 40%,
-    rgba(255, 255, 255, 0) 81%
-  );
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    height: 778px;
+    background: rgba(254, 254, 254, 0.766);
+    background: linear-gradient(
+      180deg,
+      rgb(216, 204, 221) 40%,
+      rgba(255, 255, 255, 0) 81%
+    )
 }
 
-.aside {
-  background: #1c1e29;
-  padding: 16px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  margin-top: 100px;
-  height: 778px;
+.aside{
+    background: #1c1e29;
+    padding: 16px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    height: 778px;
 }
 
 .asideInner {
   flex: 1;
 }
 
-.clientList {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 20px;
+.clientsList {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .client {
@@ -67,7 +67,8 @@
 }
 
 .editorCenter {
-  margin-top: 100px;
+    margin-top: 10vh;
+
 }
 
 .CodeMirror {
