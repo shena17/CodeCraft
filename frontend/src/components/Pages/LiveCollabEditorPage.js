@@ -12,12 +12,11 @@ import toast from "react-hot-toast"
 export default function LiveCollabEditorPage() {
 
   const socketRef = useRef(null);
+  const codeRef = useRef(null);
   const location = useLocation();
   const {roomId} = useParams();
   const reactNavigator = useNavigate();
-  const [clients, setClients] = useState([
-
-  ]);
+  const [clients, setClients] = useState([]);
 
   useEffect(() => {
     const init = async () => {
@@ -45,6 +44,10 @@ export default function LiveCollabEditorPage() {
           console.log(`${username} joined`);
         }
         setClients(clients);
+        socketRef.current.emit(ACTIONS.SYNC_CODE, {
+          code: codeRef.current,
+          socketId,
+        }); 
       }) 
 
       //Listening for disconnected
@@ -57,7 +60,8 @@ export default function LiveCollabEditorPage() {
       })
     }
     init();
-  },[])
+   
+  },[roomId, location.state?.username, reactNavigator])
 
   async function copyRoomId() {
     try{
@@ -106,7 +110,10 @@ if(!location.state){
       </div>
 
       <div className='liveeditorWrap'>
-          <LiveEditor />
+          <LiveEditor 
+          socketRef={socketRef}
+          roomId={roomId}
+          onCodeChange={(code) => {codeRef.current = code;}}/>
         </div>
 
     </div>
