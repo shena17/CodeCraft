@@ -65,7 +65,7 @@
   font-weight: bold;
 }
 
-/* .btn {
+.liveCollabHomebtn {
   border: none;
   padding: 10px;
   border-radius: 5px;
@@ -73,7 +73,7 @@
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-} */
+}
 
 .joinBtn {
   background: #6a4cff;

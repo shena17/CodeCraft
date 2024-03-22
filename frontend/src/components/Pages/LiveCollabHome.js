@@ -74,7 +74,7 @@ export default function LiveCollabHome() {
                   onKeyUp={handleInputEnter}
               />
 
-         <button className='btn joinBtn' onClick={joinRoom}>Join</button>
+         <button className='liveCollabHomebtn joinBtn' onClick={joinRoom}>Join</button>
 
          <span className='createInfo'>
               If you don't have an invite then create &nbsp;

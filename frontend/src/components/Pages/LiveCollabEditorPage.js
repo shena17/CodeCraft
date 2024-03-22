@@ -99,9 +99,9 @@ if(!location.state){
           </div>
         </div>
 
-        <button className='btn joinchatBtn'>Join Chat</button>
-        <button className='btn copyBtn' onClick={copyRoomId}>Copy ROOM ID</button>
-        <button className='btn leaveBtn' onClick={leaveRoom}>Leave</button>
+        <button className='liveCollabHomebtn joinchatBtn'>Join Chat</button>
+        <button className='liveCollabHomebtn copyBtn' onClick={copyRoomId}>Copy ROOM ID</button>
+        <button className='liveCollabHomebtn leaveBtn' onClick={leaveRoom}>Leave</button>
 
       </div>
 
