@@ -21,6 +21,7 @@ import python from "../../images/python.svg";
 import html5 from "../../images/html5.png";
 import css from "../../images/css.png";
 import javascript from "../../images/javascript.png";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -72,7 +73,17 @@ export default function Tags() {
       <div className="main-top ">
         <div className="tutContainer ">
           <div className="home-main container pageMain">
-            <div className="topic topic-main pageTopic"># Browse Tags</div>
+            <div className="tutTopBar container mt-5">
+              <Button
+                variant="outline-light"
+                onClick={() => window.history.back()}
+                className="header-btn register viewTutBtn"
+              >
+                <ArrowBackIosNewIcon fontSize="small" className="me-1" />
+                Back
+              </Button>
+            </div>
+            <div className="topic topic-main pageTopic">#Browse Tags</div>
             <div>
               <Search>
                 <SearchIconWrapper>

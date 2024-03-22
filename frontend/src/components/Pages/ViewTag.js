@@ -9,6 +9,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import pdf from "../../images/pdf.png";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 export default function ViewTag() {
   return (
@@ -16,6 +17,16 @@ export default function ViewTag() {
       <div className="main-top ">
         <div className="tutContainer ">
           <div className="home-main container pageMain">
+            <div className="tutTopBar container mt-5">
+              <Button
+                variant="outline-light"
+                onClick={() => window.history.back()}
+                className="header-btn register viewTutBtn"
+              >
+                <ArrowBackIosNewIcon fontSize="small" className="me-1" />
+                Back
+              </Button>
+            </div>
             <div className="topic topic-main pageTopic">#Web Developmenet</div>
           </div>
         </div>

@@ -7,7 +7,6 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import pdf from "../../images/pdf.png";
 

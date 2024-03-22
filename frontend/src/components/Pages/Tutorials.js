@@ -8,6 +8,7 @@ import { Button } from "react-bootstrap";
 import html from "../../images/html.png";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,6 +60,16 @@ export default function Tutorials() {
       <div className="main-top">
         <div className="tutContainer">
           <div className="home-main container pageMain">
+            <div className="tutTopBar container mt-5">
+              <Button
+                variant="outline-light"
+                onClick={() => window.history.back()}
+                className="header-btn register viewTutBtn"
+              >
+                <ArrowBackIosNewIcon fontSize="small" className="me-1" />
+                Back
+              </Button>
+            </div>
             <div className="topic topic-main pageTopic">
               Start Learning with Tutorials
             </div>
