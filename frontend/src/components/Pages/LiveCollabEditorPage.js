@@ -77,6 +77,10 @@ export default function LiveCollabEditorPage() {
     reactNavigator('/LiveHome');
 }
 
+function joinchatRoom(){
+  reactNavigator('/LiveChat');
+}
+
 if(!location.state){
   return <Navigate to="/LiveHome" />
 }
@@ -103,7 +107,7 @@ if(!location.state){
           </div>
         </div>
 
-        <button className='liveCollabHomebtn joinchatBtn'>Join Chat</button>
+        <button className='liveCollabHomebtn joinchatBtn' onClick={joinchatRoom}>Join Chat</button>
         <button className='liveCollabHomebtn copyBtn' onClick={copyRoomId}>Copy ROOM ID</button>
         <button className='liveCollabHomebtn leaveBtn' onClick={leaveRoom}>Leave</button>
 
