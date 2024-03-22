@@ -179,7 +179,7 @@ export default function Tags() {
 
       <div className="topic topic-intro pageIntro">OTHER TAGS</div>
       <div className="tagDiv container mt-4">
-        {Array.from(Array(6)).map((_, index) => (
+        {Array.from(Array(21)).map((_, index) => (
           <div className="tagList">
             <Chip
               label="Web Development"
