@@ -6,28 +6,37 @@ export default function LiveChat() {
   return (
 
     <div className='live_chat_main_wrap'>
-        <div className='chat_section'>
 
-<div className='chat_brand'>
-    <img src={logo} alt="" style={{ width: '100px', height: 'auto' }} />
-</div>
+        <section className='chat_body'>
+
+            <div className='chat_section'>
+
+                <div className='chat_brand'>
+                    <img src={logo} alt="" style={{ width: '100px', height: 'auto' }} />
+                </div>
 
 
-<div className='chat_message_area'>
-    <div className='chat_incoming_message'>
-        <h4>Thanuka</h4>
-        <p>Hello</p>
-    </div>
-</div>
+                <div className='chat_message_area'>
+                    <div className='chat_incoming_message'>
+                        <h4>Thanuka</h4>
+                        <p>Hello</p>
+                    </div>
+                </div>
 
-<div className='chat_message_area'>
-    <div className='chat_outgoing_message'>
-        <h4>Thanuka</h4>
-        <p>Hello</p>
-    </div>
-</div>
+                <div className='chat_message_area'>
+                    <div className='chat_outgoing_message'>
+                        <h4>Thanuka</h4>
+                        <p>Hello</p>
+                    </div>
+                </div>
 
-</div>
+                <div>
+                    <textarea id="chat_textarea"cols={30} rows={1} placeholder='Write a message' ></textarea>
+                </div>
+
+            </div>
+        </section>
+
     </div>
   )
 }
