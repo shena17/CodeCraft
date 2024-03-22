@@ -22,6 +22,8 @@ import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
 import { Toaster } from "react-hot-toast";
 import Tutorials from "./components/Pages/Tutorials";
 import ViewTutorial from "./components/Pages/ViewTutorial";
+import Tags from "./components/Pages/Tags";
+import ViewTag from "./components/Pages/ViewTag";
 
 export default function App() {
   return (
@@ -48,14 +50,15 @@ function AppContent() {
 
       <div>
         <Toaster
-            position="top-right"
-            toastOptions={{
-              success: {
-                theme: {
-                  primary: '#4aed88',
-                }
-              }
-            }}></Toaster>
+          position="top-right"
+          toastOptions={{
+            success: {
+              theme: {
+                primary: "#4aed88",
+              },
+            },
+          }}
+        ></Toaster>
       </div>
 
       <Routes>
@@ -67,6 +70,8 @@ function AppContent() {
         <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage />} />
         <Route path="/tutorials" element={<Tutorials />} />
         <Route path="/viewTutorial" element={<ViewTutorial />} />
+        <Route path="/tags" element={<Tags />} />
+        <Route path="/viewTag" element={<ViewTag />} />
 
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
