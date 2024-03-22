@@ -78,7 +78,7 @@ export default function LiveCollabEditorPage() {
 }
 
 function joinchatRoom(){
-  reactNavigator('/LiveChat');
+  reactNavigator('/LiveChat', {username: location.state?.username});
 }
 
 if(!location.state){
