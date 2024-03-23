@@ -19,10 +19,20 @@ export default function LiveChat() {
                 </div>
 
 
-                <div className='chat_message_area'></div>
+                <div className='chat_message_area'>
+                    <div className='chat_incoming_message'>
+                        <h4>Thanuka</h4>
+                        <p>Hello! How are you?</p>
+                    </div>
+                </div>
 
+                <div className='chat_message_area'>
+                    <div className='chat_outgoing_message'>
+                        <h4>Minik</h4>
+                        <p>I'm fine. Thank you</p>
+                    </div>
+                </div>
                
-
                 <div>
                     <textarea id="chat_textarea"cols={30} rows={1} placeholder='Write a message' ></textarea>
                 </div>
