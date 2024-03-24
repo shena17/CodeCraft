@@ -17,6 +17,15 @@ import Members from "./components/Admin/Members";
 import Fees from "./components/Admin/Fees";
 import Attendance from "./components/Admin/Attendance";
 import AdminHome from "./components/Admin/Home";
+import LiveCollabHome from "./components/Pages/LiveCollabHome";
+import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
+import { Toaster } from "react-hot-toast";
+import Tutorials from "./components/Pages/Tutorials";
+import ViewTutorial from "./components/Pages/ViewTutorial";
+import LiveChat from "./components/Pages/LiveChat";
+import Tags from "./components/Pages/Tags";
+import ViewTag from "./components/Pages/ViewTag";
+import CommunityForum from "./components/Pages/CommunityForum";
 
 export default function App() {
   return (
@@ -41,11 +50,34 @@ function AppContent() {
         <Header />
       )}
 
+      <div>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            success: {
+              theme: {
+                primary: "#4aed88",
+              },
+            },
+          }}
+        ></Toaster>
+      </div>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
+        <Route path="/LiveHome" element={<LiveCollabHome />} />
+        <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage />} />
+        <Route path="/LiveChat" element={<LiveChat />} /> 
+        <Route path="/tutorials" element={<Tutorials />} />
+        <Route path="/viewTutorial" element={<ViewTutorial />} />
+        <Route path="/tags" element={<Tags />} />
+        <Route path="/viewTag" element={<ViewTag />} />
+        <Route path="/community" element={<CommunityForum />} />
+
+        {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<AdminHome />} />
           <Route path="members" element={<Members />} />
@@ -53,6 +85,7 @@ function AppContent() {
           <Route path="attendance" element={<Attendance />} />
           {/* Other nested routes */}
         </Route>
+        {/* Admin Panel */}
       </Routes>
 
       {/* Footer */}
