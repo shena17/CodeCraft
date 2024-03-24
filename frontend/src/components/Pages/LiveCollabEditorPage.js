@@ -12,12 +12,11 @@ import toast from "react-hot-toast"
 export default function LiveCollabEditorPage() {
 
   const socketRef = useRef(null);
+  const codeRef = useRef(null);
   const location = useLocation();
   const {roomId} = useParams();
   const reactNavigator = useNavigate();
-  const [clients, setClients] = useState([
-
-  ]);
+  const [clients, setClients] = useState([]);
 
   useEffect(() => {
     const init = async () => {
@@ -45,10 +44,24 @@ export default function LiveCollabEditorPage() {
           console.log(`${username} joined`);
         }
         setClients(clients);
+        socketRef.current.emit(ACTIONS.SYNC_CODE, {
+          code: codeRef.current,
+          socketId,
+        }); 
       }) 
+
+      //Listening for disconnected
+      socketRef.current.on(ACTIONS.DISCONNECTED, ({socketId, username}) => {
+        toast.success(`${username} left the room`);
+        setClients((prev) => {
+          return prev.filter(client => client.socketId !== socketId)
+        })
+
+      })
     }
     init();
-  },[])
+   
+  },[roomId, location.state?.username, reactNavigator])
 
   async function copyRoomId() {
     try{
@@ -62,6 +75,10 @@ export default function LiveCollabEditorPage() {
 
   function leaveRoom() {
     reactNavigator('/LiveHome');
+}
+
+function joinchatRoom(){
+  reactNavigator('/LiveChat', {username: location.state?.username});
 }
 
 if(!location.state){
@@ -90,14 +107,17 @@ if(!location.state){
           </div>
         </div>
 
-        <button className='btn joinchatBtn'>Join Chat</button>
-        <button className='btn copyBtn' onClick={copyRoomId}>Copy ROOM ID</button>
-        <button className='btn leaveBtn' onClick={leaveRoom}>Leave</button>
+        <button className='liveCollabHomebtn joinchatBtn' onClick={joinchatRoom}>Join Chat</button>
+        <button className='liveCollabHomebtn copyBtn' onClick={copyRoomId}>Copy ROOM ID</button>
+        <button className='liveCollabHomebtn leaveBtn' onClick={leaveRoom}>Leave</button>
 
       </div>
 
       <div className='liveeditorWrap'>
-          <LiveEditor />
+          <LiveEditor 
+          socketRef={socketRef}
+          roomId={roomId}
+          onCodeChange={(code) => {codeRef.current = code;}}/>
         </div>
 
     </div>
