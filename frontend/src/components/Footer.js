@@ -80,7 +80,7 @@ export default function Footer() {
             <i class="fa-brands fa-instagram"></i>
           </a>
 
-          <a href="#">
+          <a href="/community">
             <i class="fa-brands fa-facebook"></i>
           </a>
 

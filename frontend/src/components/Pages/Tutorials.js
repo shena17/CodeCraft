@@ -8,6 +8,7 @@ import { Button } from "react-bootstrap";
 import html from "../../images/html.png";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,6 +60,16 @@ export default function Tutorials() {
       <div className="main-top">
         <div className="tutContainer">
           <div className="home-main container pageMain">
+            <div className="tutTopBar container mt-5">
+              <Button
+                variant="outline-light"
+                onClick={() => window.history.back()}
+                className="header-btn register viewTutBtn"
+              >
+                <ArrowBackIosNewIcon fontSize="small" className="me-1" />
+                Back
+              </Button>
+            </div>
             <div className="topic topic-main pageTopic">
               Start Learning with Tutorials
             </div>
@@ -111,151 +122,114 @@ export default function Tutorials() {
         SUGGESTED BASED ON YOUR LEARNING
       </div>
       <div className="cardList">
-        <div className="pageCard anim">
-          <img src={html} alt="Tutorial" className="tutLogo" />
-          <div className="rightCard">
-            <p className="cardTopic">HTML Course for Beginners</p>
-            <p className="cardDesc">
-              HTML Fundamentals: A Beginner's Guide to Web Development.
-              Throughout this course, we'll start from the very basics, assuming
-              no prior knowledge of HTML or coding.
-            </p>
-            <Stack direction="row" spacing={2}>
-              <Chip
-                label="HTML"
-                component="a"
-                href="#basic-chip"
-                variant="outlined"
-                clickable
-                size="small"
-                sx={{
-                  padding: "5px",
-                  color: "var(--pink)",
-                  borderColor: "var(--pink)",
-                }}
-              />
-              <Chip
-                label="Web Development"
-                component="a"
-                href="#basic-chip"
-                variant="outlined"
-                clickable
-                size="small"
-                sx={{
-                  padding: "5px",
-                  color: "var(--pink)",
-                  borderColor: "var(--pink)",
-                }}
-              />
-              <div className="cardBtnArea">
-                <Button
-                  variant="outline-light"
-                  href="/viewTutorial"
-                  className="header-btn register viewTutBtn"
-                >
-                  View Tutorial
-                </Button>
-              </div>
-            </Stack>
+        {Array.from(Array(2)).map((_, index) => (
+          <div className="pageCard anim">
+            <img src={html} alt="Tutorial" className="tutLogo" />
+            <div className="rightCard">
+              <p className="cardTopic">HTML Course for Beginners</p>
+              <p className="cardDesc">
+                HTML Fundamentals: A Beginner's Guide to Web Development.
+                Throughout this course, we'll start from the very basics,
+                assuming no prior knowledge of HTML or coding.
+              </p>
+              <Stack direction="row" spacing={2}>
+                <Chip
+                  label="HTML"
+                  component="a"
+                  href="#basic-chip"
+                  variant="outlined"
+                  clickable
+                  size="small"
+                  sx={{
+                    padding: "5px",
+                    color: "var(--pink)",
+                    borderColor: "var(--pink)",
+                  }}
+                />
+                <Chip
+                  label="Web Development"
+                  component="a"
+                  href="#basic-chip"
+                  variant="outlined"
+                  clickable
+                  size="small"
+                  sx={{
+                    padding: "5px",
+                    color: "var(--pink)",
+                    borderColor: "var(--pink)",
+                  }}
+                />
+                <div className="cardBtnArea">
+                  <Button
+                    variant="outline-light"
+                    href="/viewTutorial"
+                    className="header-btn register viewTutBtn"
+                  >
+                    View Tutorial
+                  </Button>
+                </div>
+              </Stack>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-      <div className="topic topic-intro pageIntro">MORE TURORIALS</div>
-      <div className="pageCard anim">
-        <img src={html} alt="Tutorial" className="tutLogo" />
-        <div className="rightCard">
-          <p className="cardTopic">HTML Course for Beginners</p>
-          <p className="cardDesc">
-            HTML Fundamentals: A Beginner's Guide to Web Development. Throughout
-            this course, we'll start from the very basics, assuming no prior
-            knowledge of HTML or coding.
-          </p>
-          <Stack direction="row" spacing={2}>
-            <Chip
-              label="HTML"
-              component="a"
-              href="#basic-chip"
-              variant="outlined"
-              clickable
-              size="small"
-              sx={{
-                padding: "5px",
-                color: "var(--pink)",
-                borderColor: "var(--pink)",
-              }}
-            />
-            <Chip
-              label="Web Development"
-              component="a"
-              href="#basic-chip"
-              variant="outlined"
-              clickable
-              size="small"
-              sx={{
-                padding: "5px",
-                color: "var(--pink)",
-                borderColor: "var(--pink)",
-              }}
-            />
-            <div className="cardBtnArea">
-              <Button
-                variant="outline-light"
-                href="/viewTutorial"
-                className="header-btn register viewTutBtn"
-              >
-                View Tutorial
-              </Button>
+      <div
+        className="topic topic-intro pageIntro"
+        style={{ marginTop: "80px" }}
+      >
+        MORE TURORIALS
+      </div>
+      <div className="cardList">
+        {Array.from(Array(6)).map((_, index) => (
+          <div className="pageCard anim">
+            <img src={html} alt="Tutorial" className="tutLogo" />
+            <div className="rightCard">
+              <p className="cardTopic">HTML Course for Beginners</p>
+              <p className="cardDesc">
+                HTML Fundamentals: A Beginner's Guide to Web Development.
+                Throughout this course, we'll start from the very basics,
+                assuming no prior knowledge of HTML or coding.
+              </p>
+              <Stack direction="row" spacing={2}>
+                <Chip
+                  label="HTML"
+                  component="a"
+                  href="#basic-chip"
+                  variant="outlined"
+                  clickable
+                  size="small"
+                  sx={{
+                    padding: "5px",
+                    color: "var(--pink)",
+                    borderColor: "var(--pink)",
+                  }}
+                />
+                <Chip
+                  label="Web Development"
+                  component="a"
+                  href="#basic-chip"
+                  variant="outlined"
+                  clickable
+                  size="small"
+                  sx={{
+                    padding: "5px",
+                    color: "var(--pink)",
+                    borderColor: "var(--pink)",
+                  }}
+                />
+                <div className="cardBtnArea">
+                  <Button
+                    variant="outline-light"
+                    href="/viewTutorial"
+                    className="header-btn register viewTutBtn"
+                  >
+                    View Tutorial
+                  </Button>
+                </div>
+              </Stack>
             </div>
-          </Stack>
-        </div>
-      </div>{" "}
-      <div className="pageCard anim">
-        <img src={html} alt="Tutorial" className="tutLogo" />
-        <div className="rightCard">
-          <p className="cardTopic">HTML Course for Beginners</p>
-          <p className="cardDesc">
-            HTML Fundamentals: A Beginner's Guide to Web Development. Throughout
-            this course, we'll start from the very basics, assuming no prior
-            knowledge of HTML or coding.
-          </p>
-          <Stack direction="row" spacing={2}>
-            <Chip
-              label="HTML"
-              component="a"
-              href="#basic-chip"
-              variant="outlined"
-              clickable
-              size="small"
-              sx={{
-                padding: "5px",
-                color: "var(--pink)",
-                borderColor: "var(--pink)",
-              }}
-            />
-            <Chip
-              label="Web Development"
-              component="a"
-              href="#basic-chip"
-              variant="outlined"
-              clickable
-              size="small"
-              sx={{
-                padding: "5px",
-                color: "var(--pink)",
-                borderColor: "var(--pink)",
-              }}
-            />
-            <div className="cardBtnArea">
-              <Button
-                variant="outline-light"
-                href="/viewTutorial"
-                className="header-btn register viewTutBtn"
-              >
-                View Tutorial
-              </Button>
-            </div>
-          </Stack>
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   );
