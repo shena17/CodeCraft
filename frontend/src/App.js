@@ -23,6 +23,10 @@ import { Toaster } from "react-hot-toast";
 import Tutorials from "./components/Pages/Tutorials";
 import ViewTutorial from "./components/Pages/ViewTutorial";
 import LiveChat from "./components/Pages/LiveChat";
+import Tags from "./components/Pages/Tags";
+import ViewTag from "./components/Pages/ViewTag";
+import CommunityForum from "./components/Pages/CommunityForum";
+import CodeEditor from "./components/Pages/CodeEditor";
 
 export default function App() {
   return (
@@ -49,14 +53,15 @@ function AppContent() {
 
       <div>
         <Toaster
-            position="top-right"
-            toastOptions={{
-              success: {
-                theme: {
-                  primary: '#4aed88',
-                }
-              }
-            }}></Toaster>
+          position="top-right"
+          toastOptions={{
+            success: {
+              theme: {
+                primary: "#4aed88",
+              },
+            },
+          }}
+        ></Toaster>
       </div>
 
       <Routes>
@@ -66,9 +71,13 @@ function AppContent() {
         <Route path="/forgotpwd" element={<ForgotPassword />} />
         <Route path="/LiveHome" element={<LiveCollabHome />} />
         <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage />} />
-        <Route path="/LiveChat" element={<LiveChat />} /> 
+        <Route path="/LiveChat" element={<LiveChat />} />
         <Route path="/tutorials" element={<Tutorials />} />
         <Route path="/viewTutorial" element={<ViewTutorial />} />
+        <Route path="/tags" element={<Tags />} />
+        <Route path="/viewTag" element={<ViewTag />} />
+        <Route path="/community" element={<CommunityForum />} />
+        <Route path="/codeEditor" element={<CodeEditor />} />
 
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
