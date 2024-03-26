@@ -58,7 +58,7 @@ export default function CodeEditor() {
 
     try {
       const { run: result } = await executeCode(language, sourceCode);
-      setOutput(result.output);
+      setOutput(result.output.split("\n"));
     } catch (error) {
       console.log(error);
       setOpen(true);
@@ -142,7 +142,9 @@ export default function CodeEditor() {
                   </LoadingButton>
                 </div>
                 <Box className="codeOutput">
-                  {output ? output : 'Click "Run Code" to see the output here'}
+                  {output
+                    ? output.map((line, i) => <p key={i}>{line}</p>)
+                    : 'Click "Run Code" to see the output here'}
                 </Box>
               </div>
             </div>
