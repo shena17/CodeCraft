@@ -75,8 +75,11 @@ function Header() {
               <Nav.Link href="/" className="nav-links">
                 Home
               </Nav.Link>
-              <Nav.Link href="/LiveHome" className="nav-links">
+              <Nav.Link href="/codeEditor" className="nav-links">
                 Code Editor
+              </Nav.Link>
+              <Nav.Link href="/LiveHome" className="nav-links">
+                Live Editor
               </Nav.Link>
               <Nav.Link href="/admin/home" className="nav-links">
                 Courses
