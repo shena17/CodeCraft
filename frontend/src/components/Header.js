@@ -75,7 +75,7 @@ function Header() {
               <Nav.Link href="/" className="nav-links">
                 Home
               </Nav.Link>
-              <Nav.Link href="/dashboard" className="nav-links">
+              <Nav.Link href="/LiveHome" className="nav-links">
                 Code Editor
               </Nav.Link>
               <Nav.Link href="/admin/home" className="nav-links">
@@ -143,25 +143,13 @@ function Header() {
                   transformOrigin={{ horizontal: "right", vertical: "top" }}
                   anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem onClick={handleClose} className="mb-2">
                     <Avatar /> Profile
                   </MenuItem>
                   <MenuItem onClick={handleClose}>
-                    <Avatar /> My account
+                    <Avatar /> Edit Profile
                   </MenuItem>
                   <Divider />
-                  <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                      <PersonAdd fontSize="small" />
-                    </ListItemIcon>
-                    Add another account
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                      <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Settings
-                  </MenuItem>
                   <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                       <Logout fontSize="small" />

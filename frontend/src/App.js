@@ -16,11 +16,21 @@ import Dashboard from "./components/Admin/Dashboard";
 import Members from "./components/Admin/Members";
 import LiveCollabHome from "./components/Pages/LiveCollabHome";
 import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
+<<<<<<< HEAD
 import Tags from "./components/Admin/Tags";
 import Resource from "./components/Admin/Resource";
 import Tutorial from "./components/Admin/Tutorial";
 import EditTags from "./components/Admin/EditTags";
 import AddTags from "./components/Admin/AddTags";
+=======
+import { Toaster } from "react-hot-toast";
+import Tutorials from "./components/Pages/Tutorials";
+import ViewTutorial from "./components/Pages/ViewTutorial";
+import LiveChat from "./components/Pages/LiveChat";
+import Tags from "./components/Pages/Tags";
+import ViewTag from "./components/Pages/ViewTag";
+import CommunityForum from "./components/Pages/CommunityForum";
+>>>>>>> eeff8411f9415a25f43f96af811257101f21feae
 
 export default function App() {
   return (
@@ -45,16 +55,40 @@ function AppContent() {
         <Header />
       )}
 
+      <div>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            success: {
+              theme: {
+                primary: "#4aed88",
+              },
+            },
+          }}
+        ></Toaster>
+      </div>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
+<<<<<<< HEAD
         <Route path="/LiveHome" element={<LiveCollabHome/>} />
         <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage/>} />
         <Route path="/admin/tags/edit/:id" element={<EditTags/>}/>
         <Route path="/admin/tags/add" element={<AddTags/>}/>
 
+=======
+        <Route path="/LiveHome" element={<LiveCollabHome />} />
+        <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage />} />
+        <Route path="/LiveChat" element={<LiveChat />} /> 
+        <Route path="/tutorials" element={<Tutorials />} />
+        <Route path="/viewTutorial" element={<ViewTutorial />} />
+        <Route path="/tags" element={<Tags />} />
+        <Route path="/viewTag" element={<ViewTag />} />
+        <Route path="/community" element={<CommunityForum />} />
+>>>>>>> eeff8411f9415a25f43f96af811257101f21feae
 
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>

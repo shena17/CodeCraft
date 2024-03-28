@@ -76,11 +76,11 @@ export default function Footer() {
           </a>
         </div>
         <div className="foot-lower-icons">
-          <a href="#">
+          <a href="/tutorials">
             <i class="fa-brands fa-instagram"></i>
           </a>
 
-          <a href="#">
+          <a href="/community">
             <i class="fa-brands fa-facebook"></i>
           </a>
 
