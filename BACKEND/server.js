@@ -12,6 +12,10 @@ const PORT = process.env.PORT || 8071;
 app.use(cors());
 app.use(express.json());
 
+
+const tagsRouter = require('./routes/tags');
+app.use('/tags', tagsRouter);
+
 //Setting up routing
 app.use("/user", require("./routes/User"));
 
