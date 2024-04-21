@@ -16,7 +16,7 @@ import Dashboard from "./components/Admin/Dashboard";
 import Members from "./components/Admin/Members";
 import LiveCollabHome from "./components/Pages/LiveCollabHome";
 import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
-import Tags from "./components/Admin/Tags";
+import TagsAdmin from "./components/Admin/Tags";
 import Resource from "./components/Admin/Resource";
 import Tutorial from "./components/Admin/Tutorial";
 import EditTags from "./components/Admin/EditTags";
@@ -71,8 +71,8 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
-        <Route path="/admin/tags/edit/:id" element={<EditTags/>}/>
-        <Route path="/admin/tags/add" element={<AddTags/>}/>
+        <Route path="/admin/tags/edit/:id" element={<EditTags />} />
+        <Route path="/admin/tags/add" element={<AddTags />} />
         <Route path="/LiveHome" element={<LiveCollabHome />} />
         <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage />} />
         <Route path="/LiveChat" element={<LiveChat />} />
@@ -87,13 +87,12 @@ function AppContent() {
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<Home />} />
           <Route path="members" element={<Members />} />
-          <Route path="tags/*" element={<Tags />}>
-          <Route path="edit/:id" element={<EditTags/>}/>
-          <Route path="add" element={<AddTags/>}/>
+          <Route path="tags/*" element={<TagsAdmin />}>
+            <Route path="edit/:id" element={<EditTags />} />
+            <Route path="add" element={<AddTags />} />
           </Route>
           <Route path="resource" element={<Resource />} />
           <Route path="tutorial" element={<Tutorial />} />
-
 
           {/* Other nested routes */}
         </Route>
