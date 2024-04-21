@@ -19,13 +19,13 @@ router.post("/register", registerUser);
 router.post("/login", login);
 
 // GET ROLE
-// router.get("/getRole", protect, getRole);
+ //router.get("/getRole", protect, getRole);
 
 // GET USER
-// router.get("/get", protect, getUser);
+//router.get("/get", protect, getUser);
 
 // GET ALL USERS
-// router.get("/getAllUsers", getAllUsers);
+//router.get("/getAllUsers", getAllUsers);
 
 // UPDATE PROJECT DETAILS
 // router.put("/updateUser/:id", updateEmployee);

@@ -74,14 +74,14 @@ export default function ViewTutorial() {
             <Grid item xs={12} sm={12} md={6} key={index}>
               <div className=" videoDiv">
                 <iframe
-                  width="480"
-                  height="270"
-                  src="https://www.youtube.com/embed/5EzBFudsqRY?si=hvsadwKXpVdSQyGg"
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/qz0aGYrrlhU?si=LOH3xqW6x5iCi9_I"
                   title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
                   allowfullscreen
-                  className="anim"
-                  style={{ borderRadius: "15px" }}
                 ></iframe>
               </div>
             </Grid>
