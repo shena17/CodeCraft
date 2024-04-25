@@ -6,7 +6,7 @@ const {
   registerUser,
   // getRole,
   // getUser,
-  // getAllUsers,
+  //getAllUsers,
   // deleteEmployee,
   // updateEmployee,
   // getNewToken,
@@ -24,7 +24,7 @@ router.post("/login", login);
 // GET USER
 //router.get("/get", protect, getUser);
 
-// GET ALL USERS
+ //GET ALL USERS
 //router.get("/getAllUsers", getAllUsers);
 
 // UPDATE PROJECT DETAILS

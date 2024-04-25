@@ -13,7 +13,6 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import Dashboard from "./components/Admin/Dashboard";
-import Members from "./components/Admin/Members";
 import LiveCollabHome from "./components/Pages/LiveCollabHome";
 import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
 import Tags from "./components/Admin/Tags";
@@ -21,6 +20,11 @@ import Resource from "./components/Admin/Resource";
 import Tutorial from "./components/Admin/Tutorial";
 import EditTags from "./components/Admin/EditTags";
 import AddTags from "./components/Admin/AddTags";
+import Forums from "./components/Admin/Forums";
+import AddForum from "./components/Admin/AddForum";
+import EditForums from "./components/Admin/EditForums";
+import AddResource from "./components/Admin/AddResource";
+import EditResources from "./components/Admin/EditResources";
 
 export default function App() {
   return (
@@ -54,17 +58,22 @@ function AppContent() {
         <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage/>} />
         <Route path="/admin/tags/edit/:id" element={<EditTags/>}/>
         <Route path="/admin/tags/add" element={<AddTags/>}/>
+        <Route path="/admin/forums/add" element={<AddForum/>}/>
+        <Route path="/admin/forums/edit/:id" element={<EditForums/>}/>
+        <Route path="/admin/resources/add" element={<AddResource/>}/>
+        <Route path="/admin/resources/edit/:id" element={<EditResources/>}/>
+
+
+
+
 
 
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<Home />} />
-          <Route path="members" element={<Members />} />
-          <Route path="tags/*" element={<Tags />}>
-          <Route path="edit/:id" element={<EditTags/>}/>
-          <Route path="add" element={<AddTags/>}/>
-          </Route>
-          <Route path="resource" element={<Resource />} />
+          <Route path="forums" element={<Forums />} />
+          <Route path="tags" element={<Tags />}/>
+          <Route path="resources" element={<Resource />} />
           <Route path="tutorial" element={<Tutorial />} />
 
 

@@ -30,24 +30,29 @@ import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PeopleIcon from "@mui/icons-material/People";
 import Home from "./Home";
-import Members from "./Members";
+import Forums from "./Forums";
 import Button from "@mui/material/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Tags from "./Tags";
 import Resource from "./Resource";
 import Tutorial from "./Tutorial";
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
+import BookIcon from '@mui/icons-material/Book';
+import AnimationIcon from '@mui/icons-material/Animation';
 
 //Navigation
 const nav = [
   { name: "Dashboard", icon: <HomeIcon />, path: "/admin/home" },
   { name: "Manage Users", icon: <PeopleIcon />, path: "/admin/members" },
   { name: "Manage Tags", icon: <EmojiPeopleIcon />, path: "/admin/tags" },
-  { name: "Manage Resource", icon: <EmojiPeopleIcon />, path: "/admin/resource" },
-  { name: "Manage Tutorial", icon: <EmojiPeopleIcon />, path: "/admin/tutorial" },
+  { name: "Manage Resource", icon: <AutoAwesomeMotionIcon />, path: "/admin/resources" },
+  { name: "Manage Tutorial", icon: <BookIcon />, path: "/admin/tutorial" },
+  { name: "Community Forum", icon: <AnimationIcon />, path: "/admin/forums" },
+
 
 ];
 
-const drawerWidth = 200;
+const drawerWidth = 220;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -328,10 +333,11 @@ export default function Dashboard() {
 
           <Routes>
             <Route exact path="/home" element={<Home />} />
-            <Route exact path="/members" element={<Members />} />
             <Route exact path="/tags" element={<Tags />} />
-            <Route exact path="/resource" element={<Resource />} />
+            <Route exact path="/resources" element={<Resource />} />
             <Route exact path="/tutorial" element={<Tutorial />} />
+            <Route exact path="/forums" element={<Forums />} />
+
 
           </Routes>
         </Box>

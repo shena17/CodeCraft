@@ -16,6 +16,15 @@ app.use(express.json());
 const tagsRouter = require('./routes/tags');
 app.use('/tags', tagsRouter);
 
+const forumsRouter = require('./routes/forums');
+app.use('/forums', forumsRouter);
+
+const resourcesRouter = require('./routes/resources');
+app.use('/resources', resourcesRouter);
+
+const tutorialsRouter = require('./routes/tutorials');
+app.use('/tutorials', tutorialsRouter);
+
 //Setting up routing
 app.use("/user", require("./routes/User"));
 
