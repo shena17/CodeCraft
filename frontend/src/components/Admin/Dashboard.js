@@ -46,7 +46,7 @@ const nav = [
   { name: "Manage Users", icon: <PeopleIcon />, path: "/admin/members" },
   { name: "Manage Tags", icon: <EmojiPeopleIcon />, path: "/admin/tags" },
   { name: "Manage Resource", icon: <AutoAwesomeMotionIcon />, path: "/admin/resources" },
-  { name: "Manage Tutorial", icon: <BookIcon />, path: "/admin/tutorial" },
+  { name: "Manage Tutorial", icon: <BookIcon />, path: "/admin/tutorials" },
   { name: "Community Forum", icon: <AnimationIcon />, path: "/admin/forums" },
 
 
@@ -335,7 +335,7 @@ export default function Dashboard() {
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/tags" element={<Tags />} />
             <Route exact path="/resources" element={<Resource />} />
-            <Route exact path="/tutorial" element={<Tutorial />} />
+            <Route exact path="/tutorials" element={<Tutorial />} />
             <Route exact path="/forums" element={<Forums />} />
 
 

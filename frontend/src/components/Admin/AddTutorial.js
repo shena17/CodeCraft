@@ -3,26 +3,28 @@ import Footer from "../Footer";
 import React,{useEffect,useState} from "react";
 import axios from "axios";
 
-export default function AddForum() {
-    const [forumid, setForumid] = useState("");
-    const [subject, setSubject] = useState("");
-    const [body, setBody] = useState("");
+export default function AddTutorial() {
+    const [tutorialid, setTutorialid] = useState("");
+    const [url, setUrl] = useState("");
+    const [attach, setAttach] = useState("");
+    const [heading, setheading] = useState("");
     const [tags, setTags] = useState("");
 
     function sendData(e){
             e.preventDefault();
 
-        const newForum ={
-            forumid,
-            subject,
-            body,
+        const newTutorial ={
+            tutorialid,
+            url,
+            attach,
+            heading,
             tags
 
         }
 
-        axios.post("http://localhost:8071/forums/add",newForum ).then(()=>{
-            alert("New Forum Added to the system")
-            window.location.href='/admin/forums';
+        axios.post("http://localhost:8071/tutorials/add",newTutorial ).then(()=>{
+            alert("New Tutorial Added to the system")
+            window.location.href='/admin/tutorials';
 
         }).catch((err)=>{
             alert(err)
@@ -39,26 +41,34 @@ export default function AddForum() {
         <div className="col-12 col-md-9 col-lg-7 col-xl-6">
           <div className="card" style={{borderRadius: 15}}>
             <div className="card-body p-5">
-              <h2 className="text-uppercase text-center mb-5">Add Forum</h2>
+              <h2 className="text-uppercase text-center mb-5">Add Tutorial</h2>
               <form onSubmit={sendData} >
                 <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="form3Example1cg">Forum ID</label>
-                  <input type="text" id="forumid" className="form-control form-control-lg"  required onChange={(e)=>{
-                    setForumid(e.target.value);
+                <label className="form-label" htmlFor="form3Example1cg">Tutorial ID</label>
+                  <input type="text" id="tutorialid" className="form-control form-control-lg"  required onChange={(e)=>{
+                    setTutorialid(e.target.value);
                         }}
                      />
                 </div>
                 <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="form3Example3cg">Subject</label>
-                  <input type="text" id="subject" className="form-control form-control-lg" required onChange={(e)=>{
-                    setSubject(e.target.value);
+                <label className="form-label" htmlFor="form3Example3cg">Video Link</label>
+                  <input type="text" id="url" className="form-control form-control-lg" required onChange={(e)=>{
+                    setUrl(e.target.value);
                         }}
                      />
                 </div>
                 <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="form3Example4cg">Body</label>
-                  <input type="text" id="body" className="form-control form-control-lg" required onChange={(e)=>{
-                    setBody(e.target.value);
+                <label className="form-label" htmlFor="form3Example4cg">Resources acccess link</label>
+                  <input type="text" id="attach" className="form-control form-control-lg" required onChange={(e)=>{
+                    setAttach(e.target.value);
+                        }}
+                    />
+                </div>
+
+                <div className="form-outline mb-4">
+                <label className="form-label" htmlFor="form3Example4cg">Heading</label>
+                  <input type="text" id="heading" className="form-control form-control-lg" required onChange={(e)=>{
+                    setheading(e.target.value);
                         }}
                     />
                 </div>

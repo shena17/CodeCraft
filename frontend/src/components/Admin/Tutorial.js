@@ -4,21 +4,29 @@ import { Card, Pagination, Input, Button } from "antd";
 import Meta from "antd/es/card/Meta";
 import { Link } from "react-router-dom";
 import { Popconfirm } from "antd";
-import { DeleteFilled, EditOutlined, SearchOutlined, DownloadOutlined } from "@ant-design/icons";
-import { PDFDownloadLink, PDFViewer, Document, Page, View, Text } from '@react-pdf/renderer';
-
+import { DeleteFilled, EditOutlined, SearchOutlined } from "@ant-design/icons";
+import YouTube from "react-youtube";
 
 export default function Tutorial() {
-
-  const [page, setPage] = useState(1);
-    const [products, setProducts] = useState([]);
+    const [page, setPage] = useState(1);
+    const [tutorials, setTutorials] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
-        axios.get('http://localhost:5000/products')
-            .then(response => setProducts(response.data))
+        axios.get('http://localhost:8071/tutorials')
+            .then(response => setTutorials(response.data))
             .catch(error => console.error(error));
     }, []);
+
+    const extractVideoId = (videoUrl) => {
+        const urlParams = new URLSearchParams(new URL(videoUrl).search);
+        return urlParams.get('v');
+    };
+
+    const getYouTubeThumbnail = (videoUrl) => {
+        const videoId = extractVideoId(videoUrl);
+        return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+    };
 
     const handlePaginationChange = (value) => {
         if (value === 1) {
@@ -28,29 +36,27 @@ export default function Tutorial() {
         }
     };
 
-    const handleDelete = (productId) => {
-        axios.delete(`http://localhost:5000/products/${productId}`)
+    const handleDelete = (tutorialId) => {
+        axios.delete(`http://localhost:8071/tutorials/${tutorialId}`)
             .then(() => {
-                setProducts(products.filter(product => product._id !== productId));
+                setTutorials(tutorials.filter(tutorial => tutorial._id !== tutorialId));
             })
             .catch(err => {
                 alert(err.message);
             });
     };
 
-
-  return(
-    <>
-          <h1>All Tutorials</h1>
-
-     <Input
+    return (
+        <>
+            <h1>All Tutorials</h1>
+            <Input
                 placeholder="Search by Tutorial Heading"
                 prefix={<SearchOutlined />}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 style={{ marginBottom: "20px", width: "300px", marginLeft: "650px", marginTop: "50px" }}
             />
-                  <Link to={"/admin/resources/add"}><Button type="primary" style={{marginLeft:"200px"}}>Add</Button></Link>
+            <Link to={"/admin/tutorials/add"}><Button type="primary" style={{ marginLeft: "200px" }}>Add</Button></Link>
 
             <div style={{
                 display: "flex",
@@ -61,13 +67,13 @@ export default function Tutorial() {
                 flexWrap: "wrap",
                 marginTop: "50px",
             }}>
-                {products
-                    .filter((product) =>
-                        product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+                {tutorials
+                    .filter((tutorial) =>
+                        tutorial.heading.toLowerCase().includes(searchQuery.toLowerCase())
                     )
                     .slice((page - 1) * 4, page * 4)
-                    .map((product) => (
-                        <div key={product._id}>
+                    .map((tutorial) => (
+                        <div key={tutorial._id}>
                             <Card
                                 style={{
                                     width: 300,
@@ -75,8 +81,8 @@ export default function Tutorial() {
                                 }}
                                 cover={
                                     <img
-                                        alt={product.productName}
-                                        src={product.imageUrl}
+                                        alt={tutorial.heading}
+                                        src={getYouTubeThumbnail(tutorial.url)} // Use getYouTubeThumbnail function here
                                         style={{
                                             objectFit: "cover",
                                             height: "200px",
@@ -85,7 +91,7 @@ export default function Tutorial() {
                                     />
                                 }
                                 actions={[
-                                    <Link to={`/edit/${product._id}`}>
+                                    <Link to={"edit/"+tutorial._id}>
                                         <EditOutlined
                                             key="edit"
                                             style={{
@@ -95,7 +101,7 @@ export default function Tutorial() {
                                     </Link>,
                                     <Popconfirm
                                         title="Are you sure to delete this product?"
-                                        onConfirm={() => handleDelete(product._id)}
+                                        onConfirm={() => handleDelete(tutorial._id)}
                                         onCancel={() => { }}
                                         okText="Yes"
                                         cancelText="No"
@@ -110,12 +116,16 @@ export default function Tutorial() {
                                 ]}
                             >
                                 <Meta style={{ textAlign: "center" }}
-                                    title={product.productName}
+                                    title={tutorial.heading}
                                     description={
                                         <div>
-                                            <p>Price: {product.productPrice} LKR </p>
-                                            <p>New Discount: {product.discount} LKR </p>
-                                            <p>New Price: {product.productPrice} LKR </p>
+                                            <p>Video Url: <a href={tutorial.url} target="_blank" rel="noopener noreferrer">
+                                                {tutorial.url}
+                                            </a></p>
+                                            <p>Resources access link: <a href={tutorial.attach} target="_blank" rel="noopener noreferrer">
+                                                {tutorial.attach}
+                                            </a></p>
+                                            <p>Tags: {tutorial.tags} </p>
                                         </div>
                                     }
                                 />
@@ -130,35 +140,10 @@ export default function Tutorial() {
                     marginBottom: "50px",
                 }}
                 defaultCurrent={1}
-                total={products.length}
+                total={tutorials.length}
                 defaultPageSize={4}
                 onChange={handlePaginationChange}
             />
-            <div style={{ textAlign: "center" }}>
-                <PDFDownloadLink document={<PdfDocument data={products} />} fileName="discount_details.pdf">
-                    <Button type="primary" icon={<DownloadOutlined />}>Download PDF</Button>
-                </PDFDownloadLink>
-            </div>
-    </>
-  )
+        </>
+    );
 }
-
-
-// PDF Document Component
-const PdfDocument = ({ data }) => (
-  <Document>
-      <Page>
-          <View style={{ padding: 10 }}>
-              <Text style={{ marginBottom: 10 }}>Discount Details</Text>
-              {data.map((product, index) => (
-                  <View key={product._id} style={{ marginBottom: index < data.length - 1 ? 20 : 0 }}>
-                      <Text>{product.productName}</Text>
-                      <Text>Price: {product.productPrice} LKR</Text>
-                      <Text>Discount: {product.discount} LKR</Text>
-                  </View>
-              ))}
-          </View>
-      </Page>
-  </Document>
-);
-

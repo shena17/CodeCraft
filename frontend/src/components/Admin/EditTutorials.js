@@ -4,51 +4,55 @@ import React,{useEffect,useState} from "react";
 import axios from "axios";
 import { useParams} from "react-router-dom";
 
-export default function EditResources() {
+export default function EditTutorials() {
 
-    const [resourceid, setResourceid] = useState("");
-    const [type, setType] = useState("");
+    const [tutorialid, setTutorialid] = useState("");
+    const [url, setUrl] = useState("");
     const [attach, setAttach] = useState("");
-    const [heading, setHeading] = useState("");
+    const [heading, setheading] = useState("");
+    const [tags, setTags] = useState("");
+
    
   
     const [error, setError] = useState();
   
     const params = useParams();
   
-    const getSelectedResource = () => {
-      axios.get(`http://localhost:8071/resources/${params.id}`)
+    const getSelectedTutorial = () => {
+      axios.get(`http://localhost:8071/tutorials/${params.id}`)
         .then((response) => {
           console.log(response.data);
-          setResourceid(response.data.resourceid);
-          setType(response.data.type);
+          setTutorialid(response.data.tutorialid);
+          setUrl(response.data.url);
           setAttach(response.data.attach);
-          setHeading(response.data.heading);
+          setheading(response.data.heading);
+          setTags(response.data.tags);
 
          
         })
       }
   
       useEffect(()=>{
-        getSelectedResource();
+        getSelectedTutorial();
       },[]);
   
-    const updateResourceDetails = (e) => {
+    const updateTutorialDetails = (e) => {
       e.preventDefault();
   
       let updateData = {
-        resourceid: resourceid,
-        type: type,
+        tutorialid: tutorialid,
+        url: url,
         attach: attach,
         heading: heading,
+        tags: tags,
 
        
       }
   
-      axios.put(`http://localhost:8071/resources/${params.id}`, updateData)
+      axios.put(`http://localhost:8071/tutorials/${params.id}`, updateData)
         .then(() => {
-          alert("Resource details updated");
-          window.location.href = "/admin/resources";
+          alert("Tutorial details updated");
+          window.location.href = "/admin/tutorials";
 
         })
         .catch((error) => {
@@ -66,35 +70,42 @@ export default function EditResources() {
         <div className="col-12 col-md-9 col-lg-7 col-xl-6">
           <div className="card" style={{borderRadius: 15}}>
             <div className="card-body p-5">
-              <h2 className="text-uppercase text-center mb-5">Update Resource</h2>
+              <h2 className="text-uppercase text-center mb-5">Update Tutorial</h2>
               <form className="createUpdate" >
                 <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="form3Example1cg">Resource ID</label>
-                  <input type="text" id="resourceid" className="form-control form-control-lg"  onChange={(e)=>
-                    setResourceid(e.target.value)}
-                    value={resourceid}  readOnly/>
+                <label className="form-label" htmlFor="form3Example1cg">Tutorial ID</label>
+                  <input type="text" id="tutorialid" className="form-control form-control-lg"  onChange={(e)=>
+                    setTutorialid(e.target.value)}
+                    value={tutorialid}  readOnly/>
                 </div>
                 <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="form3Example3cg">Resource Type</label>
-                  <input type="text" id="type" className="form-control form-control-lg" onChange={(e)=>
-                    setType(e.target.value)}
-                    value={type} />
+                <label className="form-label" htmlFor="form3Example3cg">Video Link</label>
+                  <input type="text" id="url" className="form-control form-control-lg" onChange={(e)=>
+                    setUrl(e.target.value)}
+                    value={url} />
                 </div>
                 <div className="form-outline mb-4">
-                <label className="form-label" htmlFor="form3Example4cg">Access Link</label>
+                <label className="form-label" htmlFor="form3Example4cg">Resources acccess link</label>
                   <input type="text" id="attach" className="form-control form-control-lg" onChange={(e)=>
                     setAttach(e.target.value)}
                     value={attach}/>
                 </div>
+
                 <div className="form-outline mb-4">
                 <label className="form-label" htmlFor="form3Example4cg">Heading</label>
                   <input type="text" id="heading" className="form-control form-control-lg" onChange={(e)=>
-                    setHeading(e.target.value)}
+                    setheading(e.target.value)}
                     value={heading}/>
+                </div>
+                <div className="form-outline mb-4">
+                <label className="form-label" htmlFor="form3Example4cg">Tags</label>
+                  <input type="text" id="tags" className="form-control form-control-lg" onChange={(e)=>
+                    setTags(e.target.value)}
+                    value={tags}/>
                 </div>
                 
                 <div className="d-flex justify-content-center">
-                  <button type="button" className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={updateResourceDetails}>Update</button>
+                  <button type="button" className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={updateTutorialDetails}>Update</button>
                 </div>
                 {error && <div className="error">{error}</div>}
               </form>

@@ -25,6 +25,8 @@ import AddForum from "./components/Admin/AddForum";
 import EditForums from "./components/Admin/EditForums";
 import AddResource from "./components/Admin/AddResource";
 import EditResources from "./components/Admin/EditResources";
+import AddTutorial from "./components/Admin/AddTutorial";
+import EditTutorials from "./components/Admin/EditTutorials";
 
 export default function App() {
   return (
@@ -62,6 +64,10 @@ function AppContent() {
         <Route path="/admin/forums/edit/:id" element={<EditForums/>}/>
         <Route path="/admin/resources/add" element={<AddResource/>}/>
         <Route path="/admin/resources/edit/:id" element={<EditResources/>}/>
+        <Route path="/admin/tutorials/add" element={<AddTutorial/>}/>
+        <Route path="/admin/tutorials/edit/:id" element={<EditTutorials/>}/>
+
+
 
 
 
@@ -74,7 +80,7 @@ function AppContent() {
           <Route path="forums" element={<Forums />} />
           <Route path="tags" element={<Tags />}/>
           <Route path="resources" element={<Resource />} />
-          <Route path="tutorial" element={<Tutorial />} />
+          <Route path="tutorials" element={<Tutorial />} />
 
 
           {/* Other nested routes */}
