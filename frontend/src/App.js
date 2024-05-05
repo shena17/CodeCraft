@@ -14,11 +14,13 @@ import Login from "./components/Login";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import Dashboard from "./components/Admin/Dashboard";
 import Members from "./components/Admin/Members";
-import Fees from "./components/Admin/Fees";
-import Attendance from "./components/Admin/Attendance";
-import AdminHome from "./components/Admin/Home";
 import LiveCollabHome from "./components/Pages/LiveCollabHome";
 import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
+import TagsAdmin from "./components/Admin/Tags";
+import Resource from "./components/Admin/Resource";
+import Tutorial from "./components/Admin/Tutorial";
+import EditTags from "./components/Admin/EditTags";
+import AddTags from "./components/Admin/AddTags";
 import { Toaster } from "react-hot-toast";
 import Tutorials from "./components/Pages/Tutorials";
 import ViewTutorial from "./components/Pages/ViewTutorial";
@@ -69,6 +71,8 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
+        <Route path="/admin/tags/edit/:id" element={<EditTags />} />
+        <Route path="/admin/tags/add" element={<AddTags />} />
         <Route path="/LiveHome" element={<LiveCollabHome />} />
         <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage />} />
         <Route path="/LiveChat" element={<LiveChat />} />
@@ -81,10 +85,15 @@ function AppContent() {
 
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
-          <Route path="home" element={<AdminHome />} />
+          <Route path="home" element={<Home />} />
           <Route path="members" element={<Members />} />
-          <Route path="fees" element={<Fees />} />
-          <Route path="attendance" element={<Attendance />} />
+          <Route path="tags/*" element={<TagsAdmin />}>
+            <Route path="edit/:id" element={<EditTags />} />
+            <Route path="add" element={<AddTags />} />
+          </Route>
+          <Route path="resource" element={<Resource />} />
+          <Route path="tutorial" element={<Tutorial />} />
+
           {/* Other nested routes */}
         </Route>
         {/* Admin Panel */}
