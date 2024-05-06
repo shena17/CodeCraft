@@ -89,6 +89,11 @@ io.on("connection", (socket) => {
     delete userSocketMap[socket.id];
     socket.leave();
   })
+
+  socket.on('message', (msg) => {
+    console.log('Received message:', msg);
+    io.emit('message', msg); // Broadcast the message to all connected clients
+});
 })
 
 //Start the HTTP server
