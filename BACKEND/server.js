@@ -17,6 +17,7 @@ app.use(express.json());
 
 const tagsRouter = require("./routes/tags");
 app.use("/tags", tagsRouter);
+app.use("/tutorials", require("./routes/tutorials"));
 
 //Setting up routing
 app.use("/user", require("./routes/User"));
