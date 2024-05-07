@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/tutorials.css";
 import "../../styles/home.css";
 import "../../styles/tags.css";
@@ -10,8 +10,25 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import pdf from "../../images/pdf.png";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import axios from "axios";
 
 export default function ViewTag() {
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    function getTags() {
+      axios
+        .get("http://localhost:8071/ala/getTags")
+        .then((res) => {
+          setTags(res.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+    getTags();
+  }, []);
+
   return (
     <div className="mb-5 ">
       <div className="main-top ">
@@ -27,7 +44,7 @@ export default function ViewTag() {
                 Back
               </Button>
             </div>
-            <div className="topic topic-main pageTopic">#Web Developmenet</div>
+            <div className="topic topic-main pageTopic">{tags.tag}</div>
           </div>
         </div>
       </div>

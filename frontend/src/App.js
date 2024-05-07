@@ -79,7 +79,7 @@ function AppContent() {
         <Route path="/tutorials" element={<Tutorials />} />
         <Route path="/viewTutorial" element={<ViewTutorial />} />
         <Route path="/tags" element={<Tags />} />
-        <Route path="/viewTag" element={<ViewTag />} />
+        <Route path="/viewTag/:id" element={<ViewTag />} />
         <Route path="/community" element={<CommunityForum />} />
         <Route path="/codeEditor" element={<CodeEditor />} />
 
