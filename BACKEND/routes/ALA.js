@@ -1,11 +1,23 @@
 const router = require("express").Router();
 const { protect } = require("../middleware/authorization");
-const { getTags } = require("../controllers/alaController");
 
-//REGISTER
+const {
+  getTags,
+  viewTag,
+  getTutorials,
+  viewTutorial,
+} = require("../controllers/alaController");
+
+// GET ALL TAGS
 router.get("/getTags", getTags);
 
-// GET USER
-// router.get("/get", protect, getUser);
+//  GET SPECIFIC TAG
+router.get("/viewTag/:id", protect, viewTag);
+
+//GET ALL TUTORIALS
+router.get("/getTutorials", getTutorials);
+
+// GET SPECIFIC TUTORIAL
+router.get("/viewTutorial/:id", protect, viewTutorial);
 
 module.exports = router;

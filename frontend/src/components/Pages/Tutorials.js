@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/tutorials.css";
 import "../../styles/home.css";
 import { styled, alpha } from "@mui/material/styles";
@@ -9,6 +9,8 @@ import html from "../../images/html.png";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -55,6 +57,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Tutorials() {
+  const [tutorials, setTutorials] = useState([]);
+
+  useEffect(() => {
+    function getTutorials() {
+      axios
+        .get("http://localhost:8071/ala/getTutorials")
+        .then((res) => {
+          setTutorials(res.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+
+    getTutorials();
+  }, []);
+
   return (
     <div className="mb-5">
       <div className="main-top">
@@ -180,47 +199,39 @@ export default function Tutorials() {
         MORE TURORIALS
       </div>
       <div className="cardList">
-        {Array.from(Array(6)).map((_, index) => (
+        {tutorials.map((tut, index) => (
           <div className="pageCard anim">
             <img src={html} alt="Tutorial" className="tutLogo" />
             <div className="rightCard">
-              <p className="cardTopic">HTML Course for Beginners</p>
+              <p className="cardTopic">{tut.heading}</p>
               <p className="cardDesc">
                 HTML Fundamentals: A Beginner's Guide to Web Development.
                 Throughout this course, we'll start from the very basics,
                 assuming no prior knowledge of HTML or coding.
               </p>
               <Stack direction="row" spacing={2}>
-                <Chip
-                  label="HTML"
-                  component="a"
-                  href="#basic-chip"
-                  variant="outlined"
-                  clickable
-                  size="small"
-                  sx={{
-                    padding: "5px",
-                    color: "var(--pink)",
-                    borderColor: "var(--pink)",
-                  }}
-                />
-                <Chip
-                  label="Web Development"
-                  component="a"
-                  href="#basic-chip"
-                  variant="outlined"
-                  clickable
-                  size="small"
-                  sx={{
-                    padding: "5px",
-                    color: "var(--pink)",
-                    borderColor: "var(--pink)",
-                  }}
-                />
+                {tut.tags &&
+                  tut.tags.map((tag, index) => (
+                    <Chip
+                      key={index}
+                      label={tag.tagname}
+                      component="a"
+                      href={"/viewTag/" + tag._id}
+                      variant="outlined"
+                      clickable
+                      size="small"
+                      sx={{
+                        padding: "5px",
+                        color: "var(--pink)",
+                        borderColor: "var(--pink)",
+                      }}
+                    />
+                  ))}
+
                 <div className="cardBtnArea">
                   <Button
                     variant="outline-light"
-                    href="/viewTutorial"
+                    href={"/viewTutorial/" + tut._id}
                     className="header-btn register viewTutBtn"
                   >
                     View Tutorial
