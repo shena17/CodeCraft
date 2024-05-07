@@ -15,6 +15,9 @@ export default function LiveChat() {
             try {
                 const socket = await initSocket(); // Initialize socket connection
                 socketRef.current = socket; // Set the socket reference
+
+                const userName = prompt('Please enter your name:');
+                setName(userName);
                 
                 socketRef.current.on('message', (msg) => {
                     setMessages(prevMessages => [...prevMessages, msg]);
