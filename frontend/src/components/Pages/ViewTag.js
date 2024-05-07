@@ -11,14 +11,22 @@ import Grid from "@mui/material/Grid";
 import pdf from "../../images/pdf.png";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 export default function ViewTag() {
   const [tags, setTags] = useState([]);
+  const { id } = useParams();
 
   useEffect(() => {
-    function getTags() {
+    const token = localStorage.getItem("token");
+
+    function viewTag() {
       axios
-        .get("http://localhost:8071/ala/getTags")
+        .get("http://localhost:8071/ala/viewTag/" + id, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((res) => {
           setTags(res.data);
         })
@@ -26,8 +34,8 @@ export default function ViewTag() {
           alert(err.message);
         });
     }
-    getTags();
-  }, []);
+    viewTag();
+  }, [id]);
 
   return (
     <div className="mb-5 ">

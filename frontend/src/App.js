@@ -77,7 +77,7 @@ function AppContent() {
         <Route path="/LiveEditor/:roomId" element={<LiveCollabEditorPage />} />
         <Route path="/LiveChat" element={<LiveChat />} />
         <Route path="/tutorials" element={<Tutorials />} />
-        <Route path="/viewTutorial" element={<ViewTutorial />} />
+        <Route path="/viewTutorial/:id" element={<ViewTutorial />} />
         <Route path="/tags" element={<Tags />} />
         <Route path="/viewTag/:id" element={<ViewTag />} />
         <Route path="/community" element={<CommunityForum />} />
