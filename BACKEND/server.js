@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const {Server} = require('socket.io');
+const { Server } = require("socket.io");
 const http = require("http");
 const ACTIONS = require("../frontend/src/Actions");
 
@@ -15,12 +15,12 @@ const PORT = process.env.PORT || 8071;
 app.use(cors());
 app.use(express.json());
 
-
-const tagsRouter = require('./routes/tags');
-app.use('/tags', tagsRouter);
+const tagsRouter = require("./routes/tags");
+app.use("/tags", tagsRouter);
 
 //Setting up routing
 app.use("/user", require("./routes/User"));
+app.use("/ala", require("./routes/ALA"));
 
 //Create HTTP server
 const server = http.createServer(app);
@@ -44,60 +44,60 @@ const userSocketMap = {};
 
 function getAllConnectedClients(roomId) {
   //Map
-  return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map((socketId) => {
-    return {
-      socketId,
-      username: userSocketMap[socketId],
+  return Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
+    (socketId) => {
+      return {
+        socketId,
+        username: userSocketMap[socketId],
+      };
     }
-  });
+  );
 }
 
 //Socket.IO connection event
 io.on("connection", (socket) => {
   console.log("Socket Connected", socket.id);
 
-  socket.on(ACTIONS.JOIN, ({roomId, username}) => {
+  socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
     userSocketMap[socket.id] = username;
     socket.join(roomId);
     const clients = getAllConnectedClients(roomId);
-    clients.forEach(({socketId}) => {
+    clients.forEach(({ socketId }) => {
       io.to(socketId).emit(ACTIONS.JOINED, {
         clients,
         username,
-        socketId: socket.id
-      })
-    })
-  })
+        socketId: socket.id,
+      });
+    });
+  });
 
-  socket.on(ACTIONS.CODE_CHANGE, ({roomId, code}) => {
-    socket.in(roomId).emit(ACTIONS.CODE_CHANGE, {code});
-  })
+  socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
+    socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
+  });
 
-  socket.on(ACTIONS.SYNC_CODE, ({socketId, code}) => {
-    io.to(socketId).emit(ACTIONS.CODE_CHANGE, {code});
-  })
+  socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
+    io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
+  });
 
-
-  socket.on('disconnecting', () => {
+  socket.on("disconnecting", () => {
     const rooms = [...socket.rooms];
     rooms.forEach((roomId) => {
       socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
         socketId: socket.id,
         username: userSocketMap[socket.id],
-      })
-    })
+      });
+    });
     delete userSocketMap[socket.id];
     socket.leave();
-  })
+  });
 
-  socket.on('message', (msg) => {
-    console.log('Received message:', msg);
-    io.emit('message', msg); // Broadcast the message to all connected clients
+  socket.on("message", (msg) => {
+    console.log("Received message:", msg);
+    io.emit("message", msg); // Broadcast the message to all connected clients
+  });
 });
-})
 
 //Start the HTTP server
 server.listen(PORT, () => {
   console.log("Server up with port : " + PORT);
 });
-

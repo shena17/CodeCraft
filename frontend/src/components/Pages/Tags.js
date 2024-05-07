@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/tutorials.css";
 import "../../styles/home.css";
 import "../../styles/tags.css";
@@ -22,6 +22,7 @@ import html5 from "../../images/html5.png";
 import css from "../../images/css.png";
 import javascript from "../../images/javascript.png";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import axios from "axios";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -68,6 +69,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Tags() {
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    function getTags() {
+      axios
+        .get("http://localhost:8071/ala/getTags")
+        .then((res) => {
+          setTags(res.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    }
+    getTags();
+  }, []);
+
   return (
     <div className="mb-5 ">
       <div className="main-top ">
@@ -179,12 +196,12 @@ export default function Tags() {
 
       <div className="topic topic-intro pageIntro">OTHER TAGS</div>
       <div className="tagDiv container mt-4">
-        {Array.from(Array(21)).map((_, index) => (
+        {tags.map((tag, index) => (
           <div className="tagList">
             <Chip
-              label="Web Development"
+              label={tag.tag}
               component="a"
-              href="/viewTag"
+              href={"/viewTag/" + tag._id}
               variant="outlined"
               clickable
               sx={{
@@ -192,7 +209,7 @@ export default function Tags() {
                 color: "var(--pink)",
                 borderColor: "var(--pink)",
               }}
-              className="anim mb-3"
+              className="anim mb-3 me-1 mx-1"
             />
           </div>
         ))}
