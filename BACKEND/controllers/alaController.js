@@ -1,7 +1,7 @@
 const User = require("../models/User.model");
 const Tag = require("../models/tag.model");
-const Tutorial = require("../models/tutorial.model");
-const Tutorials = require("../models/tutorial.model");
+const Tutorial = require("../models/tutorialsUser.model");
+const Tutorials = require("../models/tutorialsUser.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -19,6 +19,9 @@ const getTags = async (req, res) => {
 const viewTag = async (req, res) => {
   try {
     const tag = await Tag.findById(req.params.id);
+
+    
+
     res.json(tag);
   } catch (err) {
     res.status(400).json("Error: " + err);

@@ -25,5 +25,5 @@ const tutorialSchema = new Schema(
   }
 );
 
-const Tutorial = mongoose.model("Tutorial", tutorialSchema);
-module.exports = Tutorial;
+const TutorialsUser = mongoose.model("TutorialsUser", tutorialSchema);
+module.exports = TutorialsUser;
