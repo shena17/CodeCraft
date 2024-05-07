@@ -31,17 +31,20 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PeopleIcon from "@mui/icons-material/People";
 import Home from "./Home";
 import Members from "./Members";
-import Fees from "./Fees";
-import Attendance from "./Attendance";
 import Button from "@mui/material/Button";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import Tags from "./Tags";
+import Resource from "./Resource";
+import Tutorial from "./Tutorial";
 
 //Navigation
 const nav = [
   { name: "Dashboard", icon: <HomeIcon />, path: "/admin/home" },
-  { name: "Members", icon: <PeopleIcon />, path: "/admin/members" },
-  { name: "Update Fees", icon: <PaidIcon />, path: "/admin/fees" },
-  { name: "Attendance", icon: <EmojiPeopleIcon />, path: "/admin/attendance" },
+  { name: "Manage Users", icon: <PeopleIcon />, path: "/admin/members" },
+  { name: "Manage Tags", icon: <EmojiPeopleIcon />, path: "/admin/tags" },
+  { name: "Manage Resource", icon: <EmojiPeopleIcon />, path: "/admin/resource" },
+  { name: "Manage Tutorial", icon: <EmojiPeopleIcon />, path: "/admin/tutorial" },
+
 ];
 
 const drawerWidth = 200;
@@ -326,8 +329,10 @@ export default function Dashboard() {
           <Routes>
             <Route exact path="/home" element={<Home />} />
             <Route exact path="/members" element={<Members />} />
-            <Route exact path="/fees" element={<Fees />} />
-            <Route exact path="/attendance" element={<Attendance />} />
+            <Route exact path="/tags" element={<Tags />} />
+            <Route exact path="/resource" element={<Resource />} />
+            <Route exact path="/tutorial" element={<Tutorial />} />
+
           </Routes>
         </Box>
       </Box>
