@@ -27,7 +27,6 @@ const UserDashboard = () => {
       <Container style={{ height: "8rem" }} />
       <Box bgcolor="white" mb={10} boxShadow={4} p={3} borderRadius={4}>
         <Typography variant="h4" gutterBottom color={"#005597"}>
-          User Dashboard
         </Typography>
         <Container sx={{ marginBottom: "1rem" }}>
           <CardContent>
