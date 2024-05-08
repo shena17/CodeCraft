@@ -203,17 +203,13 @@ export default function Tutorials() {
             <img src={html} alt="Tutorial" className="tutLogo" />
             <div className="rightCard">
               <p className="cardTopic">{tut.heading}</p>
-              <p className="cardDesc">
-                HTML Fundamentals: A Beginner's Guide to Web Development.
-                Throughout this course, we'll start from the very basics,
-                assuming no prior knowledge of HTML or coding.
-              </p>
+              <p className="cardDesc">{tut.description}</p>
               <Stack direction="row" spacing={2}>
                 {tut.tags &&
                   tut.tags.map((tag, index) => (
                     <Chip
                       key={index}
-                      label={tag.tagname}
+                      label={tag.tag}
                       component="a"
                       href={"/viewTag/" + tag._id}
                       variant="outlined"
