@@ -117,12 +117,9 @@ export default function Register() {
                 <Form.Label>Country</Form.Label>
                 <SelectField
                   name="country"
-                  options={{
-                    NotStarted: "Not Started",
-                    Started: "Started",
-                    InProgress: "In Progress",
-                    Completed: "Completed",
-                  }}
+                  options={Object.fromEntries(
+                    countries.map((country) => [country.name, country.name])
+                  )}
                 />
               </Grid>
 
@@ -178,3 +175,4 @@ export default function Register() {
     </div>
   );
 }
+

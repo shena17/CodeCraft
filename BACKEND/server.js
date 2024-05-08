@@ -23,6 +23,7 @@ app.use("/resources", require("./routes/resourcesUser"));
 //Setting up routing
 app.use("/user", require("./routes/User"));
 app.use("/ala", require("./routes/ALA"));
+app.use("/note", require("./routes/Note"));
 
 //Create HTTP server
 const server = http.createServer(app);
