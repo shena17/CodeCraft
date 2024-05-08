@@ -36,7 +36,7 @@ const UserDashboard = () => {
               component="div"
               color={"#005597"}
             >
-              Welcome, User! {/* Replace "User" with the actual user's name */}
+              WELCOME ! {/* Replace "User" with the actual user's name */}
             </Typography>
             {/* Row with three cards */}
             <Box display="flex" justifyContent="space-between" mt={3} gap={2}>
