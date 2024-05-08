@@ -1,3 +1,4 @@
+
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -12,6 +13,11 @@ import Footer from "./components/Footer";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import ForgotPassword from "./components/Pages/ForgotPassword";
+import Profile from "./components/Pages/Profile";
+import UpdateAccount from "./components/Pages/UpdateAccount";
+import ChangePassword from "./components/Pages/ChangePassword";
+import Note from "./components/Pages/Note";
+import MyList from "./components/Pages/MyList";
 import Dashboard from "./components/Admin/Dashboard";
 import Members from "./components/Admin/Members";
 import LiveCollabHome from "./components/Pages/LiveCollabHome";
@@ -29,6 +35,8 @@ import Tags from "./components/Pages/Tags";
 import ViewTag from "./components/Pages/ViewTag";
 import CommunityForum from "./components/Pages/CommunityForum";
 import CodeEditor from "./components/Pages/CodeEditor";
+import AboutUs from "./components/Pages/AboutUs";
+import UserDashboard from "./components/Pages/UserDashboard";
 
 export default function App() {
   return (
@@ -71,6 +79,11 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgotpwd" element={<ForgotPassword />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/note" element={<Note/>} />
+        <Route path="/mylist" element={<MyList/>} />
+        <Route path="/updateAccount" element={<UpdateAccount />} />
         <Route path="/admin/tags/edit/:id" element={<EditTags />} />
         <Route path="/admin/tags/add" element={<AddTags />} />
         <Route path="/LiveHome" element={<LiveCollabHome />} />
@@ -82,7 +95,8 @@ function AppContent() {
         <Route path="/viewTag/:id" element={<ViewTag />} />
         <Route path="/community" element={<CommunityForum />} />
         <Route path="/codeEditor" element={<CodeEditor />} />
-
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/userdashboard" element={<UserDashboard />} />
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<Home />} />
@@ -107,3 +121,4 @@ function AppContent() {
     </div>
   );
 }
+
