@@ -18,6 +18,9 @@ import Collapse from "@mui/material/Collapse";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
 
+// Import the analyzeCode function
+import { analyzeCode } from "../ALA/analysisLogic";
+
 const languages = Object.entries(LANGUAGE_VERSIONS);
 
 export default function CodeEditor() {
@@ -66,6 +69,20 @@ export default function CodeEditor() {
       setAlertBody(error.message || "Unable to run code");
     } finally {
       setLoading(false);
+    }
+
+    // Perform code analysis
+    const analysisResult = analyzeCode(sourceCode);
+
+    // Display analysis results
+    if (analysisResult.containsConsoleLog) {
+      setOpen(true);
+      setAlertTitle("Analysis Result");
+      setAlertBody("Code contains console.log statement");
+    } else {
+      setOpen(true);
+      setAlertTitle("Analysis Result");
+      setAlertBody("Code does not contain console.log statement");
     }
   };
 
