@@ -22,9 +22,6 @@ import Dashboard from "./components/Admin/Dashboard";
 import Members from "./components/Admin/Members";
 import LiveCollabHome from "./components/Pages/LiveCollabHome";
 import LiveCollabEditorPage from "./components/Pages/LiveCollabEditorPage";
-import TagsAdmin from "./components/Admin/Tags";
-import Resource from "./components/Admin/Resource";
-import Tutorial from "./components/Admin/Tutorial";
 import EditTags from "./components/Admin/EditTags";
 import AddTags from "./components/Admin/AddTags";
 import { Toaster } from "react-hot-toast";
@@ -37,6 +34,18 @@ import CommunityForum from "./components/Pages/CommunityForum";
 import CodeEditor from "./components/Pages/CodeEditor";
 import AboutUs from "./components/Pages/AboutUs";
 import UserDashboard from "./components/Pages/UserDashboard";
+import Forums from "./components/Admin/Forums";
+import AddForum from "./components/Admin/AddForum";
+import EditForums from "./components/Admin/EditForums";
+import AddResource from "./components/Admin/AddResource";
+import EditResources from "./components/Admin/EditResources";
+import AddTutorial from "./components/Admin/AddTutorial";
+import EditTutorials from "./components/Admin/EditTutorials";
+import Resource from "./components/Admin/Resource";
+import Tutorial from "./components/Admin/Tutorial";
+import Tag from "./components/Admin/Tag";
+
+
 
 export default function App() {
   return (
@@ -91,22 +100,27 @@ function AppContent() {
         <Route path="/LiveChat" element={<LiveChat />} />
         <Route path="/tutorials" element={<Tutorials />} />
         <Route path="/viewTutorial/:id" element={<ViewTutorial />} />
-        <Route path="/tags" element={<Tags />} />
+        <Route path="/tags" element={<Tag/>} />
         <Route path="/viewTag/:id" element={<ViewTag />} />
         <Route path="/community" element={<CommunityForum />} />
         <Route path="/codeEditor" element={<CodeEditor />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/userdashboard" element={<UserDashboard />} />
+        <Route path="/admin/forums/add" element={<AddForum/>}/>
+        <Route path="/admin/forums/edit/:id" element={<EditForums/>}/>
+        <Route path="/admin/resources/add" element={<AddResource/>}/>
+        <Route path="/admin/resources/edit/:id" element={<EditResources/>}/>
+        <Route path="/admin/tutorials/add" element={<AddTutorial/>}/>
+        <Route path="/admin/tutorials/edit/:id" element={<EditTutorials/>}/>
+        
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<Home />} />
-          <Route path="members" element={<Members />} />
-          <Route path="tags/*" element={<TagsAdmin />}>
-            <Route path="edit/:id" element={<EditTags />} />
-            <Route path="add" element={<AddTags />} />
-          </Route>
-          <Route path="resource" element={<Resource />} />
-          <Route path="tutorial" element={<Tutorial />} />
+          <Route path="forums" element={<Forums />} />
+          <Route path="tags" element={<Tags />}/>
+          <Route path="resources" element={<Resource />} />
+          <Route path="tutorials" element={<Tutorial />} />
+
 
           {/* Other nested routes */}
         </Route>
