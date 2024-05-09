@@ -58,35 +58,62 @@ const viewTutorial = async (req, res) => {
 const createAla = async (req, res) => {
   try {
     const { tags } = req.body;
-    const tagIds = [];
+    const tagObjects = [];
+    let updateSuccessful = false;
 
     for (const tagName of tags) {
       // Find the tag by name
       const tag = await Tag.findOne({ tagname: tagName });
 
       if (!tag) {
-        // If tag not found, handle the error accordingly
         return res.status(404).json(`Tag "${tagName}" not found`);
       }
 
-      // Push the tag ID to the tagIds array
-      tagIds.push(tag._id);
+      tagObjects.push({ _id: tag._id, tag: tag._id, count: 1 });
     }
 
     // Search for an existing document with the given _id
     const existingALA = await ALA.findById(req.user.id);
 
     if (existingALA) {
-      updateAla(req, res);
+      // UPDATE EXISTING DOCUMENT
+      for (const alaTags of existingALA.tags) {
+        const existingTag = tagObjects.find(
+          (obj) => String(obj.tag) === String(alaTags._id)
+        );
+
+        if (existingTag) {
+          alaTags.count++;
+          await existingALA.save();
+          updateSuccessful = true;
+        } else {
+          await ALA.findByIdAndUpdate(
+            req.user.id,
+            {
+              $addToSet: {
+                tags: { _id: alaTags._id, tag: alaTags._id, count: 1 },
+              },
+            }, // Add new tags to the existing tags array
+            { new: true } // Return the updated document
+          );
+          updateSuccessful = true;
+        }
+      }
+
+      if (updateSuccessful) {
+        return res.status(200).json("Update successful");
+      } else {
+        return res.status(500).json("No updates or creations made");
+      }
     } else {
-      // If document does not exist, create a new document
+      // CREATE NEW DOCUMENT
       const newALA = new ALA({
         _id: req.user.id,
         userId: req.user.id,
-        tags: tagIds, // Store all tag IDs in the tagIds array
+        tags: tagObjects,
       });
       await newALA.save();
-      res.status(201).json(ala);
+      return res.status(200).json(newALA);
     }
   } catch (err) {
     res.status(400).json("Error: " + err);
@@ -97,7 +124,7 @@ const createAla = async (req, res) => {
 const updateAla = async (req, res) => {
   try {
     const { tags } = req.body;
-    const tagIds = [];
+    const tagIds = []; // Initialize tagIds variable
 
     // Iterate over each tag name in the array
     for (const tagName of tags) {
@@ -109,10 +136,18 @@ const updateAla = async (req, res) => {
         return res.status(404).json(`Tag "${tagName}" not found`);
       }
 
-      // Push the tag ID to the tagIds array
-      tagIds.push(tag._id);
+      // Check if the tag already exists in tagObjects
+      const existingTag = tagIds.find(
+        (obj) => String(obj.tag) === String(tag._id)
+      );
+      if (existingTag) {
+        existingTag.count++;
+      } else {
+        tagIds.push({ _id: tag._id, tag: tag._id, count: 1 });
+      }
     }
-    // Find the document by its _id and update the tags array
+
+    // Find the ALA document by its _id and update the tags array
     const updatedALA = await ALA.findByIdAndUpdate(
       req.user.id,
       { $addToSet: { tags: { $each: tagIds } } }, // Add new tags to the existing tags array

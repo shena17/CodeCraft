@@ -8,7 +8,13 @@ const alaSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
+    tags: [
+      {
+        _id: { type: Schema.Types.ObjectId, ref: "Tag" },
+        tag: { type: Schema.Types.ObjectId, ref: "Tag" },
+        count: { type: Number, default: 0 },
+      },
+    ],
   },
   {
     timestamps: true,

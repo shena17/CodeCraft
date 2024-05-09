@@ -1,8 +1,13 @@
+import axios from "axios";
 import predefinedPatterns from "./ayalysisPatterns.json";
 
-export function analyzeCode(code, language) {
+export async function analyzeCode(code, language) {
+  const token = localStorage.getItem("token");
+
   // Perform the analysis for each predefined pattern
   const analysisResults = {};
+  const tags = [];
+  tags.push(language);
 
   Object.keys(predefinedPatterns).forEach((patternName) => {
     const pattern = new RegExp(predefinedPatterns[patternName], "g");
@@ -13,13 +18,31 @@ export function analyzeCode(code, language) {
     // Store the analysis result for the current pattern
     const result = (analysisResults[patternName] = {
       containsMatch: !!matches, // Check if any matches were found
-      matchCount: matches ? matches.length : 0, // Count the number of matches
     });
 
     if (result.containsMatch) {
       // alert(`${language} Code contains ${patternName}`);
+
+      tags.push(patternName);
     }
   });
+
+  try {
+    const response = await axios.post(
+      "http://localhost:8071/ala/createAla",
+      {
+        tags,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    alert("Notification sent successfully:", response.data);
+  } catch (error) {
+    alert("Error sending notification:", error.message);
+  }
 
   // return analysisResults;
 }
