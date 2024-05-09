@@ -10,12 +10,14 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Download from "@mui/icons-material/Download";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Notification from "../DispayComponents/Notification";
 import { useNavigate } from "react-router-dom";
 import { securityMiddleware } from '../../middleware/securityMiddleware';
+import jsPDF from "jspdf";
 
 const NoteCard = ({ note, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -44,6 +46,54 @@ const NoteCard = ({ note, onEdit, onDelete }) => {
   const handleDelete = async () => {
     onDelete(note);
   };
+
+
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+  
+    // Set initial y position for the table
+    let yPos = 20;
+
+ 
+  
+    // Header row
+    doc.setFillColor(33, 150, 243); // Blue background color
+    doc.setTextColor(0, 0, 0); // Black font color
+    doc.rect(10, yPos, 90, 10, 'F'); // Topic title rectangle
+    doc.rect(100, yPos, 90, 10, 'F'); // Description title rectangle
+    doc.setFont('helvetica', 'bold');
+    doc.text("Topic", 15, yPos + 8); // Topic title
+    doc.text("Description", 105, yPos + 8); // Description title
+    yPos += 10;
+  
+    // Body rows
+   
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(0, 0, 0); // Black text color
+      doc.setFillColor(255, 255, 255); // White background color
+      doc.rect(10, yPos, 90, 10, 'F'); // Topic cell rectangle
+      doc.rect(100, yPos, 90, 10, 'F'); // Description cell rectangle
+      doc.text(note.topic, 15, yPos + 8); // Topic cell text
+      
+       // Split the description into lines to fit in the cell
+    const descriptionLines = doc.splitTextToSize(note.description, 80);
+
+    const descriptionCellHeight = descriptionLines.length * 7; // Assuming each line height is 7
+
+    descriptionLines.forEach((line, index) => {
+      const padding = 3; // Padding from the top of the cell
+      const lineHeight = 7; // Line height
+      const lineYPos = yPos + 8 + padding + (lineHeight * index);
+      doc.text(line, 105, lineYPos);
+    });
+
+    yPos += descriptionCellHeight > 10 ? descriptionCellHeight : 10;
+    
+    ;
+  
+    doc.save("notes.pdf");
+  };
+  
 
   return (
     <Card sx={{ marginBottom: '1rem' }} >
@@ -95,6 +145,20 @@ const NoteCard = ({ note, onEdit, onDelete }) => {
               </IconButton>
               <IconButton
                 sx={{
+                  backgroundColor: "#6F4FFA",
+                  "&:hover": {
+                    backgroundColor: "#B43535",
+                  },
+                  borderRadius: "1rem",
+                  fontSize: "0.6rem",
+                }}
+                onClick={handleDownloadPDF}
+              >
+                <Download sx={{ color: "white" }} />
+              </IconButton>
+                
+              <IconButton
+                sx={{
                   backgroundColor: "#E44C4C",
                   "&:hover": {
                     backgroundColor: "#B43535",
@@ -106,6 +170,8 @@ const NoteCard = ({ note, onEdit, onDelete }) => {
               >
                 <DeleteIcon sx={{ color: "white" }} />
               </IconButton>
+
+
             </Box>
           </>
         )}
@@ -309,7 +375,6 @@ const Note = () => {
       handleRefreshNotes();
       handleNotification(response);
       return true;
-      // Refresh notes list
     } catch (error) {
       console.error("Error updating note:", error);
       handleNotification(error.response);
@@ -329,7 +394,6 @@ const Note = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      // Include note ID in the URL path
       const response = await axios.delete(
         `http://localhost:8071/note/delete/${note._id}`,
         config
@@ -341,6 +405,10 @@ const Note = () => {
       handleNotification(error.response);
     }
   };
+
+  
+
+    
 
   return (
     <Container maxWidth="md">
@@ -357,8 +425,10 @@ const Note = () => {
             note={note}
             onEdit={handleOnEditNote}
             onDelete={handleOnDeleteNote}
+            
           />
         ))}
+       
       </Box>
     </Container>
   );
