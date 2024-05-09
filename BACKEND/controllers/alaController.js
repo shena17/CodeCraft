@@ -1,3 +1,4 @@
+const ALA = require("../models/ALA.model");
 const User = require("../models/User.model");
 const Tag = require("../models/tag.model");
 const Tutorial = require("../models/tutorialsUser.model");
@@ -19,8 +20,6 @@ const getTags = async (req, res) => {
 const viewTag = async (req, res) => {
   try {
     const tag = await Tag.findById(req.params.id);
-
-    
 
     res.json(tag);
   } catch (err) {
@@ -55,9 +54,82 @@ const viewTutorial = async (req, res) => {
   }
 };
 
+// CREATE ALA SYSTEM
+const createAla = async (req, res) => {
+  try {
+    const { tags } = req.body;
+    const tagIds = [];
+
+    for (const tagName of tags) {
+      // Find the tag by name
+      const tag = await Tag.findOne({ tagname: tagName });
+
+      if (!tag) {
+        // If tag not found, handle the error accordingly
+        return res.status(404).json(`Tag "${tagName}" not found`);
+      }
+
+      // Push the tag ID to the tagIds array
+      tagIds.push(tag._id);
+    }
+
+    // Search for an existing document with the given _id
+    const existingALA = await ALA.findById(req.user.id);
+
+    if (existingALA) {
+      updateAla(req, res);
+    } else {
+      // If document does not exist, create a new document
+      const newALA = new ALA({
+        _id: req.user.id,
+        userId: req.user.id,
+        tags: tagIds, // Store all tag IDs in the tagIds array
+      });
+      await newALA.save();
+      res.status(201).json(ala);
+    }
+  } catch (err) {
+    res.status(400).json("Error: " + err);
+  }
+};
+
+// UPDATE TAGS IN ALA ARRAY
+const updateAla = async (req, res) => {
+  try {
+    const { tags } = req.body;
+    const tagIds = [];
+
+    // Iterate over each tag name in the array
+    for (const tagName of tags) {
+      // Find the tag by name
+      const tag = await Tag.findOne({ tagname: tagName });
+
+      if (!tag) {
+        // If tag not found, handle the error accordingly
+        return res.status(404).json(`Tag "${tagName}" not found`);
+      }
+
+      // Push the tag ID to the tagIds array
+      tagIds.push(tag._id);
+    }
+    // Find the document by its _id and update the tags array
+    const updatedALA = await ALA.findByIdAndUpdate(
+      req.user.id,
+      { $addToSet: { tags: { $each: tagIds } } }, // Add new tags to the existing tags array
+      { new: true } // Return the updated document
+    );
+
+    return res.status(200).json(updatedALA);
+  } catch (err) {
+    res.status(400).json("Error: " + err);
+  }
+};
+
 module.exports = {
   getTags,
   viewTag,
   getTutorials,
   viewTutorial,
+  createAla,
+  updateAla,
 };

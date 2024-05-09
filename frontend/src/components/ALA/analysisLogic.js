@@ -1,6 +1,6 @@
 import predefinedPatterns from "./ayalysisPatterns.json";
 
-export function analyzeCode(code) {
+export function analyzeCode(code, language) {
   // Perform the analysis for each predefined pattern
   const analysisResults = {};
 
@@ -11,11 +11,15 @@ export function analyzeCode(code) {
     const matches = code.match(pattern);
 
     // Store the analysis result for the current pattern
-    analysisResults[patternName] = {
+    const result = (analysisResults[patternName] = {
       containsMatch: !!matches, // Check if any matches were found
       matchCount: matches ? matches.length : 0, // Count the number of matches
-    };
+    });
+
+    if (result.containsMatch) {
+      // alert(`${language} Code contains ${patternName}`);
+    }
   });
 
-  return analysisResults;
+  // return analysisResults;
 }
