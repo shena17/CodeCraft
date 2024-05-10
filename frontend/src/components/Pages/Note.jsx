@@ -18,6 +18,57 @@ import Notification from "../DispayComponents/Notification";
 import { useNavigate } from "react-router-dom";
 import { securityMiddleware } from '../../middleware/securityMiddleware';
 import jsPDF from "jspdf";
+import { Input } from "@mui/base";
+import { SearchOutlined, DownloadOutlined } from '@ant-design/icons';
+import SearchIcon from "@mui/icons-material/Search";
+import { styled, alpha } from "@mui/material/styles";
+import InputBase from "@mui/material/InputBase";
+
+
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: "10px",
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(1),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  width: "40%",
+  borderRadius: "10px",
+  border: "1px solid var(--gray)",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    [theme.breakpoints.up("sm")]: {
+      width: "18ch",
+      "&:focus": {
+        width: "28ch",
+      },
+    },
+  },
+}));
 
 const NoteCard = ({ note, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -39,7 +90,7 @@ const NoteCard = ({ note, onEdit, onDelete }) => {
   const handleSaveEdit = async () => {
     const response = await onEdit(note, updatedTopic, updatedDescription);
     if (response === true) {
-      setIsEditing(false);
+      setIsEditing(false);  
     }
   };
 
@@ -242,6 +293,8 @@ const NoteForm = ({ onAddNote }) => {
 };
 
 const Note = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredNotes, setFilteredNotes] = useState([]);
   const [notes, setNotes] = useState([]);
   const [notify, setNotify] = useState({
     isOpen: false,
@@ -257,6 +310,8 @@ const Note = () => {
       return;
     }
   }, [navigate]);
+
+
   useEffect(() => {
     async function fetchNotes() {
       try {
@@ -282,6 +337,10 @@ const Note = () => {
     fetchNotes();
   }, []);
 
+
+
+
+  
   const handleNotification = (response) => {
     let messageType = "";
     if (response.status === 200) {
@@ -406,6 +465,20 @@ const Note = () => {
     }
   };
 
+
+  useEffect(() => {
+    // Filter notes based on search term
+    const filtered = notes.filter((note) =>
+      note.topic.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredNotes(filtered);
+  }, [searchTerm, notes]);
+
+  const handleSearch = (event) => {
+    
+    setSearchTerm(event.target.value);
+  };
+
   
 
     
@@ -417,20 +490,37 @@ const Note = () => {
         <Typography variant="h4" gutterBottom color={"#005597"}>
           My Notes
         </Typography>
+        
         <Notification notify={notify} setNotify={setNotify} />
         <NoteForm onAddNote={handleOnAddNote} />
-        {notes.map((note) => (
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search Notes"
+            inputProps={{ "aria-label": "search" }}
+            onChange={handleSearch}
+          />
+        </Search>
+          
+        <div style={{ marginTop: "20px" }}>
+          {filteredNotes.map((note) => (
           <NoteCard
             key={note._id}
             note={note}
             onEdit={handleOnEditNote}
             onDelete={handleOnDeleteNote}
-            
           />
         ))}
+
+      </div>
        
       </Box>
+      
     </Container>
+
+    
   );
 };
 
