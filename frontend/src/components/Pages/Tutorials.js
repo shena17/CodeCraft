@@ -8,7 +8,10 @@ import { Button } from "react-bootstrap";
 import html from "../../images/html.png";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import { Link } from "@mui/material";
@@ -85,6 +88,7 @@ export default function Tutorials() {
   };
 
   const [clicked, setClicked] = useState(false);
+
 
 
   useEffect(() => {
@@ -204,6 +208,7 @@ export default function Tutorials() {
       </div>
 
       {/* BODY */}
+
       {isSearch ? (
         <div className="cardList">
           <div className="topic topic-intro pageIntro">
@@ -365,6 +370,7 @@ export default function Tutorials() {
           onChange={handlePageChange}
         />
       </div>
+      <Notification notify={notify} setNotify={setNotify} />
     </div>
   );
 }
