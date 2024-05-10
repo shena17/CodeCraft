@@ -11,7 +11,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import { Link } from "@mui/material";
-import TutotialLogo from "../ALA/TutotialLogo";
+import TutorialLogo from "../ALA/TutorialLogo";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -208,7 +208,7 @@ export default function Tutorials() {
           {currentTutorials.map((tut, index) => (
             <div className="pageCard anim">
               {/* <img src={html} alt="Tutorial" className="tutLogo" /> */}
-              <TutotialLogo tags={tut.tags} />
+              <TutorialLogo tags={tut.tags} />
               <div className="rightCard">
                 <p className="cardTopic">{tut.heading}</p>
                 <p className="cardDesc">{tut.description}</p>
@@ -256,7 +256,7 @@ export default function Tutorials() {
               <div className="cardList">
                 {suggested.slice(0, compactView ? 2 : 5).map((tut, index) => (
                   <div className="pageCard anim">
-                    <TutotialLogo tags={tut.tags} />
+                    <TutorialLogo tags={tut.tags} />
                     <div className="rightCard">
                       <p className="cardTopic">{tut.heading}</p>
                       <p className="cardDesc">{tut.description}</p>
@@ -313,7 +313,7 @@ export default function Tutorials() {
           <div className="cardList">
             {currentTutorials.map((tut, index) => (
               <div className="pageCard anim">
-                <TutotialLogo tags={tut.tags} />
+                <TutorialLogo tags={tut.tags} />
                 <div className="rightCard">
                   <p className="cardTopic">{tut.heading}</p>
                   <p className="cardDesc">{tut.description}</p>

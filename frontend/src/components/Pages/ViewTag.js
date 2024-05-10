@@ -12,9 +12,11 @@ import pdf from "../../images/pdf.png";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import TutorialLogo from "../ALA/TutorialLogo";
 
 export default function ViewTag() {
   const [tags, setTags] = useState([]);
+  const [tutorials, setTutorials] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
@@ -28,7 +30,8 @@ export default function ViewTag() {
           },
         })
         .then((res) => {
-          setTags(res.data);
+          setTags(res.data.tag);
+          setTutorials(res.data.tutorials);
         })
         .catch((err) => {
           alert(err.message);
@@ -60,47 +63,34 @@ export default function ViewTag() {
       <div className="topic topic-intro pageIntro">TUTORIALS</div>
 
       <div className="cardList">
-        {Array.from(Array(4)).map((_, index) => (
-          <div className="pageCard anim">
-            <img src={html} alt="Tutorial" className="tutLogo" />
+        {tutorials.map((tut, index) => (
+          <div className="pageCard anim" key={index}>
+            <TutorialLogo tags={tut.tags} />
             <div className="rightCard">
-              <p className="cardTopic">HTML Course for Beginners</p>
-              <p className="cardDesc">
-                HTML Fundamentals: A Beginner's Guide to Web Development.
-                Throughout this course, we'll start from the very basics,
-                assuming no prior knowledge of HTML or coding.
-              </p>
+              <p className="cardTopic">{tut.heading}</p>
+              <p className="cardDesc">{tut.description}</p>
               <Stack direction="row" spacing={2}>
-                <Chip
-                  label="HTML"
-                  component="a"
-                  href="#basic-chip"
-                  variant="outlined"
-                  clickable
-                  size="small"
-                  sx={{
-                    padding: "5px",
-                    color: "var(--pink)",
-                    borderColor: "var(--pink)",
-                  }}
-                />
-                <Chip
-                  label="Web Development"
-                  component="a"
-                  href="#basic-chip"
-                  variant="outlined"
-                  clickable
-                  size="small"
-                  sx={{
-                    padding: "5px",
-                    color: "var(--pink)",
-                    borderColor: "var(--pink)",
-                  }}
-                />
+                {tut.tags &&
+                  tut.tags.slice(0, 3).map((tag, index) => (
+                    <Chip
+                      key={index}
+                      label={tag.tag}
+                      component="a"
+                      href={"/viewTag/" + tag._id}
+                      variant="outlined"
+                      clickable
+                      size="small"
+                      sx={{
+                        padding: "5px",
+                        color: "var(--pink)",
+                        borderColor: "var(--pink)",
+                      }}
+                    />
+                  ))}
                 <div className="cardBtnArea">
                   <Button
                     variant="outline-light"
-                    href="/viewTutorial"
+                    href={"/viewTutorial/" + tut._id}
                     className="header-btn register viewTutBtn"
                   >
                     View Tutorial

@@ -42,8 +42,7 @@ import EditTutorials from "./components/Admin/EditTutorials";
 import Resource from "./components/Admin/Resource";
 import Tutorial from "./components/Admin/Tutorial";
 import Tag from "./components/Admin/Tag";
-
-
+import Progress from "./components/Pages/Progress";
 
 export default function App() {
   return (
@@ -89,6 +88,7 @@ function AppContent() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="/note" element={<Note />} />
+        <Route path="/progress" element={<Progress />} />
         <Route path="/mylist" element={<MyList />} />
         <Route path="/updateAccount" element={<UpdateAccount />} />
         <Route path="/admin/tags/edit/:id" element={<EditTags />} />
@@ -98,26 +98,25 @@ function AppContent() {
         <Route path="/LiveChat" element={<LiveChat />} />
         <Route path="/tutorials" element={<Tutorials />} />
         <Route path="/viewTutorial/:id" element={<ViewTutorial />} />
-        <Route path="/tags" element={<Tag/>} />
+        <Route path="/userTags" element={<Tags />} />
         <Route path="/viewTag/:id" element={<ViewTag />} />
         <Route path="/codeEditor" element={<CodeEditor />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/userdashboard" element={<UserDashboard />} />
-        <Route path="/admin/forums/add" element={<AddForum/>}/>
-        <Route path="/admin/forums/edit/:id" element={<EditForums/>}/>
-        <Route path="/admin/resources/add" element={<AddResource/>}/>
-        <Route path="/admin/resources/edit/:id" element={<EditResources/>}/>
-        <Route path="/admin/tutorials/add" element={<AddTutorial/>}/>
-        <Route path="/admin/tutorials/edit/:id" element={<EditTutorials/>}/>
-        
+        <Route path="/admin/forums/add" element={<AddForum />} />
+        <Route path="/admin/forums/edit/:id" element={<EditForums />} />
+        <Route path="/admin/resources/add" element={<AddResource />} />
+        <Route path="/admin/resources/edit/:id" element={<EditResources />} />
+        <Route path="/admin/tutorials/add" element={<AddTutorial />} />
+        <Route path="/admin/tutorials/edit/:id" element={<EditTutorials />} />
+
         {/* Admin Panel */}
         <Route path="/admin/*" element={<Dashboard />}>
           <Route path="home" element={<Home />} />
           <Route path="forums" element={<Forums />} />
-          <Route path="tags" element={<Tags />}/>
+          <Route path="tags" element={<Tags />} />
           <Route path="resources" element={<Resource />} />
           <Route path="tutorials" element={<Tutorial />} />
-
 
           {/* Other nested routes */}
         </Route>
