@@ -5,20 +5,13 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { Button } from "react-bootstrap";
-import html from "../../images/html.png";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import { Link } from "@mui/material";
 import TutotialLogo from "../ALA/TutotialLogo";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import Download from "@mui/icons-material/Download";
-import IconButton from "@mui/material/IconButton";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

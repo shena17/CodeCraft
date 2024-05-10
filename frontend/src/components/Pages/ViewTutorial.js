@@ -11,6 +11,9 @@ import Grid from "@mui/material/Grid";
 import pdf from "../../images/pdf.png";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 export default function ViewTutorial() {
   const [tutorials, setTutorials] = useState([]);
@@ -41,7 +44,10 @@ export default function ViewTutorial() {
       <div className="main-top">
         <div className="tutContainer">
           <div className="home-main container pageMain">
-            <div className="tutTopBar container mt-5">
+            <div
+              className="tutTopBar container mt-5"
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
               <Button
                 variant="outline-light"
                 onClick={() => window.history.back()}
@@ -50,6 +56,9 @@ export default function ViewTutorial() {
                 <ArrowBackIosNewIcon fontSize="small" className="me-1" />
                 Back
               </Button>
+              <IconButton aria-label="delete">
+                <BookmarkBorderIcon fontSize="large" sx={{ color: "red" }} />
+              </IconButton>
             </div>
             <img src={html} alt="Tutorial" className="viewTutLogo mt-5" />
             <div className="topic topic-main pageTopic mb-0 mt-3">
