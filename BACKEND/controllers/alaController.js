@@ -55,6 +55,7 @@ const viewTutorial = async (req, res) => {
   }
 };
 
+// CREATING OR UPDATING DOCUMENT
 const createAla = async (req, res) => {
   try {
     const { tags } = req.body;
@@ -62,6 +63,7 @@ const createAla = async (req, res) => {
     let updateSuccessful = false;
     const uniqueTagIds = new Set(); // Set to store unique tag IDs
     let _id; // Declare _id variable here
+    const toUpdate = [];
 
     for (const tagName of tags) {
       // Find the tag by name
@@ -71,59 +73,33 @@ const createAla = async (req, res) => {
         return res.status(404).json(`Tag "${tagName}" not found`);
       }
 
-      // Check if the tag ID is already in the uniqueTagIds set
-      if (!uniqueTagIds.has(tag._id.toString())) {
-        // If the tag ID is not in the set, push the tag object to tagObjects
-        _id = new mongoose.Types.ObjectId(); // Corrected usage
-        tagObjects.push({ _id, tag: tag._id, count: 1 });
-        uniqueTagIds.add(tag._id.toString()); // Add the tag ID to the set
-      } else {
-        // If the tag ID is already in the set, you may want to handle it here
-        // For now, let's just log a message
-        console.log(`Tag "${tagName}" already exists in tagObjects array.`);
-      }
+      _id = new mongoose.Types.ObjectId(); // Corrected usage
+      tagObjects.push({ _id, tag: tag._id, count: 1 });
     }
 
     // Search for an existing document with the given _id
     let existingALA = await ALA.findById(req.user.id);
 
     if (existingALA) {
-      const updatedTags = await mergeDuplicateTags(existingALA.tags);
-
-      // Update the document with the updatedTags array
-      existingALA = await ALA.findByIdAndUpdate(
-        req.user.id,
-        { tags: updatedTags },
-        { new: true }
-      );
-
       // UPDATE EXISTING DOCUMENT
       for (const alaTags of existingALA.tags) {
-        const existingTag = tagObjects.find(
+        const existingTag = tagObjects.findIndex(
           (obj) => String(obj.tag) === String(alaTags.tag)
         );
 
-        if (existingTag) {
+        if (existingTag !== -1) {
           alaTags.count++;
           await existingALA.save();
-          updateSuccessful = true;
-        } else {
-          await ALA.findByIdAndUpdate(
-            req.user.id,
-            {
-              $addToSet: {
-                tags: {
-                  _id,
-                  tag: alaTags.tag,
-                  count: 1,
-                },
-              },
-            }, // Add new tags to the existing tags array
-            { new: true } // Return the updated document
-          );
+          tagObjects.splice(existingTag, 1);
           updateSuccessful = true;
         }
       }
+
+      for (const newTag of tagObjects) {
+        existingALA.tags.push(newTag);
+      }
+
+      await existingALA.save();
 
       if (updateSuccessful) {
         return res.status(200).json("Update successful");
@@ -146,56 +122,49 @@ const createAla = async (req, res) => {
   }
 };
 
-const mergeDuplicateTags = async (tags) => {
-  const tagIds = new Set();
-  const updatedTags = [];
-
-  for (const tag of tags) {
-    if (!tagIds.has(tag.tag.toString())) {
-      tagIds.add(tag.tag.toString());
-      updatedTags.push(tag);
-    } else {
-      const existingTag = updatedTags.find(
-        (t) => String(t.tag) === String(tag.tag)
-      );
-      existingTag.count += tag.count;
-    }
-  }
-
-  return updatedTags;
-};
-
-// const mergeDuplicateTags = async (tags) => {
-//   const duplicateIds = new Set();
-
-//   // Find duplicate IDs
-//   tags.forEach((tag, index) => {
-//     if (tags.findIndex((t) => t.tag === tag.tag) !== index) {
-//       duplicateIds.add(tag.tag);
-//     }
-//   });
-
-//   // Remove duplicate tags from the array
-//   const updatedTags = tags.filter((tag) => !duplicateIds.has(tag.tag));
-
-//   return updatedTags;
-// };
-
-//GET ALL TUTORIALS
+//GET ALL TUTORIALS BY USER
 const getAla = async (req, res) => {
   try {
-    const alaDocuments = await ALA.find().populate("tags.tag").exec();
-    const uniqueAlaDocuments = alaDocuments.map((ala) => {
-      const uniqueTags = Array.from(
-        new Set(ala.tags.map((tag) => tag._id.toString()))
-      ).map((tagId) => {
-        return ala.tags.find((tag) => tag._id.toString() === tagId);
-      });
-      return { ...ala.toObject(), tags: uniqueTags };
-    });
-    res.json(uniqueAlaDocuments);
-  } catch (err) {
-    res.status(400).json("Error: " + err);
+    // Find ALA document by user id
+    const alaDocument = await ALA.findById(req.user.id);
+
+    // Check if ALA document exists
+    if (!alaDocument) {
+      return res
+        .status(404)
+        .json({ error: `ALA document with id ${req.user.id} not found` });
+    }
+
+    // Sort tags by count in descending order
+    alaDocument.tags.sort((a, b) => b.count - a.count);
+
+    // Select top 5 tags
+    const topTags = alaDocument.tags.map((tag) => tag.tag._id);
+
+    // Find tutorials that contain any of the top tags and limit to at least 6 tutorials
+    const tutorials = await Tutorial.find({ tags: { $in: topTags } })
+      .limit(6)
+      .populate("tags")
+      .exec();
+
+    // // Calculate the total count of tags
+    // const totalTags = alaDocument.tags.reduce((acc, tag) => acc + tag.count, 0);
+
+    // // Calculate the average count of tags
+    // const averageCount = totalTags / alaDocument.tags.length;
+
+    // // Find tutorials that contain tags with counts close to the average count
+    // const tutorials = await Tutorial.find({
+    //   "tags.count": { $gt: averageCount - 1, $lt: averageCount + 1 }
+    // }).limit(6)
+    //   .populate("tags")
+    //   .exec();
+
+    // Return the list of tutorials
+    return res.status(200).json(tutorials);
+  } catch (error) {
+    console.error("Error finding ALA document by id:", error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 

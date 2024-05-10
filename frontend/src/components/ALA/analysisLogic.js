@@ -41,9 +41,9 @@ export async function analyzeCode(code, language) {
         },
       }
     );
-    alert("Notification sent successfully:", response.data);
+    console.log("Notification sent successfully:", response.data);
   } catch (error) {
-    alert("Error sending notification:", error);
+    console.log("Error sending notification:", error);
     console.log("Error sending notification:", error.response);
   }
 
