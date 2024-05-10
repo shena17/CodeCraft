@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
 import Notification from "./DispayComponents/Notification";
+import {jwtDecode} from 'jwt-decode';
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [notify, setNotify] = useState({
@@ -20,6 +22,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -44,7 +47,17 @@ export default function Login() {
             window.localStorage.setItem("token", res.data);
             window.localStorage.setItem("LoggedIn", true);
             sessionStorage.setItem("showmsg", "1");
-            window.location.href = "./";
+            const token = res.data;
+            // Parse the token to access its properties
+            const decodedToken = jwtDecode(token);
+            // Check if the role is admin
+            if (decodedToken.role === "admin") {
+              // Navigate to admin home page
+              navigate("/admin/home");
+            } else {
+              // Navigate to default page
+              navigate("/");
+            }
           })
           .catch((err) => {
             if (

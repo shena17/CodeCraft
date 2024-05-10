@@ -6,7 +6,7 @@ import { PDFDownloadLink, Document, Page, View, Text } from '@react-pdf/renderer
 import { Link } from "react-router-dom";
 import DeleteButtonTag from "./DeleteButtonTag";
 
-export default function Tags() {
+export default function Tag() {
   const [tags, setTags] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
