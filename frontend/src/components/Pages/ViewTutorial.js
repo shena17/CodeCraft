@@ -61,7 +61,7 @@ export default function ViewTutorial() {
                 tutorials.tags.map((tag, index) => (
                   <Chip
                     key={index}
-                    label={tag.tagname}
+                    label={tag.tag}
                     component="a"
                     href={"/viewTag/" + tag._id}
                     variant="outlined"

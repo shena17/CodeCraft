@@ -1,7 +1,7 @@
 const User = require("../models/User.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Verification = require('../models/Verification.model');
+const Verification = require("../models/Verification.model");
 
 //        !!!!!!!!   IMPORTANT     !!!!!!!!!
 // GET USER ROLE
@@ -130,54 +130,6 @@ const getNewToken = async (req, res) => {
   }
 };
 
-//Get user
-/*const getUser = async (req, res) => {
-  const {
-    _id,
-    fullName,
-    email,
-    username,
-    password,
-    role,
-    dob,
-    designation,
-    nic,
-    etfNo,
-    epfNo,
-    address,
-    isOnline,
-    contact,
-    leaveDates,
-    creditPoints,
-    grade,
-    baseSalary,
-    totCP,
-  } = await User.findById(req.user.id);
-
-  res.status(200).json({
-    id: _id,
-    fullName,
-    email,
-    username,
-    password,
-    role,
-    dob,
-    designation,
-    nic,
-    etfNo,
-    epfNo,
-    address,
-    isOnline,
-    contact,
-    leaveDates,
-    creditPoints,
-    grade,
-    baseSalary,
-    totCP,
-  });
-};
-*/
-
 async function getUser(req, res) {
   try {
     // Extract user ID from req.user
@@ -196,8 +148,6 @@ async function getUser(req, res) {
     res.status(500).json({ message: "Internal Server Error" });
   }
 }
-
-
 
 async function updateUser(req, res) {
   try {
@@ -285,48 +235,49 @@ async function updatePassword(req, res) {
 
 const forgotPasswordReset = async (req, res) => {
   try {
-      // Unpack parameters from request body
-      const { email, verificationCode, newPassword } = req.body;
+    // Unpack parameters from request body
+    const { email, verificationCode, newPassword } = req.body;
 
-      // Find the user by email
-      const user = await User.findOne({ email });
+    // Find the user by email
+    const user = await User.findOne({ email });
 
-      // Check if the user exists
-      if (!user) {
-        
-          return res.status(404).json({ message: "User not found." });
-      }
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
 
-      // Find the verification object associated with the user
-      const verification = await Verification.findOne({ user: user._id });
+    // Find the verification object associated with the user
+    const verification = await Verification.findOne({ user: user._id });
 
-      // Check if the verification object exists
-      if (!verification) {
-        
-          return res.status(404).json({ message: "Verification not found for the user." });
-      }
+    // Check if the verification object exists
+    if (!verification) {
+      return res
+        .status(404)
+        .json({ message: "Verification not found for the user." });
+    }
 
-      // Check if the verification code matches
-      if (verification.forgotPasswordVerificationCode !== verificationCode) {
-        
-          return res.status(400).json({ message: "Invalid verification code." });
-      }
+    // Check if the verification code matches
+    if (verification.forgotPasswordVerificationCode !== verificationCode) {
+      return res.status(400).json({ message: "Invalid verification code." });
+    }
 
-      // Encrypt new password
-      const salt = await bcrypt.genSalt(10);
-      const hashedPwd = await bcrypt.hash(newPassword, salt);
+    // Encrypt new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPwd = await bcrypt.hash(newPassword, salt);
 
-      // Update user's password
-      user.password = hashedPwd;
+    // Update user's password
+    user.password = hashedPwd;
 
-      // Save the updated user
-      await user.save();
+    // Save the updated user
+    await user.save();
 
-      // Respond with success message
-      return res.status(200).json({ message: "Password reset successfully." });
+    // Respond with success message
+    return res.status(200).json({ message: "Password reset successfully." });
   } catch (error) {
-      console.error("Error resetting password:", error);
-      return res.status(500).json({ error: "Something went wrong while resetting the password." });
+    console.error("Error resetting password:", error);
+    return res
+      .status(500)
+      .json({ error: "Something went wrong while resetting the password." });
   }
 };
 
@@ -364,8 +315,6 @@ const deleteEmployee = async (req, res) => {
     });
   }
 };
-
-
 
 //Update User details
 const updateEmployee = async (req, res) => {

@@ -13,7 +13,12 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import Notification from "../DispayComponents/Notification";
+import Pagination from "@mui/material/Pagination";
+import { Link } from "@mui/material";
+import TutotialLogo from "../ALA/TutotialLogo";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import Download from "@mui/icons-material/Download";
+import IconButton from '@mui/material/IconButton';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -47,13 +52,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   border: "1px solid var(--gray)",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
-      width: "18ch",
+      width: "20ch",
       "&:focus": {
-        width: "28ch",
+        width: "32ch",
       },
     },
   },
@@ -61,50 +65,31 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Tutorials() {
   const [tutorials, setTutorials] = useState([]);
-  const [notify, setNotify] = useState({
-    isOpen: false,
-    message: "",
-    type: "",
-  });
+  const [filteredTutorials, setFilteredTutorials] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isSearch, setIsSearch] = useState(false);
+  const [suggested, setSuggested] = useState([]);
+  const [suggestions, setSuggestions] = useState(false);
+  const token = localStorage.getItem("token");
+  const tutorialsPerPage = 6;
 
-  const addToMyList = (tutorial) => {
-    console.log(tutorial)
-    const token = window.localStorage.getItem("token");
-    if (!token) {
-      throw new Error("No token found");
-    }
-
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    axios
-      .post(
-        "http://localhost:8071/mylist/create",
-        {
-          tutorialsRef: tutorial._id,
-        },
-        config
-      )
-      .then((res) => {
-        setNotify({
-          isOpen: true,
-          message: "Tutorial added to your list successfully!",
-          type: "success",
-        });
-        console.log(res.data);
-      })
-      .catch((err) => {
-        setNotify({
-          isOpen: true,
-          message: err.response.data.message,
-          type: "error",
-        });
-        console.error(err.response.data.message);
-      });
+  // Function to handle page change
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
+
+  // Compact view by default, only show 2 tutorials
+  const [compactView, setCompactView] = useState(true);
+
+  // Toggle between compact and expanded view
+  const toggleView = () => {
+    setCompactView(!compactView);
+  };
+
+  const [clicked, setClicked] = useState(false);
+
+
 
   useEffect(() => {
     function getTutorials() {
@@ -120,6 +105,70 @@ export default function Tutorials() {
 
     getTutorials();
   }, []);
+
+  useEffect(() => {
+    function getSuggested() {
+      axios
+        .get("http://localhost:8071/ala/getAla", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setSuggested(res.data);
+          setSuggestions(true);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+
+    getSuggested();
+  }, []);
+
+  // Function to filter tutorials based on search query
+  const filterTutorials = () => {
+    const filtered = tutorials.filter((tutorial) => {
+      const headingMatch = tutorial.heading
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const descriptionMatch = tutorial.description
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const tagMatch = tutorial.tags.some((tag) =>
+        tag.tag.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      return headingMatch || descriptionMatch || tagMatch;
+    });
+    setFilteredTutorials(filtered);
+  };
+
+  // Function to handle search input change
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchInputFocus = () => {
+    setIsSearch(true);
+  };
+
+  // Function to handle search input blur
+  const handleSearchInputBlur = () => {
+    setIsSearch(false);
+  };
+
+  useEffect(() => {
+    // Call filterTutorials function whenever the search query changes
+    filterTutorials();
+  }, [searchQuery, tutorials]);
+
+  // Calculate the index range of tutorials to display based on the current page
+  const indexOfLastTutorial = currentPage * tutorialsPerPage;
+  const indexOfFirstTutorial = indexOfLastTutorial - tutorialsPerPage;
+  const currentTutorials = filteredTutorials.slice(
+    indexOfFirstTutorial,
+    indexOfLastTutorial
+  );
 
   return (
     <div className="mb-5">
@@ -147,179 +196,50 @@ export default function Tutorials() {
                 <StyledInputBase
                   placeholder="Search Tutorials"
                   inputProps={{ "aria-label": "search" }}
+                  value={searchQuery}
+                  onChange={handleSearchInputChange}
+                  onFocus={handleSearchInputFocus}
+                  onBlur={handleSearchInputBlur}
                 />
               </Search>
-            </div>
-            <div className="mt-5 mb-3 pageBtnGroup">
-              <Button
-                variant="outline-light"
-                href="#"
-                className="header-btn login reg-company-btn learn-more pageBtn"
-              >
-                All Languages
-              </Button>
-              <Button
-                variant="outline-light"
-                href="#"
-                className="header-btn login reg-company-btn learn-more pageBtn"
-              >
-                Data Science
-              </Button>
-              <Button
-                variant="outline-light"
-                href="#"
-                className="header-btn login reg-company-btn learn-more pageBtn"
-              >
-                Web Developmenet
-              </Button>
-              <Button
-                variant="outline-light"
-                href="#"
-                className="header-btn login reg-company-btn learn-more pageBtn"
-              >
-                Machine Learning
-              </Button>
             </div>
           </div>
         </div>
       </div>
-      {/* BODY */}
-      <div className="topic topic-intro pageIntro">
-        SUGGESTED BASED ON YOUR LEARNING
-      </div>
-      <div className="cardList">
-        {tutorials.map((tut, index) => (
-          <div className="pageCard anim">
-            <img src={html} alt="Tutorial" className="tutLogo" />
-            <div className="rightCard">
-              <p className="cardTopic">{tut.heading}</p>
-              <p className="cardDesc">
-                HTML Fundamentals: A Beginner's Guide to Web Development.
-                Throughout this course, we'll start from the very basics,
-                assuming no prior knowledge of HTML or coding.
-              </p>
-              <Stack direction="row" spacing={2}>
-                {tut.tags &&
-                  tut.tags.map((tag, index) => (
-                    <Chip
-                      key={index}
-                      label={tag.tagname}
-                      component="a"
-                      href={"/viewTag/" + tag._id}
-                      variant="outlined"
-                      clickable
-                      size="small"
-                      sx={{
-                        padding: "5px",
-                        color: "var(--pink)",
-                        borderColor: "var(--pink)",
-                      }}
-                    />
-                  ))}
-                <Box sx={{ flexGrow: 1 }} />
-                <Stack direction="row" alignItems="center">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: 30,
-                      height: 30,
-                      borderRadius: "50%",
-                      backgroundColor: "white",
-                      border: "1px solid #7A288A",
-                      "&:hover": {
-                        // Add hover effect
-                        transform: "scale(1.1)",
-                      },
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      size="lg"
-                      color="#7A288A"
-                      cursor="pointer"
-                      onClick={() => addToMyList(tut)}
-                    />
-                  </Box>
-                  <Box sx={{ marginLeft: 2 }}>
-                    <Button
-                      variant="outline-light"
-                      href={"/viewTutorial/" + tut._id}
-                      className="header-btn register viewTutBtn"
-                    >
-                      View Tutorial
-                    </Button>
-                  </Box>
-                </Stack>
-              </Stack>
-            </div>
-          </div>
-        ))}
-      </div>
 
-      <div
-        className="topic topic-intro pageIntro"
-        style={{ marginTop: "80px" }}
-      >
-        MORE TURORIALS
-      </div>
-      <div className="cardList">
-        {tutorials.map((tut, index) => (
-          <div className="pageCard anim">
-            <img src={html} alt="Tutorial" className="tutLogo" />
-            <div className="rightCard">
-              <p className="cardTopic">{tut.heading}</p>
-              <p className="cardDesc">
-                HTML Fundamentals: A Beginner's Guide to Web Development.
-                Throughout this course, we'll start from the very basics,
-                assuming no prior knowledge of HTML or coding.
-              </p>
-              <Stack direction="row" spacing={2}>
-                {tut.tags &&
-                  tut.tags.map((tag, index) => (
-                    <Chip
-                      key={index}
-                      label={tag.tagname}
-                      component="a"
-                      href={"/viewTag/" + tag._id}
-                      variant="outlined"
-                      clickable
-                      size="small"
-                      sx={{
-                        padding: "5px",
-                        color: "var(--pink)",
-                        borderColor: "var(--pink)",
-                      }}
-                    />
-                  ))}
-                <Box sx={{ flexGrow: 1 }} />
-                <Stack direction="row" alignItems="center">
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: 30,
-                      height: 30,
-                      borderRadius: "50%",
-                      backgroundColor: "white",
-                      border: "1px solid #7A288A",
-                      "&:hover": {
-                        // Add hover effect
-                        transform: "scale(1.1)",
-                      },
-                    }}
-                  >
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      size="lg"
-                      color="#7A288A"
-                      cursor="pointer"
-                      onClick={() => addToMyList(tut)}
-                    />
-                  </Box>
-                  <Box sx={{ marginLeft: 2 }}>
+      {/* BODY */}
+
+      {isSearch ? (
+        <div className="cardList">
+          <div className="topic topic-intro pageIntro">
+            SEARCH FOR TUTORIALS
+          </div>
+          {currentTutorials.map((tut, index) => (
+            <div className="pageCard anim">
+              {/* <img src={html} alt="Tutorial" className="tutLogo" /> */}
+              <TutotialLogo tags={tut.tags} />
+              <div className="rightCard">
+                <p className="cardTopic">{tut.heading}</p>
+                <p className="cardDesc">{tut.description}</p>
+                <Stack direction="row" spacing={2}>
+                  {tut.tags &&
+                    tut.tags.slice(0, 3).map((tag, index) => (
+                      <Chip
+                        key={index}
+                        label={tag.tag}
+                        component="a"
+                        href={"/viewTag/" + tag._id}
+                        variant="outlined"
+                        clickable
+                        size="small"
+                        sx={{
+                          padding: "5px",
+                          color: "var(--pink)",
+                          borderColor: "var(--pink)",
+                        }}
+                      />
+                    ))}
+                  <div className="cardBtnArea">
                     <Button
                       variant="outline-light"
                       href={"/viewTutorial/" + tut._id}
@@ -327,12 +247,128 @@ export default function Tutorials() {
                     >
                       View Tutorial
                     </Button>
-                  </Box>
+                  </div>
                 </Stack>
-              </Stack>
+              </div>
             </div>
+          ))}
+        </div>
+      ) : (
+        <>
+          {" "}
+          {suggestions ? (
+            <>
+              {" "}
+              <div className="topic topic-intro pageIntro">
+                SUGGESTED BASED ON YOUR LEARNING
+              </div>
+              <div className="cardList">
+                {suggested.slice(0, compactView ? 2 : 5).map((tut, index) => (
+                  <div className="pageCard anim">
+                    <TutotialLogo tags={tut.tags} />
+                    <div className="rightCard">
+                      <p className="cardTopic">{tut.heading}</p>
+                      <p className="cardDesc">{tut.description}</p>
+                      <Stack direction="row" spacing={2}>
+                        {tut.tags &&
+                          tut.tags.slice(0, 3).map((tag, index) => (
+                            <Chip
+                              key={index}
+                              label={tag.tag}
+                              component="a"
+                              href={"/viewTag/" + tag._id}
+                              variant="outlined"
+                              clickable
+                              size="small"
+                              sx={{
+                                padding: "5px",
+                                color: "var(--pink)",
+                                borderColor: "var(--pink)",
+                              }}
+                            />
+                          ))}
+                        <div className="cardBtnArea">
+                          <Button
+                            variant="outline-light"
+                            href={"/viewTutorial/" + tut._id}
+                            className="header-btn register viewTutBtn"
+                          >
+                            View Tutorial
+                          </Button>
+                        </div>
+                      </Stack>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {suggested.length > 2 && (
+                <div className="mt-3 text-center">
+                  <Link
+                    onClick={toggleView}
+                    sx={{ cursor: "pointer", textDecoration: "none" }}
+                  >
+                    {compactView ? "See More" : "See Less"}
+                  </Link>
+                </div>
+              )}
+            </>
+          ) : null}
+          <div
+            className="topic topic-intro pageIntro"
+            style={{ marginTop: "80px" }}
+          >
+            MORE TUTORIALS
           </div>
-        ))}
+
+          <div className="cardList">
+            {currentTutorials.map((tut, index) => (
+              <div className="pageCard anim">
+                <TutotialLogo tags={tut.tags} />
+                <div className="rightCard">
+                  <p className="cardTopic">{tut.heading}</p>
+                  <p className="cardDesc">{tut.description}</p>
+                  <Stack direction="row" spacing={2}>
+                    {tut.tags &&
+                      tut.tags.slice(0, 3).map((tag, index) => (
+                        <Chip
+                          key={index}
+                          label={tag.tag}
+                          component="a"
+                          href={"/viewTag/" + tag._id}
+                          variant="outlined"
+                          clickable
+                          size="small"
+                          sx={{
+                            padding: "5px",
+                            color: "var(--pink)",
+                            borderColor: "var(--pink)",
+                          }}
+                        />
+                      ))}
+                    <div className="cardBtnArea">
+                      <Button
+                        variant="outline-light"
+                        href={"/viewTutorial/" + tut._id}
+                        className="header-btn register viewTutBtn"
+                      >
+                        View Tutorial
+                      </Button>
+                    </div>
+                  </Stack>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Pagination */}
+      <div className="d-flex justify-content-center mt-5">
+        <Pagination
+          count={Math.ceil(filteredTutorials.length / tutorialsPerPage)}
+          color="primary"
+          onChange={handlePageChange}
+        />
       </div>
       <Notification notify={notify} setNotify={setNotify} />
     </div>
