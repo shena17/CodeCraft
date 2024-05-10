@@ -19,7 +19,7 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Header() {
   const [isScrolled, setScrolled] = useState(false);
@@ -82,11 +82,11 @@ function Header() {
               <Nav.Link href="/LiveHome" className="nav-links">
                 Live Editor
               </Nav.Link>
-              <Nav.Link href="/admin/home" className="nav-links">
-                Courses
+              <Nav.Link href="/tutorials" className="nav-links">
+                Tutorials
               </Nav.Link>
-              <Nav.Link href="/aboutus" className="nav-links">
-                About
+              <Nav.Link href="/tags" className="nav-links">
+                Tags
               </Nav.Link>
             </Nav>
 
@@ -147,10 +147,15 @@ function Header() {
                   transformOrigin={{ horizontal: "right", vertical: "top" }}
                   anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                 >
-                  <MenuItem component={Link} to="/userdashboard" onClick={handleClose} className="mb-2">
+                  <MenuItem
+                    component={Link}
+                    to="/userdashboard"
+                    onClick={handleClose}
+                    className="mb-2"
+                  >
                     <Avatar /> Dashboard
                   </MenuItem>
-                  
+
                   <Divider />
                   <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
