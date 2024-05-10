@@ -1,10 +1,10 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { Container, Box, Typography, Card, CardContent } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MyListImage from "../../images/mylist_image.svg";
 import NotebookImage from "../../images/notebook_image.svg";
 import ProfileImage from "../../images/profile_image.svg";
-import { securityMiddleware } from '../../middleware/securityMiddleware';
+import { securityMiddleware } from "../../middleware/securityMiddleware";
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -12,7 +12,6 @@ const UserDashboard = () => {
   const handleCardClick = (route) => {
     navigate(route);
   };
-
 
   useEffect(() => {
     const isAuthUser = securityMiddleware();
@@ -26,8 +25,7 @@ const UserDashboard = () => {
     <Container maxWidth="md">
       <Container style={{ height: "8rem" }} />
       <Box bgcolor="white" mb={10} boxShadow={4} p={3} borderRadius={4}>
-        <Typography variant="h4" gutterBottom color={"#005597"}>
-        </Typography>
+        <Typography variant="h4" gutterBottom color={"#005597"}></Typography>
         <Container sx={{ marginBottom: "1rem" }}>
           <CardContent>
             <Typography
@@ -41,27 +39,7 @@ const UserDashboard = () => {
             {/* Row with three cards */}
             <Box display="flex" justifyContent="space-between" mt={3} gap={2}>
               {/* Card 1 */}
-              <Card
-                sx={{
-                  flex: 1,
-                  cursor: "pointer",
-                  "&:hover": {
-                    boxShadow: "0px 0px 8px rgba(0, 0, 0, 0.5)", // Hover effect
-                  },
-                }}
-                onClick={() => handleCardClick("/mylist")}
-                elevation={4}
-              >
-                <img
-                  src={MyListImage} // Replace with actual image source
-                  style={{ height: 150, width: "100%" }}
-                  alt="My List"
-                />
-                {/* Label */}
-                <Typography variant="subtitle1" align="center">
-                  My List
-                </Typography>
-              </Card>
+
               {/* Card 2 */}
               <Card
                 sx={{
