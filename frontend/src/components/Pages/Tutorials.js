@@ -13,6 +13,9 @@ import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import { Link } from "@mui/material";
 import TutotialLogo from "../ALA/TutotialLogo";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import Download from "@mui/icons-material/Download";
+import IconButton from '@mui/material/IconButton';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -80,6 +83,9 @@ export default function Tutorials() {
   const toggleView = () => {
     setCompactView(!compactView);
   };
+
+  const [clicked, setClicked] = useState(false);
+
 
   useEffect(() => {
     function getTutorials() {
@@ -308,6 +314,7 @@ export default function Tutorials() {
           >
             MORE TUTORIALS
           </div>
+
           <div className="cardList">
             {currentTutorials.map((tut, index) => (
               <div className="pageCard anim">
