@@ -122,26 +122,6 @@ const createAla = async (req, res) => {
   }
 };
 
-// MERGING DUPLICATE TAGS
-const mergeDuplicateTags = async (tags) => {
-  const tagIds = new Set();
-  const updatedTags = [];
-
-  for (const tag of tags) {
-    if (!tagIds.has(tag.tag.toString())) {
-      tagIds.add(tag.tag.toString());
-      updatedTags.push(tag);
-    } else {
-      const existingTag = updatedTags.find(
-        (t) => String(t.tag) === String(tag.tag)
-      );
-      existingTag.count += tag.count;
-    }
-  }
-
-  return updatedTags;
-};
-
 //GET ALL TUTORIALS BY USER
 const getAla = async (req, res) => {
   try {
@@ -159,12 +139,26 @@ const getAla = async (req, res) => {
     alaDocument.tags.sort((a, b) => b.count - a.count);
 
     // Select top 5 tags
-    const topTags = alaDocument.tags.slice(0, 5).map((tag) => tag.tag._id);
+    const topTags = alaDocument.tags.map((tag) => tag.tag._id);
 
-    // Find tutorials that contain any of the top tags
+    // Find tutorials that contain any of the top tags and limit to at least 6 tutorials
     const tutorials = await Tutorial.find({ tags: { $in: topTags } })
+      .limit(6)
       .populate("tags")
       .exec();
+
+    // // Calculate the total count of tags
+    // const totalTags = alaDocument.tags.reduce((acc, tag) => acc + tag.count, 0);
+
+    // // Calculate the average count of tags
+    // const averageCount = totalTags / alaDocument.tags.length;
+
+    // // Find tutorials that contain tags with counts close to the average count
+    // const tutorials = await Tutorial.find({
+    //   "tags.count": { $gt: averageCount - 1, $lt: averageCount + 1 }
+    // }).limit(6)
+    //   .populate("tags")
+    //   .exec();
 
     // Return the list of tutorials
     return res.status(200).json(tutorials);
