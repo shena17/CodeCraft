@@ -21,51 +21,6 @@ export default function Home() {
     type: "",
   });
 
-  // Check token expiry on component mount
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-
-  //   if (token) {
-  //     const decodedToken = jwtDecode(token);
-  //     const currentTime = Date.now() / 1000;
-
-  //     if (decodedToken.exp < currentTime) {
-  //       // Token has expired, clear token and redirect to login
-  //       localStorage.removeItem("token");
-  //       localStorage.removeItem("LoggedIn");
-  //       sessionStorage.setItem("tokenExpired");
-  //       window.location.reload();
-  //     }
-  //   } else {
-  //     // Token not found, redirect to login
-  //     // Token has expired, clear token and redirect to login
-  //     setNotify({
-  //       isOpen: true,
-  //       message: "Session expired, Logged In again!",
-  //       type: "warning",
-  //     });
-  //   }
-
-  //   // LogIn msg
-  //   if (sessionStorage.getItem("showmsg") == 1) {
-  //     setNotify({
-  //       isOpen: true,
-  //       message: "Logged In!",
-  //       type: "success",
-  //     });
-  //     sessionStorage.removeItem("showmsg");
-  //   }
-
-  //   if (sessionStorage.getItem("tokenExpired") == true) {
-  //     setNotify({
-  //       isOpen: true,
-  //       message: "Session expired, Logged In again!",
-  //       type: "warning",
-  //     });
-  //     sessionStorage.removeItem("tokenExpired");
-  //   }
-  // }, []);
-
   //TOOLTIP
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
@@ -99,7 +54,7 @@ export default function Home() {
                 <div className="top-btns">
                   <Button
                     variant="outline-light"
-                    href="/register"
+                    href="/codeEditor"
                     className="header-btn register reg-company-btn"
                   >
                     GET STARTED

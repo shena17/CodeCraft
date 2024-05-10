@@ -4,40 +4,16 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { securityMiddleware } from '../../middleware/securityMiddleware';
-import axios from 'axios';
+import { securityMiddleware } from "../../middleware/securityMiddleware";
+import axios from "axios";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-
-const MyListCard = ({ note, onCodeButtonClick }) => {
-  return (
-    <Box sx={{ marginBottom: "1rem" }}>
-      <Box bgcolor="white" boxShadow={4} p={3} borderRadius={4}>
-        <Typography variant="h6" component="div" color={"#005597"}>
-          {note[0].heading}
-        </Typography>
-        <Typography variant="body2">{note[0].description}</Typography>
-        <Box display="flex" justifyContent="flex-end">
-        <Button
-            onClick={() => onCodeButtonClick(note)}
-            sx={{
-              backgroundColor: "#6F4FFA",
-              "&:hover": {
-                backgroundColor: "#8D75FC",
-              },
-              borderRadius: "1rem",
-              fontSize: "0.6rem",
-              color: "white"
-            }}
-          >
-            View Tutorial
-          </Button>
-        </Box>
-      </Box>
-    </Box>
-  );
-};
+import TutotialLogo from "../ALA/TutotialLogo";
+import Stack from "@mui/material/Stack";
+import Chip from "@mui/material/Chip";
+import "../../styles/tutorials.css";
+import "../../styles/home.css";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -83,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const MyList = () => {
+export default function MyList() {
   const [tutorialList, setTutorialList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
@@ -100,15 +76,17 @@ const MyList = () => {
         Authorization: `Bearer ${token}`,
       },
     };
-    axios.get('http://localhost:8071/mylist/all', config)
-      .then(response => {
+    axios
+      .get("http://localhost:8071/mylist/all", config)
+      .then((response) => {
         setTutorialList(response.data);
+        console.log(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }, [navigate]); // Include navigate in the dependency array
-  
+
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -123,8 +101,10 @@ const MyList = () => {
     filteredList = tutorialList.filter((item) => {
       const searchTerm = searchQuery.toLowerCase();
       return (
-        (item[0].heading && item[0].heading.toLowerCase().includes(searchTerm)) ||
-        (item[0].description && item[0].description.toLowerCase().includes(searchTerm))
+        (item[0].heading &&
+          item[0].heading.toLowerCase().includes(searchTerm)) ||
+        (item[0].description &&
+          item[0].description.toLowerCase().includes(searchTerm))
       );
     });
   }
@@ -133,7 +113,12 @@ const MyList = () => {
     <Container maxWidth="md">
       <Container style={{ height: "8rem" }} />
       <Box bgcolor="white" mb={10} boxShadow={4} p={3} borderRadius={4}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" margin={3}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          margin={3}
+        >
           <Typography variant="h4" gutterBottom color={"#005597"}>
             My List
           </Typography>
@@ -149,16 +134,46 @@ const MyList = () => {
             />
           </Search>
         </Box>
-        {filteredList.map((item) => (
-          <MyListCard
-            key={item._id}
-            note={item}
-            onCodeButtonClick={handleCodeButtonClick}
-          />
-        ))}
+        <div className="cardList">
+          {tutorialList.map((tut, index) => (
+            <div className="pageCard anim">
+              <TutotialLogo tags={tut.tags} />
+              <div className="rightCard">
+                <p className="cardTopic">{tut.heading}</p>
+                <p className="cardDesc">{tut.description}</p>
+                <Stack direction="row" spacing={2}>
+                  {tut.tags &&
+                    tut.tags.slice(0, 3).map((tag, index) => (
+                      <Chip
+                        key={index}
+                        label={tag.tag}
+                        component="a"
+                        href={"/viewTag/" + tag._id}
+                        variant="outlined"
+                        clickable
+                        size="small"
+                        sx={{
+                          padding: "5px",
+                          color: "var(--pink)",
+                          borderColor: "var(--pink)",
+                        }}
+                      />
+                    ))}
+                  <div className="cardBtnArea">
+                    <Button
+                      variant="outline-light"
+                      href={"/viewTutorial/" + tut._id}
+                      className="header-btn register viewTutBtn"
+                    >
+                      View Tutorial
+                    </Button>
+                  </div>
+                </Stack>
+              </div>
+            </div>
+          ))}
+        </div>
       </Box>
     </Container>
   );
-};
-
-export default MyList;
+}
