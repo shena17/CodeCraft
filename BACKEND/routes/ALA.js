@@ -7,7 +7,7 @@ const {
   getTutorials,
   viewTutorial,
   createAla,
-  updateAla,
+  getAla,
 } = require("../controllers/alaController");
 
 // GET ALL TAGS
@@ -25,7 +25,7 @@ router.get("/viewTutorial/:id", protect, viewTutorial);
 // CREATE ALA SYSTEM
 router.post("/createAla", protect, createAla);
 
-// CREATE ALA SYSTEM
-router.put("/updateAla", protect, updateAla);
+//GET ALL TUTORIALS
+router.get("/getAla", protect, getAla);
 
 module.exports = router;
