@@ -1,3 +1,4 @@
+
 "use strict";
 const nodemailer = require("nodemailer");
 const mailObj = require("../templates/email-template");

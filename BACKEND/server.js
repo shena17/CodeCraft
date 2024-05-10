@@ -24,6 +24,7 @@ app.use("/resources", require("./routes/resourcesUser"));
 app.use("/user", require("./routes/User"));
 app.use("/ala", require("./routes/ALA"));
 app.use("/note", require("./routes/Note"));
+app.use("/verification", require("./routes/Verification"));
 
 //Create HTTP server
 const server = http.createServer(app);

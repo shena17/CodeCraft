@@ -10,6 +10,9 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import axios from "axios";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import Download from "@mui/icons-material/Download";
+import IconButton from '@mui/material/IconButton';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -57,6 +60,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Tutorials() {
   const [tutorials, setTutorials] = useState([]);
+  const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
     function getTutorials() {
@@ -224,6 +228,19 @@ export default function Tutorials() {
                   ))}
 
                 <div className="cardBtnArea">
+
+                <IconButton 
+             
+                color={clicked ? "inherit" : "primary"} // Change color to blue when clicked, otherwise inherit
+                aria-label="add to favorites"
+                style={{ marginRight: '8px' }} // Add margin to create space between icon and button
+    
+                onClick={() => setClicked(!clicked)} // Toggle clicked state
+            >
+                <ThumbUpIcon />
+            </IconButton>
+
+
                   <Button
                     variant="outline-light"
                     href={"/viewTutorial/" + tut._id}
