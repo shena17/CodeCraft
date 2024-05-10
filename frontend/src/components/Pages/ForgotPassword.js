@@ -1,9 +1,8 @@
-
 import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Button from "react-bootstrap/Button";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -148,22 +147,15 @@ const ForgotPassword = () => {
             </Stack>
 
             <Stack direction="row" justifyContent="center" mt={4}>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#6F4FFA",
-                  "&:hover": {
-                    backgroundColor: "#8D75FC",
-                  },
-                  borderRadius: "1rem",
-                  fontSize: "0.8rem",
-                  height: "3rem",
-                  width: "100%",
-                }}
-                onClick={formik.handleSubmit}
-              >
-                Submit
-              </Button>
+            <Button
+            variant="bg-danger"
+            type="submit"
+            className="header-btn register browse-btn signin-btn"
+            onClick={formik.handleSubmit}
+          >
+            Submit
+          </Button>
+             
             </Stack>
           </CardContent>
         </Card>

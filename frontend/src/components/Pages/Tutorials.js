@@ -8,11 +8,12 @@ import { Button } from "react-bootstrap";
 import html from "../../images/html.png";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import Download from "@mui/icons-material/Download";
-import IconButton from '@mui/material/IconButton';
+import Notification from "../DispayComponents/Notification";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -60,7 +61,50 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function Tutorials() {
   const [tutorials, setTutorials] = useState([]);
-  const [clicked, setClicked] = useState(false);
+  const [notify, setNotify] = useState({
+    isOpen: false,
+    message: "",
+    type: "",
+  });
+
+  const addToMyList = (tutorial) => {
+    console.log(tutorial)
+    const token = window.localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found");
+    }
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    axios
+      .post(
+        "http://localhost:8071/mylist/create",
+        {
+          tutorialsRef: tutorial._id,
+        },
+        config
+      )
+      .then((res) => {
+        setNotify({
+          isOpen: true,
+          message: "Tutorial added to your list successfully!",
+          type: "success",
+        });
+        console.log(res.data);
+      })
+      .catch((err) => {
+        setNotify({
+          isOpen: true,
+          message: err.response.data.message,
+          type: "error",
+        });
+        console.error(err.response.data.message);
+      });
+  };
 
   useEffect(() => {
     function getTutorials() {
@@ -144,57 +188,76 @@ export default function Tutorials() {
         SUGGESTED BASED ON YOUR LEARNING
       </div>
       <div className="cardList">
-        {Array.from(Array(2)).map((_, index) => (
+        {tutorials.map((tut, index) => (
           <div className="pageCard anim">
             <img src={html} alt="Tutorial" className="tutLogo" />
             <div className="rightCard">
-              <p className="cardTopic">HTML Course for Beginners</p>
+              <p className="cardTopic">{tut.heading}</p>
               <p className="cardDesc">
                 HTML Fundamentals: A Beginner's Guide to Web Development.
                 Throughout this course, we'll start from the very basics,
                 assuming no prior knowledge of HTML or coding.
               </p>
               <Stack direction="row" spacing={2}>
-                <Chip
-                  label="HTML"
-                  component="a"
-                  href="#basic-chip"
-                  variant="outlined"
-                  clickable
-                  size="small"
-                  sx={{
-                    padding: "5px",
-                    color: "var(--pink)",
-                    borderColor: "var(--pink)",
-                  }}
-                />
-                <Chip
-                  label="Web Development"
-                  component="a"
-                  href="#basic-chip"
-                  variant="outlined"
-                  clickable
-                  size="small"
-                  sx={{
-                    padding: "5px",
-                    color: "var(--pink)",
-                    borderColor: "var(--pink)",
-                  }}
-                />
-                <div className="cardBtnArea">
-                  <Button
-                    variant="outline-light"
-                    href="/viewTutorial"
-                    className="header-btn register viewTutBtn"
+                {tut.tags &&
+                  tut.tags.map((tag, index) => (
+                    <Chip
+                      key={index}
+                      label={tag.tagname}
+                      component="a"
+                      href={"/viewTag/" + tag._id}
+                      variant="outlined"
+                      clickable
+                      size="small"
+                      sx={{
+                        padding: "5px",
+                        color: "var(--pink)",
+                        borderColor: "var(--pink)",
+                      }}
+                    />
+                  ))}
+                <Box sx={{ flexGrow: 1 }} />
+                <Stack direction="row" alignItems="center">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 30,
+                      height: 30,
+                      borderRadius: "50%",
+                      backgroundColor: "white",
+                      border: "1px solid #7A288A",
+                      "&:hover": {
+                        // Add hover effect
+                        transform: "scale(1.1)",
+                      },
+                    }}
                   >
-                    View Tutorial
-                  </Button>
-                </div>
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      size="lg"
+                      color="#7A288A"
+                      cursor="pointer"
+                      onClick={() => addToMyList(tut)}
+                    />
+                  </Box>
+                  <Box sx={{ marginLeft: 2 }}>
+                    <Button
+                      variant="outline-light"
+                      href={"/viewTutorial/" + tut._id}
+                      className="header-btn register viewTutBtn"
+                    >
+                      View Tutorial
+                    </Button>
+                  </Box>
+                </Stack>
               </Stack>
             </div>
           </div>
         ))}
       </div>
+
       <div
         className="topic topic-intro pageIntro"
         style={{ marginTop: "80px" }}
@@ -230,34 +293,48 @@ export default function Tutorials() {
                       }}
                     />
                   ))}
-
-                <div className="cardBtnArea">
-
-                <IconButton 
-             
-                color={clicked ? "inherit" : "primary"} // Change color to blue when clicked, otherwise inherit
-                aria-label="add to favorites"
-                style={{ marginRight: '8px' }} // Add margin to create space between icon and button
-    
-                onClick={() => setClicked(!clicked)} // Toggle clicked state
-            >
-                <ThumbUpIcon />
-            </IconButton>
-
-
-                  <Button
-                    variant="outline-light"
-                    href={"/viewTutorial/" + tut._id}
-                    className="header-btn register viewTutBtn"
+                <Box sx={{ flexGrow: 1 }} />
+                <Stack direction="row" alignItems="center">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: 30,
+                      height: 30,
+                      borderRadius: "50%",
+                      backgroundColor: "white",
+                      border: "1px solid #7A288A",
+                      "&:hover": {
+                        // Add hover effect
+                        transform: "scale(1.1)",
+                      },
+                    }}
                   >
-                    View Tutorial
-                  </Button>
-                </div>
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      size="lg"
+                      color="#7A288A"
+                      cursor="pointer"
+                      onClick={() => addToMyList(tut)}
+                    />
+                  </Box>
+                  <Box sx={{ marginLeft: 2 }}>
+                    <Button
+                      variant="outline-light"
+                      href={"/viewTutorial/" + tut._id}
+                      className="header-btn register viewTutBtn"
+                    >
+                      View Tutorial
+                    </Button>
+                  </Box>
+                </Stack>
               </Stack>
             </div>
           </div>
         ))}
       </div>
+      <Notification notify={notify} setNotify={setNotify} />
     </div>
   );
 }
