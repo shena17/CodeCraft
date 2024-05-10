@@ -72,18 +72,7 @@ export default function CodeEditor() {
     }
 
     // Perform code analysis
-    const analysisResult = analyzeCode(sourceCode);
-
-    // Display analysis results
-    if (analysisResult.containsConsoleLog) {
-      setOpen(true);
-      setAlertTitle("Analysis Result");
-      setAlertBody("Code contains console.log statement");
-    } else {
-      setOpen(true);
-      setAlertTitle("Analysis Result");
-      setAlertBody("Code does not contain console.log statement");
-    }
+    analyzeCode(sourceCode, language);
   };
 
   return (

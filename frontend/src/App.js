@@ -1,4 +1,3 @@
-
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
@@ -30,7 +29,6 @@ import ViewTutorial from "./components/Pages/ViewTutorial";
 import LiveChat from "./components/Pages/LiveChat";
 import Tags from "./components/Pages/Tags";
 import ViewTag from "./components/Pages/ViewTag";
-import CommunityForum from "./components/Pages/CommunityForum";
 import CodeEditor from "./components/Pages/CodeEditor";
 import AboutUs from "./components/Pages/AboutUs";
 import UserDashboard from "./components/Pages/UserDashboard";
@@ -90,8 +88,8 @@ function AppContent() {
         <Route path="/forgotpwd" element={<ForgotPassword />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/changePassword" element={<ChangePassword />} />
-        <Route path="/note" element={<Note/>} />
-        <Route path="/mylist" element={<MyList/>} />
+        <Route path="/note" element={<Note />} />
+        <Route path="/mylist" element={<MyList />} />
         <Route path="/updateAccount" element={<UpdateAccount />} />
         <Route path="/admin/tags/edit/:id" element={<EditTags />} />
         <Route path="/admin/tags/add" element={<AddTags />} />
@@ -102,7 +100,6 @@ function AppContent() {
         <Route path="/viewTutorial/:id" element={<ViewTutorial />} />
         <Route path="/tags" element={<Tag/>} />
         <Route path="/viewTag/:id" element={<ViewTag />} />
-        <Route path="/community" element={<CommunityForum />} />
         <Route path="/codeEditor" element={<CodeEditor />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/userdashboard" element={<UserDashboard />} />
@@ -135,4 +132,3 @@ function AppContent() {
     </div>
   );
 }
-
