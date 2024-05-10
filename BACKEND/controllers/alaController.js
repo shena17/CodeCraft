@@ -5,6 +5,7 @@ const Tutorial = require("../models/tutorialsUser.model");
 const Tutorials = require("../models/tutorialsUser.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 // GET ALL TAGS
 const getTags = async (req, res) => {
@@ -60,6 +61,7 @@ const createAla = async (req, res) => {
     const tagObjects = [];
     let updateSuccessful = false;
     const uniqueTagIds = new Set(); // Set to store unique tag IDs
+    let _id; // Declare _id variable here
 
     for (const tagName of tags) {
       // Find the tag by name
@@ -72,7 +74,8 @@ const createAla = async (req, res) => {
       // Check if the tag ID is already in the uniqueTagIds set
       if (!uniqueTagIds.has(tag._id.toString())) {
         // If the tag ID is not in the set, push the tag object to tagObjects
-        tagObjects.push({ _id: tag._id, tag: tag._id, count: 1 });
+        _id = new mongoose.Types.ObjectId(); // Corrected usage
+        tagObjects.push({ _id, tag: tag._id, count: 1 });
         uniqueTagIds.add(tag._id.toString()); // Add the tag ID to the set
       } else {
         // If the tag ID is already in the set, you may want to handle it here
@@ -93,13 +96,11 @@ const createAla = async (req, res) => {
         { tags: updatedTags },
         { new: true }
       );
-    }
 
-    if (existingALA) {
       // UPDATE EXISTING DOCUMENT
       for (const alaTags of existingALA.tags) {
         const existingTag = tagObjects.find(
-          (obj) => String(obj.tag) === String(alaTags._id)
+          (obj) => String(obj.tag) === String(alaTags.tag)
         );
 
         if (existingTag) {
@@ -112,8 +113,8 @@ const createAla = async (req, res) => {
             {
               $addToSet: {
                 tags: {
-                  _id: alaTags._id,
-                  tag: alaTags._id,
+                  _id,
+                  tag: alaTags.tag,
                   count: 1,
                 },
               },
@@ -146,31 +147,39 @@ const createAla = async (req, res) => {
 };
 
 const mergeDuplicateTags = async (tags) => {
-  const duplicateIds = new Set();
+  const tagIds = new Set();
+  const updatedTags = [];
 
-  // Find duplicate IDs
-  tags.forEach((tag, index) => {
-    if (tags.findIndex((t) => t._id === tag._id) !== index) {
-      duplicateIds.add(tag._id);
-    }
-  });
-
-  // Merge counts for duplicate tags
   for (const tag of tags) {
-    if (duplicateIds.has(tag._id)) {
-      // Update count for duplicate tags in the database
-      await ALA.updateOne(
-        { _id: tag._id, "tags._id": tag._id },
-        { $inc: { "tags.$.count": tag.count } }
+    if (!tagIds.has(tag.tag.toString())) {
+      tagIds.add(tag.tag.toString());
+      updatedTags.push(tag);
+    } else {
+      const existingTag = updatedTags.find(
+        (t) => String(t.tag) === String(tag.tag)
       );
+      existingTag.count += tag.count;
     }
   }
 
-  // Remove duplicate tags from the array
-  const updatedTags = tags.filter((tag) => !duplicateIds.has(tag._id));
-
   return updatedTags;
 };
+
+// const mergeDuplicateTags = async (tags) => {
+//   const duplicateIds = new Set();
+
+//   // Find duplicate IDs
+//   tags.forEach((tag, index) => {
+//     if (tags.findIndex((t) => t.tag === tag.tag) !== index) {
+//       duplicateIds.add(tag.tag);
+//     }
+//   });
+
+//   // Remove duplicate tags from the array
+//   const updatedTags = tags.filter((tag) => !duplicateIds.has(tag.tag));
+
+//   return updatedTags;
+// };
 
 //GET ALL TUTORIALS
 const getAla = async (req, res) => {

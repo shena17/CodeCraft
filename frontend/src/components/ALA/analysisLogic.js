@@ -27,6 +27,8 @@ export async function analyzeCode(code, language) {
     }
   });
 
+  console.log(tags);
+
   try {
     const response = await axios.post(
       "http://localhost:8071/ala/createAla",
@@ -41,7 +43,8 @@ export async function analyzeCode(code, language) {
     );
     alert("Notification sent successfully:", response.data);
   } catch (error) {
-    alert("Error sending notification:", error.message);
+    alert("Error sending notification:", error);
+    console.log("Error sending notification:", error.response);
   }
 
   // return analysisResults;
