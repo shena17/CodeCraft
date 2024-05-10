@@ -27,7 +27,6 @@ const UserDashboard = () => {
       <Container style={{ height: "8rem" }} />
       <Box bgcolor="white" mb={10} boxShadow={4} p={3} borderRadius={4}>
         <Typography variant="h4" gutterBottom color={"#005597"}>
-          User Dashboard
         </Typography>
         <Container sx={{ marginBottom: "1rem" }}>
           <CardContent>
@@ -37,7 +36,7 @@ const UserDashboard = () => {
               component="div"
               color={"#005597"}
             >
-              Welcome, User! {/* Replace "User" with the actual user's name */}
+              WELCOME ! {/* Replace "User" with the actual user's name */}
             </Typography>
             {/* Row with three cards */}
             <Box display="flex" justifyContent="space-between" mt={3} gap={2}>

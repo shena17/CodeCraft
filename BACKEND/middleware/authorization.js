@@ -9,34 +9,32 @@ const protect = async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     try {
-      //Get token from header
+      // Get token from header
       token = req.headers.authorization.split(" ")[1];
 
-      //Verify the token
-      const user = jwt.verify(token, process.env.JWT_SECRET, (err, res) => {
-        if (err) {
-          return "Token expired";
-        }
-        return res;
-      });
+      // Verify the token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      if (user == "Token expired") {
-        return res.send({ status: "Error", data: "Token expired" });
-      }
-
-      //Get user from the token
-      req.user = await User.findById(user.id).select("-password");
+      // Get user from the token
+      req.user = await User.findById(decoded.id).select("-password");
 
       next();
     } catch (error) {
-      res.status(401);
-      res.json("Not authorized");
+      if (error.name === "TokenExpiredError") {
+        return res
+          .status(401)
+          .json({ status: "Error", message: "Token expired" });
+      }
+      return res
+        .status(401)
+        .json({ status: "Error", message: "Not authorized" });
     }
   }
 
   if (!token) {
-    res.status(401);
-    res.json("No token!");
+    return res
+      .status(401)
+      .json({ status: "Error", message: "No token provided" });
   }
 };
 
