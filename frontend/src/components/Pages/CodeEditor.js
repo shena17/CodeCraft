@@ -72,18 +72,19 @@ export default function CodeEditor() {
     }
 
     // Perform code analysis
-    const analysisResult = analyzeCode(sourceCode);
+    analyzeCode(sourceCode, language);
 
-    // Display analysis results
-    if (analysisResult.containsConsoleLog) {
-      setOpen(true);
-      setAlertTitle("Analysis Result");
-      setAlertBody("Code contains console.log statement");
-    } else {
-      setOpen(true);
-      setAlertTitle("Analysis Result");
-      setAlertBody("Code does not contain console.log statement");
-    }
+    // // Display analysis results
+    // const alertMessages = Object.keys(analysisResults).map((pattern) => {
+    //   const result = analysisResults[pattern];
+    //   if (result.containsMatch) {
+    //     return `Code contains ${pattern}`;
+    //   }
+    // });
+
+    // setOpen(true);
+    // setAlertTitle("Analysis Results");
+    // setAlertBody(alertMessages.join(",\n"));
   };
 
   return (
