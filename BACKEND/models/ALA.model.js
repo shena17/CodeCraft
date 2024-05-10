@@ -10,7 +10,7 @@ const alaSchema = new Schema(
     },
     tags: [
       {
-        _id: { type: Schema.Types.ObjectId, ref: "Tag", unique: true },
+        _id: { type: Schema.Types.ObjectId, unique: true },
         tag: { type: Schema.Types.ObjectId, ref: "Tag" },
         count: { type: Number, default: 0 },
       },
