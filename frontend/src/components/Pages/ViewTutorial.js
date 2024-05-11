@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import TutorialLogo from "../ALA/TutorialLogo";
 
 export default function ViewTutorial() {
   const [tutorials, setTutorials] = useState([]);
@@ -56,11 +57,11 @@ export default function ViewTutorial() {
                 <ArrowBackIosNewIcon fontSize="small" className="me-1" />
                 Back
               </Button>
-              <IconButton aria-label="delete">
-                <BookmarkBorderIcon fontSize="large" sx={{ color: "red" }} />
-              </IconButton>
             </div>
-            <img src={html} alt="Tutorial" className="viewTutLogo mt-5" />
+            {/* <img src={html} alt="Tutorial" className="viewTutLogo mt-5" /> */}
+            <div className="mt-5 viewTutLogo">
+              <TutorialLogo tags={tutorials.tags} />
+            </div>
             <div className="topic topic-main pageTopic mb-0 mt-3">
               {tutorials.heading}
             </div>

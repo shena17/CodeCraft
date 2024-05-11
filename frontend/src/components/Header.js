@@ -14,10 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
 
@@ -85,7 +82,7 @@ function Header() {
               <Nav.Link href="/tutorials" className="nav-links">
                 Tutorials
               </Nav.Link>
-              <Nav.Link href="/tags" className="nav-links">
+              <Nav.Link href="/userTags" className="nav-links">
                 Tags
               </Nav.Link>
             </Nav>
@@ -154,6 +151,14 @@ function Header() {
                     className="mb-2"
                   >
                     <Avatar /> Dashboard
+                  </MenuItem>
+                  <MenuItem
+                    component={Link}
+                    to="/progress"
+                    onClick={handleClose}
+                    className="mb-2"
+                  >
+                    <Avatar /> Progress
                   </MenuItem>
 
                   <Divider />
