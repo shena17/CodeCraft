@@ -9,7 +9,7 @@ import axios from "axios";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import TutotialLogo from "../ALA/TutotialLogo";
+import TutorialLogo from "../ALA/TutorialLogo";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import "../../styles/tutorials.css";
@@ -137,7 +137,7 @@ export default function MyList() {
         <div className="cardList">
           {tutorialList.map((tut, index) => (
             <div className="pageCard anim">
-              <TutotialLogo tags={tut.tags} />
+              <TutorialLogo tags={tut.tags} />
               <div className="rightCard">
                 <p className="cardTopic">{tut.heading}</p>
                 <p className="cardDesc">{tut.description}</p>

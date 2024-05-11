@@ -20,11 +20,25 @@ const getTags = async (req, res) => {
 // GET SPECIFIC TAG
 const viewTag = async (req, res) => {
   try {
+    // Find the tag by ID
     const tag = await Tag.findById(req.params.id);
 
-    res.json(tag);
+    // Check if the tag exists
+    if (!tag) {
+      return res
+        .status(404)
+        .json({ error: `Tag with id ${req.params.id} not found` });
+    }
+
+    // Find all tutorials containing the tag
+    const tutorials = await Tutorial.find({ tags: tag._id })
+      .populate("tags")
+      .exec();
+
+    // Return the tutorials along with the tag details
+    res.json({ tag, tutorials });
   } catch (err) {
-    res.status(400).json("Error: " + err);
+    res.status(400).json({ error: "Error: " + err });
   }
 };
 
@@ -168,6 +182,56 @@ const getAla = async (req, res) => {
   }
 };
 
+// Controller function to retrieve the tag name of the highest used languages
+const getChart = async (req, res) => {
+  try {
+    // Find ALA document by user id
+    const alaDocument = await ALA.findById(req.user.id).populate("tags.tag");
+
+    if (!alaDocument) {
+      return res
+        .status(404)
+        .json({ error: `ALA document with id ${req.user.id} not found` });
+    }
+
+    // Sort tags in descending order based on count
+    alaDocument.tags.sort((a, b) => b.count - a.count);
+
+    // Filter out the tags corresponding to languages
+    const languages = alaDocument.tags.filter((tag) =>
+      [
+        "html",
+        "c",
+        "c++",
+        "c#",
+        "java",
+        "php",
+        "python",
+        "html5",
+        "css",
+        "javascript",
+        "react",
+        "node",
+        "typescript",
+      ].includes(tag.tag.tagname)
+    );
+
+    // Map the filtered tags to language objects with language name and count
+    const languageArray = languages.map((tag) => ({
+      language: tag.tag.tagname,
+      count: tag.count,
+    }));
+
+    // Sort languageArray in descending order based on count
+    languageArray.sort((a, b) => b.count - a.count);
+
+    res.json({ languageArray });
+  } catch (error) {
+    console.error("Error retrieving highest used languages:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getTags,
   viewTag,
@@ -175,4 +239,5 @@ module.exports = {
   viewTutorial,
   createAla,
   getAla,
+  getChart,
 };
